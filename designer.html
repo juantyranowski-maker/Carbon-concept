@@ -58,9 +58,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .pcard .nums { display: flex; gap: 18px; font-size: 12px; color: var(--muted); }
 .pcard .nums b { display: block; font: 700 24px/1 var(--num); color: var(--ink); }
 .pcard .nums b.e { color: var(--emb); } .pcard .nums b.o { color: var(--op); }
-.strip { display: grid; grid-template-columns: repeat(17, 1fr); gap: 2px; }
+.strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
 .strip i { height: 8px; border-radius: 1px; display: block; }
-.strip.gap5 i:nth-child(6), .strip.gap5 i:nth-child(13), .strip.gap5 i:nth-child(17) { margin-left: 4px; }
 .pcard .foot { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-top: 2px; }
 .pcard .foot .faces { display: flex; }
 .pcard .foot .faces span { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--surface); margin-left: -6px; display: grid; place-items: center; font-size: 10px; font-weight: 700; background: var(--panel); color: var(--ink); }
@@ -135,13 +134,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .res.H { background: #1E7F4F; } .res.M { background: #E0A100; color: var(--ink); } .res.L { background: #1E1E28; }
 .yen { display: inline-flex; border: 1.5px solid var(--ink); border-radius: 4px; padding: 0 4px; font: 700 13px var(--num); }
 .yen s { text-decoration: none; color: #C4C4CC; }
-.mods { display: grid; grid-template-columns: repeat(17, 1fr); gap: 2px; }
-.mods div { text-align: center; font: 600 10px var(--num); color: var(--muted); }
-.mods div i { display: block; height: 22px; border-radius: 2px; margin-bottom: 2px; }
-.mods div:nth-child(6), .mods div:nth-child(13), .mods div:nth-child(17) { margin-left: 5px; }
-.mods-groups { display: grid; grid-template-columns: 5fr 7fr 4fr 1fr; gap: 5px; margin-top: 3px; font-size: 10.5px; color: var(--muted); text-align: center; }
-.mods-groups span { border-top: 1.5px solid var(--hair); padding-top: 2px; }
-.open { margin-top: 14px; width: 100%; border: 0; background: var(--ink); color: #fff; border-radius: 999px; padding: 10px 16px; font-weight: 700; }
+.mods { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.mods div { font-size: 11px; line-height: 1.2; color: var(--muted); }
+.mods div i { display: block; height: 26px; border-radius: 6px; margin-bottom: 5px; }
+.mods div b { display: block; font: 700 12.5px var(--num); letter-spacing: .02em; color: var(--sc); }
 .big2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .big2 > div { border-radius: 14px; padding: 12px 14px; background: var(--panel); }
 .big2 .k { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
@@ -242,8 +238,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .mx thead th { position: sticky; background: var(--surface); z-index: 3; font-weight: 700; color: var(--muted); }
 .mx thead tr.g th { top: 0; height: 30px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; text-align: center; border-bottom: 2px solid var(--hair); }
 .mx thead tr.g th.grph { border-bottom-width: 3px; border-radius: 8px 8px 0 0; }
-.mx thead tr.m th { top: 30px; height: 62px; font: 700 13px var(--num); text-align: center; vertical-align: bottom; padding-bottom: 6px; border-bottom: 1px solid var(--hair); }
-.mx thead tr.m th small { display: block; font: 500 10px var(--ui); color: var(--muted); line-height: 1.15; max-width: 44px; margin: 0 auto 3px; white-space: normal; }
+.mx thead tr.m th { top: 0; height: 92px; font: 700 13px var(--num); text-align: center; vertical-align: bottom; padding: 0 6px 8px; border-bottom: 1px solid var(--hair); }
+.mx thead tr.m th svg { display: block; margin: 0 auto 4px; }
+.mx thead tr.m th b { display: block; font: 700 14.5px var(--num); letter-spacing: .03em; color: var(--sc, var(--ink)); line-height: 1.15; }
+.mx thead tr.m th small { display: block; font: 500 10.5px var(--ui); color: var(--muted); line-height: 1.2; max-width: 92px; margin: 2px auto 0; white-space: normal; }
 .mx th.name, .mx td.name { position: sticky; left: 0; z-index: 2; background: var(--surface); text-align: left; min-width: 250px; max-width: 280px; padding: 0 12px; }
 .mx thead th.name { z-index: 4; }
 .mx td.st { padding: 0 6px 0 10px; white-space: nowrap; }
@@ -258,10 +256,11 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .mx tbody tr.t.rejected td.cell i { opacity: .3; }
 .mx td.name b { display: block; font-size: 14.5px; line-height: 1.25; }
 .mx td.name small { color: var(--muted); font-size: 12px; }
-.mx td.cell { width: 34px; min-width: 34px; text-align: center; }
-.mx td.cell i { display: block; width: 28px; height: 28px; margin: 0 auto; border-radius: 4px; }
+.mx td.cell { width: 92px; min-width: 92px; text-align: center; }
+.mx td.cell i { display: block; width: 80px; height: 26px; margin: 0 auto; border-radius: 6px; }
+.mx tr.cat td .pn { margin-left: 10px; font-size: 11px; color: var(--muted); letter-spacing: .1em; }
 .mx td.cell.gap, .mx th.gap { padding-left: 8px !important; }
-.mx td.sav { min-width: 150px; padding: 0 10px 0 14px; }
+.mx td.sav { display: table-cell; min-width: 150px; padding: 0 10px 0 14px; }
 .mx td.sav .ln { display: grid; grid-template-columns: 1fr 40px; gap: 6px; align-items: center; font: 700 14px var(--num); }
 .mx td.sav .ln .bar { height: 7px; border-radius: 4px; background: var(--panel); overflow: hidden; }
 .mx td.sav .ln .bar i { display: block; height: 100%; border-radius: 4px; }
@@ -309,102 +308,59 @@ html[lang="ja"] .mx thead tr.m.client th .tagc { font-size: 9.5px; letter-spacin
 /* =====================================================================================================
    DATA (sample)
    ===================================================================================================== */
-const MODS = ['A1', 'A2', 'A3', 'A4', 'A5', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'C1', 'C2', 'C3', 'C4', 'D'];
-const MOD_NAME = {
-  en: { A1: 'Raw material supply', A2: 'Transport', A3: 'Manufacturing', A4: 'Transport to site', A5: 'Construction', B1: 'Use', B2: 'Maintenance', B3: 'Repair', B4: 'Replacement', B5: 'Refurbishment', B6: 'Operational energy', B7: 'Operational water', C1: 'Demolition', C2: 'Transport', C3: 'Waste processing', C4: 'Disposal', D: 'Reuse · recovery · recycling' },
-  ja: { A1: '原材料調達', A2: '輸送', A3: '製造', A4: '現場への輸送', A5: '施工', B1: '使用', B2: '維持管理', B3: '修繕', B4: '交換', B5: '改修', B6: '運用エネルギー', B7: '運用水', C1: '解体', C2: '輸送', C3: '廃棄物処理', C4: '最終処分', D: '再使用・回収・リサイクル' }
-};
-/* ---------- columns: 17 life-cycle modules (Architect) or GHG Protocol scope categories (Client) ---------- */
-// Scope categories seen from the client (building owner / operator). In the app, administrators set each
-// technology's impact per category; here they are derived from the module values plus a few overrides.
-// Scope colours (tiles) and value-chain stages (groups), following the Ministry of the Environment layout.
+/* ---------- columns: 4 life-cycle stages (Architect) or 4 GHG scope groups (Client) ---------- */
+// The EN 15978 life cycle has 17 modules (A1–D). This simplified wheel groups them into four stages a first-time viewer can read.
+const LC = [
+  { k: 'A', kind: 'e', icon: 'A5', en: 'Design & construction', ja: '設計・施工', subEn: 'Upfront carbon · A1–A5', subJa: 'アップフロントカーボン · A1–A5' },
+  { k: 'B', kind: 'o', icon: 'B6', en: 'Operation', ja: '運用', subEn: 'Energy, water & upkeep · B1–B7', subJa: 'エネルギー・水・維持管理 · B1–B7' },
+  { k: 'C', kind: 'e', icon: 'C1', en: 'Demolition', ja: '解体・廃棄', subEn: 'End of life · C1–C4', subJa: '解体・処理・処分 · C1–C4' },
+  { k: 'D', kind: 'd', icon: 'D', en: 'Reuse & recovery', ja: '再利用・リサイクル', subEn: 'Beyond the life cycle · D', subJa: 'ライフサイクル外の便益 · D' }
+];
+// The client (building owner / operator) sees the same four positions as GHG Protocol scope groups,
+// placed to line up with the stages: upstream ↔ design & construction, scope 1 · 2 ↔ operation, downstream ↔ end of life.
 const SC_STYLE = {
   1: { c: '#2B79A8', bg: '#E4F1F9', en: 'Scope 1', ja: 'スコープ1' },
   2: { c: '#C2643E', bg: '#FCEAE2', en: 'Scope 2', ja: 'スコープ2' },
-  3: { c: '#4E8A3A', bg: '#EAF4E3', en: 'Scope 3', ja: 'スコープ3' },
-  0: { c: '#7A7376', bg: '#EEEAEB', en: 'Outside the scopes', ja: 'スコープ外' }
+  3: { c: '#4E8A3A', bg: '#EAF4E3', en: 'Scope 3', ja: 'スコープ3' }
 };
-const STAGES = {
-  UP: { c: '#4E8A3A', bg: '#EEF5E8', en: 'Upstream', ja: '上流', subEn: 'Scope 3', subJa: 'スコープ3' },
-  IN: { c: '#3E3A39', bg: '#F1EEEF', en: 'In-house', ja: '自社', subEn: 'Scope 1 · 2 · 3', subJa: 'スコープ1・2・3' },
-  DOWN: { c: '#4E8A3A', bg: '#EEF5E8', en: 'Downstream', ja: '下流', subEn: 'Scope 3', subJa: 'スコープ3' },
-  OUT: { c: '#7A7376', bg: '#EEEAEB', en: 'Removals & offsets', ja: '吸収・オフセット', subEn: 'reported separately', subJa: '別途報告' }
-};
-// from: life-cycle modules a category is derived from (mockup only; administrators set these per technology in the app)
-const CLIENT_DEF = [
-  { k: 'C1', st: 'UP', sc: 3, tag: 'Cat 1', tagJa: 'カテゴリ1', en: 'Purchased goods & services', ja: '購入した製品・サービス', from: ['B2', 'B3', 'B7'], icon: 'cart' },
-  { k: 'C2', st: 'UP', sc: 3, tag: 'Cat 2', tagJa: 'カテゴリ2', en: 'Capital goods', ja: '資本財', from: ['A1', 'A3', 'A5', 'B4', 'B5'], icon: 'build' },
-  { k: 'C3', st: 'UP', sc: 3, tag: 'Cat 3', tagJa: 'カテゴリ3', en: 'Fuel & energy related', ja: '燃料・エネルギー関連', from: ['B6'], down: 1, icon: 'pylon' },
-  { k: 'C4', st: 'UP', sc: 3, tag: 'Cat 4', tagJa: 'カテゴリ4', en: 'Upstream transport', ja: '輸送・配送（上流）', from: ['A2', 'A4'], icon: 'A2' },
-  { k: 'C8', st: 'UP', sc: 3, tag: 'Cat 8', tagJa: 'カテゴリ8', en: 'Upstream leased assets', ja: 'リース資産（上流）', from: ['B6'], down: 1, icon: 'key' },
-  { k: 'S1', st: 'IN', sc: 1, tag: 'Scope 1', tagJa: 'スコープ1', en: 'Direct emissions', ja: '直接排出', from: ['B6'], icon: 'factory' },
-  { k: 'S2', st: 'IN', sc: 2, tag: 'Scope 2', tagJa: 'スコープ2', en: 'Purchased electricity, steam & heat', ja: '電気・蒸気・熱の使用', from: ['B6'], icon: 'plug' },
-  { k: 'C5', st: 'IN', sc: 3, tag: 'Cat 5', tagJa: 'カテゴリ5', en: 'Waste in operations', ja: '事業から出る廃棄物', from: [], icon: 'C4' },
-  { k: 'C6', st: 'IN', sc: 3, tag: 'Cat 6', tagJa: 'カテゴリ6', en: 'Business travel', ja: '出張', from: [], icon: 'plane' },
-  { k: 'C7', st: 'IN', sc: 3, tag: 'Cat 7', tagJa: 'カテゴリ7', en: 'Employee commuting', ja: '雇用者の通勤', from: [], icon: 'car' },
-  { k: 'C10', st: 'DOWN', sc: 3, tag: 'Cat 10', tagJa: 'カテゴリ10', en: 'Processing of sold products', ja: '販売した製品の加工', from: [], icon: 'gear' },
-  { k: 'C11', st: 'DOWN', sc: 3, tag: 'Cat 11', tagJa: 'カテゴリ11', en: 'Use of sold products', ja: '販売した製品の使用', from: ['B6', 'B7'], icon: 'lamp' },
-  { k: 'C12', st: 'DOWN', sc: 3, tag: 'Cat 12', tagJa: 'カテゴリ12', en: 'End-of-life of sold products', ja: '販売した製品の廃棄', from: ['C1', 'C2', 'C3', 'C4'], icon: 'C4' },
-  { k: 'C15', st: 'DOWN', sc: 3, tag: 'Cat 15', tagJa: 'カテゴリ15', en: 'Investments', ja: '投資', from: [], icon: 'yen' },
-  { k: 'RM', st: 'OUT', sc: 0, tag: 'Other', tagJa: 'その他', en: 'Removals & offsets', ja: '吸収・オフセット', from: [], icon: 'leaf' }
+const SCOPES = [
+  { k: 'S3U', sc: 3, icon: 'build', en: 'Scope 3 · upstream', ja: 'スコープ3 · 上流', subEn: 'Materials & construction', subJa: '資材・施工' },
+  { k: 'S1', sc: 1, icon: 'factory', en: 'Scope 1', ja: 'スコープ1', subEn: 'Direct emissions · on-site fuel', subJa: '直接排出 · 敷地内の燃料' },
+  { k: 'S2', sc: 2, icon: 'plug', en: 'Scope 2', ja: 'スコープ2', subEn: 'Purchased electricity & heat', subJa: '購入した電気・熱' },
+  { k: 'S3D', sc: 3, icon: 'C4', en: 'Scope 3 · downstream', ja: 'スコープ3 · 下流', subEn: 'Building use & end of life', subJa: '建物の使用・廃棄' }
 ];
-const OVR = {
-  S1: { PV_PANELS: 'N', CARBON_CREDITS: 'N', DEMAND_RESPONSE: 'N', ELECTRIFICATION: 'H', PREDICTIVE_MAINTENANCE: 'M' },
-  S2: { CARBON_CREDITS: 'N' }, C3: { CARBON_CREDITS: 'N' }, C8: { CARBON_CREDITS: 'N' }, C11: { CARBON_CREDITS: 'N' },
-  C5: { ZERO_WASTE: 'M', PREDICTIVE_MAINTENANCE: 'L', FLEX_DESIGN: 'L', DESIGN_FOR_DECONSTRUCTION: 'L' },
-  C6: { GREEN_MOBILITY: 'L' }, C7: { GREEN_MOBILITY: 'M' },
-  C10: { DESIGN_FOR_DECONSTRUCTION: 'L' },
-  C15: { CARBON_CREDITS: 'L' },
-  RM: { CARBON_SINK: 'H', CARBON_CREDITS: 'H', MASS_TIMBER: 'M' }
-};
 const SICON = {
-  cart: 'M3 4 H5.5 L8 15 H18 L20.5 7 H6.4 M9 19 a1.4 1.4 0 1 0 0.1 0 Z M17 19 a1.4 1.4 0 1 0 0.1 0 Z',
   build: 'M3 21 H21 M5 21 V8 H13 V21 M13 11 H19 V21 M8 11 H10 M8 14 H10 M8 17 H10 M16 14 H17 M16 17 H17 M9 8 V4 H11',
-  pylon: 'M12 2 L7 22 M12 2 L17 22 M5 7 H19 M6 12 H18 M9.5 7 L14.5 12 M14.5 7 L9.5 12',
-  key: 'M3.5 15 a4.5 4.5 0 1 0 9 0 a4.5 4.5 0 1 0 -9 0 Z M11.2 11.8 L20 3 M17 6 L19.5 8.5 M14.5 8.5 L16.5 10.5',
   factory: 'M3 21 V11 L8 14 V11 L13 14 V8 H16 V3 H19 V21 Z M2 21 H22',
-  plug: 'M9 2 V7 M15 2 V7 M6 7 H18 V11 a6 6 0 0 1 -12 0 Z M12 17 V22',
-  plane: 'M21 3 L3 10.5 L10 13 L12.5 20 Z M10 13 L15 8.5',
-  car: 'M3 16 V11.5 L6 6.5 H18 L21 11.5 V16 Z M3 11.5 H21 M7 19 a1.5 1.5 0 1 0 0.1 0 Z M17 19 a1.5 1.5 0 1 0 0.1 0 Z',
-  gear: 'M8.5 12 a3.5 3.5 0 1 0 7 0 a3.5 3.5 0 1 0 -7 0 Z M12 2.5 V5.5 M12 18.5 V21.5 M2.5 12 H5.5 M18.5 12 H21.5 M5.3 5.3 L7.4 7.4 M16.6 16.6 L18.7 18.7 M5.3 18.7 L7.4 16.6 M16.6 7.4 L18.7 5.3',
-  lamp: 'M9 18 H15 M10 21 H14 M12 3 a6 6 0 0 0 -3.5 10.9 V16 H15.5 V13.9 A6 6 0 0 0 12 3 Z',
-  yen: 'M6 3 L12 11 L18 3 M12 11 V21 M7 12.5 H17 M7 16.5 H17',
-  leaf: 'M5 19 C5 10 10 5 20 4 C19 14 14 19 5 19 Z M5 19 L13 11'
+  plug: 'M9 2 V7 M15 2 V7 M6 7 H18 V11 a6 6 0 0 1 -12 0 Z M12 17 V22'
 };
-// angles for the client layout: same open arc as the modules (36.5° → 323.5°); wide gaps between stages, small gaps between scopes
-(function placeClient() {
-  const start = 36.5, end = 323.5, inGap = 2.2, scGap = 4.5, stGap = 9;
-  const gap = (c, p) => (c.st !== p.st ? stGap : c.sc !== p.sc ? scGap : inGap);
-  let gaps = 0;
-  CLIENT_DEF.forEach((c, i) => { if (i) gaps += gap(c, CLIENT_DEF[i - 1]); });
-  const w = (end - start - gaps) / CLIENT_DEF.length;
-  let a = start;
-  CLIENT_DEF.forEach((c, i) => { if (i) a += gap(c, CLIENT_DEF[i - 1]); c.ang = a + w / 2; c.half = w / 2; a += w; });
-})();
-const LVL = { H: 3, M: 2, L: 1, N: 0 }, LVLK = ['N', 'L', 'M', 'H'];
-function lvOf(x, c) {
-  if (c.idx != null) return x.imp[c.idx];
-  const o = OVR[c.k] && OVR[c.k][x.id];
-  if (o) return o;
-  let v = c.from.reduce((m, mod) => Math.max(m, LVL[x.imp[MODS.indexOf(mod)]]), 0);
-  if (c.down) v = Math.max(0, v - c.down);
-  return LVLK[v];
-}
+// The most relevant technologies (3–4 per category), with impact per stage (A B C D) and per scope group (S3 up · S1 · S2 · S3 down).
+// The other catalogue rows stay in T below; add an id here to bring one back.
+const KEY_TECHS = {
+  RETROFIT_RENOVATION: ['HHHL', 'HMMM'], ADAPTIVE_REUSE: ['HMHL', 'HLMM'], DESIGN_FOR_DECONSTRUCTION: ['LLHH', 'LNNH'],
+  FORM_FACTOR: ['HMLN', 'HLML'], GREEN_CONCRETE: ['HNLL', 'HNNL'], MASS_TIMBER: ['HLMH', 'HNLM'],
+  ELECTRIFICATION: ['LHNN', 'LHLN'], ENERGY_MANAGEMENT: ['NMNN', 'NMMN'], PV_PANELS: ['LHLM', 'LNHL'], PASSIVHAUS: ['MHLN', 'MHHL'],
+  CARBON_SINK: ['HLMM', 'HNNM'], CARBON_CREDITS: ['NMNN', 'NNHN']
+};
+// angles: the four columns share an open arc from 50° to 310°; the top gap holds names, savings and badges
+const STAGE_START = 50, STAGE_END = 310, STAGE_GAP = 4, STAGE_W = (STAGE_END - STAGE_START - 3 * STAGE_GAP) / 4;
+const lvOf = (x, c) => (c.client ? x.scp : x.imp)[c.idx];
 function cols(aud) {
-  if ((aud || S.audience) === 'client') return CLIENT_DEF.map((c) => ({ ...c, grp: c.st, client: true }));
-  return MODS.map((m, j) => ({ k: m, idx: j, grp: m === 'D' ? 'D' : m[0], ang: ANG[j], half: HALF, icon: m, kind: m === 'B6' || m === 'B7' ? 'o' : m === 'D' ? 'd' : 'e' }));
+  const client = (aud || S.audience) === 'client';
+  return (client ? SCOPES : LC).map((d, j) => ({ ...d, idx: j, grp: d.k, client, ang: STAGE_START + j * (STAGE_W + STAGE_GAP) + STAGE_W / 2, half: STAGE_W / 2 }));
 }
+const colName = (c) => (S.lang === 'ja' ? c.ja : c.en);
+const colFull = (c) => (c.client ? colName(c) : c.k + ' · ' + colName(c));
+const colSub = (c) => (S.lang === 'ja' ? c.subJa : c.subEn);
 function groupsOf(cs) {
-  const out = [];
-  cs.forEach((c, j) => { const g = out[out.length - 1]; if (g && g.key === c.grp) g.cols.push(c); else out.push({ key: c.grp, start: j, cols: [c] }); });
-  for (const g of out) {
-    if (cs[0].client) { const st = STAGES[g.key]; g.color = st.c; g.bg = st.bg; g.label = (S.lang === 'ja' ? st.ja + ' · ' + st.subJa : st.en.toUpperCase() + ' · ' + st.subEn.toUpperCase()); g.chip = S.lang === 'ja' ? st.ja : st.en; g.dashed = g.key === 'OUT'; }
-    else { g.color = g.key === 'D' ? '#8A8285' : g.key === 'B' ? '#4E5070' : '#D7262B'; g.label = t('st' + g.key); g.chip = g.key + ' · ' + t('chip' + g.key); g.dashed = g.key === 'D'; g.bar = g.key === 'D' ? '#8A8285' : '#3E3A39'; }
-  }
-  return out;
+  const ja = S.lang === 'ja';
+  return cs.map((c, j) => {
+    const color = c.client ? SC_STYLE[c.sc].c : c.kind === 'o' ? '#4E5070' : c.kind === 'd' ? '#8A8285' : '#D7262B';
+    const name = ja ? colName(c) : colName(c).toUpperCase();
+    return { key: c.k, start: j, cols: [c], color, bg: c.client ? SC_STYLE[c.sc].bg : '#F4F0F1', dashed: c.kind === 'd',
+      label: c.client ? name : c.k + ' · ' + name, sub: ja ? colSub(c) : colSub(c).toUpperCase(), chip: colFull(c) };
+  });
 }
-const colName = (c) => (c.client ? (S.lang === 'ja' ? c.ja : c.en) : MOD_NAME[S.lang][c.k]);
-const colTag = (c) => (c.client ? (S.lang === 'ja' ? c.tagJa : c.tag) : c.k);
 const iconPath = (c) => SICON[c.icon] || ICONS[c.icon];
 const CATS = [
   { id: 'KEEP_LONGER', prio: 1, en: 'KEEP LONGER', ja: '長く使う' },
@@ -417,7 +373,7 @@ const T = [
   ['CARBON_CREDITS', 'GIVE_BACK', 'CARBON CREDITS', 'カーボンクレジット', 'NNNNNNNNNNHMNNNNN', 0, 20, 'L', 'M', 'Offsets remaining operational emissions with verified credits or renewable energy certificates.', '残る運用時の排出を、認証済みのクレジットや再エネ証書で相殺する。'],
   ['RAINWATER_HARVESTING', 'GIVE_BACK', 'RAINWATER HARVESTING', '雨水利用', 'LNLNLNLLLNLHNNNNN', 0, 5, 'H', 'L', 'Collects rainwater for flushing and irrigation, reducing mains water demand.', '雨水を貯留して洗浄水や散水に使い、上水使用量を減らす。'],
   ['ELECTRIFICATION', 'RUN_CLEANER', 'ELECTRIFICATION', '電化', 'LNLNLLLLMNHNNNNLN', 0, 35, 'M', 'M', 'Replaces fossil-fuel heating, hot water and cooking with efficient electric systems such as heat pumps.', '化石燃料による暖房・給湯・調理を、ヒートポンプなどの高効率な電気設備に置き換える。'],
-  ['ENERGY_MANAGEMENT', 'RUN_CLEANER', 'ENERGY MANAGEMENT SYSTEMS', 'エネルギー管理システム', 'NNLNNNMLLNHMNNNNN', 0, 15, 'M', 'L', 'Monitors and controls building systems to cut waste and keep equipment running efficiently.', '設備を監視・制御し、無駄を減らして効率的な運転を維持する。'],
+  ['ENERGY_MANAGEMENT', 'RUN_CLEANER', 'ENERGY MANAGEMENT', 'エネルギー管理システム', 'NNLNNNMLLNHMNNNNN', 0, 15, 'M', 'L', 'Monitors and controls building systems to cut waste and keep equipment running efficiently.', '設備を監視・制御し、無駄を減らして効率的な運転を維持する。'],
   ['PV_PANELS', 'RUN_CLEANER', 'PV PANELS', '太陽光発電', 'MLMLLNLLMNHNLLMLM', 0, 20, 'M', 'M', 'Generates renewable electricity on the roof or façade.', '屋根や外壁で再生可能エネルギーによる電力をつくる。'],
   ['THERMAL_STORAGE', 'RUN_CLEANER', 'THERMAL ENERGY STORAGE', '蓄熱システム', 'LNLNLNLLLNHNNNLNN', 0, 10, 'H', 'H', 'Stores heat or cold to shift loads to low-carbon hours and downsize plant.', '熱や冷熱を蓄え、負荷を低炭素な時間帯へ移し、設備を小型化する。'],
   ['WASTE_HEAT_RECOVERY', 'RUN_CLEANER', 'WASTE HEAT RECOVERY', '排熱回収', 'LNLNNNLLLNHLNNNNN', 0, 15, 'L', 'M', 'Reuses heat from exhaust air, equipment or processes for heating and hot water.', '排気・機器・工程の排熱を暖房や給湯に再利用する。'],
@@ -436,7 +392,7 @@ const T = [
   ['DESIGN_FOR_DECONSTRUCTION', 'KEEP_LONGER', 'DESIGN FOR DECONSTRUCTION', '解体容易性設計', 'LNLNMNLMMMNNHMHHH', 10, 0, 'M', 'M', 'Bolted, reversible connections and material passports so components can be reused.', 'ボルト接合など取り外し可能な接合と材料情報の記録により、部材を再使用できるようにする。'],
   ['PREDICTIVE_MAINTENANCE', 'KEEP_LONGER', 'PREDICTIVE MAINTENANCE', '予知保全', 'NNNNNNHHMLMLNNNNN', 5, 10, 'H', 'L', 'Sensors and data predict failures, extending equipment life and avoiding early replacement.', 'センサーとデータで故障を予測し、機器を長持ちさせて早期の交換を避ける。']
 ];
-const TECHS = T.map((r) => ({ id: r[0], cat: r[1], en: r[2], ja: r[3], imp: r[4], emb: r[5], op: r[6], res: r[7], cost: r[8], sumEn: r[9], sumJa: r[10] }));
+const TECHS = T.filter((r) => KEY_TECHS[r[0]]).map((r) => ({ id: r[0], cat: r[1], en: r[2], ja: r[3], imp: KEY_TECHS[r[0]][0], scp: KEY_TECHS[r[0]][1], emb: r[5], op: r[6], res: r[7], cost: r[8], sumEn: r[9], sumJa: r[10] }));
 const TECH = Object.fromEntries(TECHS.map((t) => [t.id, t]));
 
 const ME = { name: 'Konuklar Cagatay', short: 'KC' };
@@ -472,9 +428,9 @@ const STR = {
     legend: 'How to read', legImpact: 'Impact on a module', legBars: 'Bars at the top: % saving (left operational, right embodied)', legBadges: 'Badges: resilience (circle), cost (¥)',
     legStatus: '● adopted · ○ considered · ✕ rejected', tabScore: 'Project score', tabTech: 'Technology',
     scoreKick: 'Estimated for the adopted technologies', estimate: 'Estimate: savings are combined so overlapping technologies are not double-counted (1 − Π(1 − s)). Not a substitute for a project LCA.',
-    coverage: 'Coverage of the life cycle', coverScopes: 'Coverage by GHG scope', coverText: '{0} of 17 modules addressed · {1} strongly',
+    coverage: 'Coverage of the life cycle', coverScopes: 'Coverage by GHG scope', coverText: '{0} of {2} stages addressed · {1} strongly', prioN: 'PRIORITY {0}', legPriority: 'Priority 1 → 4: start with the darker outer bands',
     costMix: 'Cost profile', resMix: 'Resilience profile', adoptedList: 'Adopted technologies', none0: 'Nothing adopted yet. Click a technology on the chart to start.',
-    statusQ: 'Use on this project?', statusHint: 'Saved to the project for everyone invited.', savings: 'Carbon saving vs baseline', modules: 'Impact per module', scopes: 'Impact per GHG scope',
+    statusQ: 'Use on this project?', statusHint: 'Saved to the project for everyone invited.', savings: 'Carbon saving vs baseline', modules: 'Impact per stage', scopes: 'Impact per GHG scope',
     openSheet: 'Open full sheet · case studies', prev: '← Previous', next: 'Next →', close: 'Close',
     keyFacts: 'Key facts', summary: 'What it is', how: 'How it reduces carbon', cases: 'Case studies', caseSample: 'Sample case study',
     caseNote: 'Placeholder: case studies are added by administrators.', did: 'What was done', results: 'Results', challenges: 'Challenges',
@@ -491,7 +447,7 @@ const STR = {
     matrix: 'Matrix', wheel: 'Wheel', zoomIn: 'Zoom in', zoomOut: 'Zoom out', fit: 'Fit', chartTitle: 'WHOLE-LIFE DECARBONIZATION STRATEGY', zoomHint: 'Hover to trace a row or column · scroll to zoom · drag to move', show: 'Show', focusAll: 'All', focusProject: 'This project',
     matrixHint: 'Click a row for details · ● ○ ✕ to decide', hideFilters: 'Hide filters', showFilters: 'Show filters', present: 'Present', exitPresent: 'Exit presentation',
     gA: 'A · Product & construction', gB: 'B · Use', gC: 'C · End of life', gD: 'D', resShort: 'Resil.', projectRow: 'This project (adopted)', hiddenN: '{0} technologies hidden by the filters',
-    chipA: 'Product', chipB: 'Use', chipC: 'End of life', chipD: 'Beyond', coverTextC: '{0} of {2} scope categories addressed · {1} strongly'
+    chipA: 'Product', chipB: 'Use', chipC: 'End of life', chipD: 'Beyond', coverTextC: '{0} of {2} scope groups addressed · {1} strongly'
   },
   ja: {
     brand: 'WLC カタログ', projects: 'プロジェクト', chooseEyebrow: 'ホールライフカーボン 技術カタログ', chooseTitle: 'プロジェクトを選択',
@@ -507,7 +463,7 @@ const STR = {
     legend: '図の見方', legImpact: '段階ごとの影響度', legBars: '上部のバー：削減率（左 オペレーショナル、右 エンボディド）', legBadges: 'バッジ：レジリエンス（円）、コスト（¥）',
     legStatus: '● 採用 · ○ 検討 · ✕ 不採用', tabScore: 'プロジェクト評価', tabTech: '技術',
     scoreKick: '採用した技術による推定値', estimate: '推定値：重複する効果を二重に数えないよう合成しています（1 − Π(1 − s)）。プロジェクトのLCAに代わるものではありません。',
-    coverage: 'ライフサイクルの網羅状況', coverScopes: 'GHGスコープ別の網羅状況', coverText: '17段階中 {0}段階に効果 · うち{1}段階で大きい',
+    coverage: 'ライフサイクルの網羅状況', coverScopes: 'GHGスコープ別の網羅状況', coverText: '{2}段階中 {0}段階に効果 · うち{1}段階で大きい', prioN: '優先度 {0}', legPriority: '優先度 1 → 4：外側の濃い帯から検討',
     costMix: 'コストの傾向', resMix: 'レジリエンスの傾向', adoptedList: '採用した技術', none0: 'まだ採用した技術はありません。図の技術をクリックして始めてください。',
     statusQ: 'このプロジェクトで使いますか？', statusHint: '招待された全員のプロジェクトに保存されます。', savings: 'ベースライン比のCO₂削減率', modules: '段階ごとの影響度', scopes: 'GHGスコープごとの影響度',
     openSheet: '詳細シートを開く · 事例', prev: '← 前へ', next: '次へ →', close: '閉じる',
@@ -526,7 +482,7 @@ const STR = {
     matrix: 'マトリクス', wheel: 'ホイール', zoomIn: '拡大', zoomOut: '縮小', fit: '全体表示', chartTitle: 'ホールライフ脱炭素戦略', zoomHint: 'ホバーで行・列をたどる · スクロールで拡大・縮小 · ドラッグで移動', show: '表示', focusAll: 'すべて', focusProject: 'このプロジェクト',
     matrixHint: '行をクリックで詳細 · ● ○ ✕ で判断', hideFilters: 'フィルターを隠す', showFilters: 'フィルターを表示', present: 'プレゼン', exitPresent: 'プレゼン終了',
     gA: 'A · 製造・施工', gB: 'B · 使用', gC: 'C · 解体・廃棄', gD: 'D', resShort: 'レジリエンス', projectRow: 'このプロジェクト（採用）', hiddenN: 'フィルターにより {0}件の技術を非表示',
-    chipA: '製造・施工', chipB: '使用', chipC: '解体・廃棄', chipD: '境界外', coverTextC: '{2}カテゴリ中 {0}カテゴリに効果 · うち{1}カテゴリで大きい'
+    chipA: '製造・施工', chipB: '使用', chipC: '解体・廃棄', chipD: '境界外', coverTextC: '{2}区分中 {0}区分に効果 · うち{1}区分で大きい'
   }
 };
 
@@ -579,9 +535,11 @@ function matches(x) {
 /* =====================================================================================================
    CHART (SVG)
    ===================================================================================================== */
-const C = 1000, ANG = [43, 59, 75, 91, 107, 129, 145, 161, 177, 193, 209, 225, 247, 263, 279, 295, 317], HALF = 6.5;
-// layout (inside → out): project estimate · technology rings · module nodes / scope tiles · stage brackets · upfront bracket
-const RING0 = 255, RING_BUDGET = 370, NODE_R = 680, GRP_R = 817, UPF_R = 867, MAX_DEG = 15, NAME_END = 34;
+const C = 1000;
+// layout (inside → out): project estimate · technology rings on priority bands · stage nodes / scope tiles · stage titles
+const RING0 = 255, RING_BUDGET = 370, MAX_DEG = 15, NAME_START = 18, NAME_END = STAGE_START - 3;
+// priority bands behind each category's rings: darker = consider first
+const PRIO_TINT = { 1: '#F1E1E7', 2: '#F5EAEE', 3: '#F8F1F3', 4: '#FBF6F7' };
 const f1 = (n) => n.toFixed(1);
 const P = (R, a) => { const r = a * Math.PI / 180; return [C + R * Math.sin(r), C - R * Math.cos(r)]; };
 const arc = (R, a, b) => { const p = P(R, a), q = P(R, b); return `M ${f1(p[0])} ${f1(p[1])} A ${R} ${R} 0 ${b - a > 180 ? 1 : 0} 1 ${f1(q[0])} ${f1(q[1])}`; };
@@ -612,39 +570,44 @@ const LAYOUT = (() => {
   let STEP = 24, GAP = 26;
   if ((nS - 1) * STEP + (nG - 1) * GAP > budget) GAP = Math.max(16, (budget - (nS - 1) * STEP) / (nG - 1));
   if ((nS - 1) * STEP + (nG - 1) * GAP > budget) STEP = Math.max(12, (budget - (nG - 1) * GAP) / (nS - 1));
-  const sz = { STEP, GAP, SEG_W: Math.min(16, STEP * 0.67), BAR_W: Math.min(8, STEP * 0.45), NAME_F: Math.min(12, STEP * 0.8), BADGE_R: Math.min(9, STEP * 0.42), COST_H: Math.min(17, STEP - 2), TITLE_F: Math.min(15, 11 + (GAP - 16) * 0.4) };
-  sz.COST_W = Math.min(30, sz.COST_H * 1.8);
+  const sz = { STEP, GAP, SEG_W: Math.min(18, STEP * 0.72), BAR_W: Math.min(9, STEP * 0.42), NAME_F: Math.min(17, STEP * 0.72), BADGE_R: Math.min(10, STEP * 0.42), COST_H: Math.min(19, STEP - 4), TITLE_F: Math.min(21, GAP * 0.8) };
+  sz.COST_W = Math.min(34, sz.COST_H * 1.8);
   const rings = [], groups = []; let R = null, R_OUT = RING0;
   members.forEach((L, gi) => {
     R = R === null ? RING0 : R + STEP + GAP;
     const first = R;
     L.forEach((x, k) => { if (k) R += STEP; rings.push({ x, R, gi }); });
-    groups.push({ cat: inner[gi], first, last: R }); R_OUT = R;
+    // each category band runs from just inside its first ring to just past its header (which sits outside its last ring)
+    const head = R + (STEP + GAP) / 2;
+    groups.push({ cat: inner[gi], first, last: R, head, in: first - STEP / 2, out: head + GAP / 2 });
+    R_OUT = R;
   });
   return { rings, groups, sz, R_OUT };
 })();
+const NODE_R = Math.round(LAYOUT.groups[LAYOUT.groups.length - 1].out + 56), GRP_R = NODE_R + 64;
 
 function chartSvg() {
-  const L = LAYOUT, sz = L.sz, p = proj(), lang = S.lang, client = S.audience === 'client', ls = lang === 'ja' ? 1 : 3;
-  const cs = cols(), sc = score(p, cs), o = [];
+  const L = LAYOUT, sz = L.sz, p = proj(), lang = S.lang, ja = lang === 'ja', client = S.audience === 'client', ls = ja ? 1 : 3;
+  const cs = cols(), sc = score(p, cs), groups = groupsOf(cs), o = [];
   o.push(`<svg viewBox="${VB.x} ${VB.y} ${VB.w} ${VB.h}" xmlns="http://www.w3.org/2000/svg" font-family="${esc(FONT)}" id="viz" role="img">`);
   o.push('<defs>');
-  L.rings.forEach((r, k) => o.push(`<path id="tn${k}" d="${arc(r.R - sz.NAME_F * 0.33, -10, NAME_END)}"/>`));
-  L.groups.forEach((g, gi) => o.push(`<path id="gh${gi}" d="${arc(g.last + (sz.STEP + sz.GAP) / 2 - sz.TITLE_F * 0.35, 2, NAME_END)}"/>`));
+  L.rings.forEach((r, k) => o.push(`<path id="tn${k}" d="${arc(r.R - sz.NAME_F * 0.33, NAME_START, NAME_END)}"/>`));
+  L.groups.forEach((g, gi) => o.push(`<path id="gh${gi}" d="${arc(g.head - sz.TITLE_F * 0.35, -47.5 + (24 / g.head) * 180 / Math.PI, 46)}"/>`));
   o.push(`<radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F6E8EC" stop-opacity=".9"/><stop offset="100%" stop-color="#F6E8EC" stop-opacity="0"/></radialGradient>`);
   o.push('</defs>');
-  o.push(`<circle cx="${C}" cy="${C}" r="250" fill="url(#glow)"/>`);
+  // priority bands: one tinted ring per category, darkest (outermost) = consider first
+  L.groups.forEach((g) => o.push(`<circle cx="${C}" cy="${C}" r="${f1((g.in + g.out) / 2)}" fill="none" stroke="${PRIO_TINT[g.cat.prio]}" stroke-width="${f1(g.out - g.in)}"/>`));
+  o.push(`<circle cx="${C}" cy="${C}" r="${f1(L.groups[0].in - 2)}" fill="url(#glow)"/>`);
   // title in the open space above the wheel, with the project as subtitle
-  o.push(`<text x="${C}" y="218" text-anchor="middle" font-size="42" font-weight="700" letter-spacing="${lang === 'ja' ? 4 : 5}" fill="#3E3A39">${esc(t('chartTitle'))}</text>`);
-  o.push(`<text x="${C}" y="252" text-anchor="middle" font-size="17" font-weight="600" letter-spacing="1.5" fill="#8A8285">${esc((lang === 'ja' ? p.nameJa : p.name) + ' · ' + BTYPE[lang][p.type] + ' · ' + (lang === 'ja' ? p.placeJa : p.place))}</text>`);
-  // life-cycle loop (architect) or stage arcs (client) through the module nodes; drawn first so labels sit on top
-  const groups = groupsOf(cs);
-  if (!client) o.push(`<path d="${arc(NODE_R, 43, 295)}" fill="none" stroke="#3E3A39" stroke-width="1.5"/><path d="${arc(NODE_R, 295, 403)}" fill="none" stroke="#3E3A39" stroke-width="1.5" stroke-dasharray="3 6"/>`);
-  else groups.forEach((g) => { if (g.cols.length > 1) o.push(`<path d="${arc(NODE_R, g.cols[0].ang, g.cols[g.cols.length - 1].ang)}" fill="none" stroke="${g.color}" stroke-width="2"${g.dashed ? ' stroke-dasharray="3 6"' : ''}/>`); });
+  o.push(`<text x="${C}" y="${f1(C - L.R_OUT - 128)}" text-anchor="middle" font-size="42" font-weight="700" letter-spacing="${ja ? 4 : 5}" fill="#3E3A39">${esc(t('chartTitle'))}</text>`);
+  o.push(`<text x="${C}" y="${f1(C - L.R_OUT - 94)}" text-anchor="middle" font-size="17" font-weight="600" letter-spacing="1.5" fill="#8A8285">${esc((ja ? p.nameJa : p.name) + ' · ' + BTYPE[lang][p.type] + ' · ' + (ja ? p.placeJa : p.place))}</text>`);
+  // the line through the stage nodes: life-cycle order (architect, dashed into "beyond") or the value chain (client)
+  if (!client) o.push(`<path d="${arc(NODE_R, cs[0].ang, cs[2].ang)}" fill="none" stroke="#3E3A39" stroke-width="1.8"/><path d="${arc(NODE_R, cs[2].ang, cs[3].ang)}" fill="none" stroke="#3E3A39" stroke-width="1.8" stroke-dasharray="4 7"/>`);
+  else o.push(`<path d="${arc(NODE_R, cs[0].ang, cs[3].ang)}" fill="none" stroke="#C9C1C4" stroke-width="1.8"/>`);
 
   // technology rings
   L.rings.forEach((r, k) => {
-    const x = r.x, st = p.status[x.id], match = matches(x), sel = S.sel === x.id;
+    const x = r.x, st = p.status[x.id], match = matches(x), sel = S.sel === x.id, halo = PRIO_TINT[L.groups[r.gi].cat.prio];
     const focus = S.focus !== 'project' ? 1 : st === 'adopted' ? 1 : st === 'considered' ? 0.5 : 0.13;
     const op = (filterOn() && !match ? 0.12 : 1) * focus;
     o.push(`<g class="ring" opacity="${op}" data-tech="${x.id}">`);
@@ -652,102 +615,86 @@ function chartSvg() {
     if (st === 'adopted' || st === 'considered') {
       // thin wine rail just outside the segments: solid = adopted, dashed = considered
       const rr = r.R + sz.SEG_W / 2 + 1.6;
-      o.push(`<path d="${arc(rr, ANG[0] - HALF, ANG[16] + HALF)}" fill="none" stroke="#861C3C" stroke-width="2"${st === 'considered' ? ' stroke-dasharray="4 4"' : ''}/>`);
+      o.push(`<path d="${arc(rr, STAGE_START, STAGE_END)}" fill="none" stroke="#861C3C" stroke-width="2"${st === 'considered' ? ' stroke-dasharray="4 4"' : ''}/>`);
     }
     const segOp = st === 'rejected' ? 0.3 : 1;
     cs.forEach((col, j) => {
       const c = lvOf(x, col);
-      o.push(`<path class="seg" data-c="${j}" d="${arc(r.R, col.ang - col.half, col.ang + col.half)}" fill="none" stroke="${IMPC[c]}" stroke-width="${f1(sz.SEG_W)}" opacity="${segOp}" data-tip="${esc(tn(x))}|${esc(colTag(col) + ' · ' + colName(col))}: ${esc(lvName(c))}"/>`);
+      o.push(`<path class="seg" data-c="${j}" d="${arc(r.R, col.ang - col.half, col.ang + col.half)}" fill="none" stroke="${IMPC[c]}" stroke-width="${f1(sz.SEG_W)}" opacity="${segOp}" data-tip="${esc(tn(x))}|${esc(colFull(col))}: ${esc(lvName(c))}"/>`);
     });
     // saving bars
     const deg = (px) => px / r.R * 180 / Math.PI, g0 = deg(2);
     if (x.op) o.push(`<path d="${arc(r.R, -(g0 + x.op * MAX_DEG / 100), -g0)}" fill="none" stroke="#4E5070" stroke-width="${f1(sz.BAR_W)}" stroke-linecap="round" opacity="${segOp}"/>`);
     if (x.emb) o.push(`<path d="${arc(r.R, g0, g0 + x.emb * MAX_DEG / 100)}" fill="none" stroke="#D7262B" stroke-width="${f1(sz.BAR_W)}" stroke-linecap="round" opacity="${segOp}"/>`);
     o.push(`<path d="${arc(r.R, -(g0 + MAX_DEG), g0 + MAX_DEG)}" fill="none" stroke="transparent" stroke-width="${f1(sz.STEP)}" data-tip="${esc(tn(x))}|${esc(t('operational'))} ${x.op}% · ${esc(t('embodied'))} ${x.emb}%"/>`);
-    // badges
-    const gapLo = ANG[16] + HALF - 360, gapHi = -(g0 + MAX_DEG);
-    const clear = ((gapHi - gapLo) * Math.PI / 180 * r.R - 2 * sz.BADGE_R - sz.COST_W) / 3;
-    const s0 = gapLo + deg(clear + sz.BADGE_R), bp = P(r.R, s0), ca = s0 + deg(sz.BADGE_R + clear + sz.COST_W / 2), cp = P(r.R, ca);
-    const cn = x.cost === 'H' ? 3 : x.cost === 'M' ? 2 : 1;
-    o.push(`<circle cx="${f1(bp[0])}" cy="${f1(bp[1])}" r="${f1(sz.BADGE_R)}" fill="${RESC[x.res]}" data-tip="${esc(tn(x))}|${esc(t('resilience'))}: ${esc(rcName(x.res))}"/>`);
-    o.push(`<text x="${f1(bp[0])}" y="${f1(bp[1])}" dy="0.36em" text-anchor="middle" font-size="${f1(sz.BADGE_R * 1.3)}" font-weight="700" fill="${x.res === 'M' ? '#1E1E28' : '#fff'}" pointer-events="none">${x.res}</text>`);
-    o.push(`<g transform="rotate(${ca.toFixed(2)} ${f1(cp[0])} ${f1(cp[1])})"><rect x="${f1(cp[0] - sz.COST_W / 2)}" y="${f1(cp[1] - sz.COST_H / 2)}" width="${f1(sz.COST_W)}" height="${f1(sz.COST_H)}" rx="3" fill="#fff" stroke="#3E3A39" stroke-width="1.2" data-tip="${esc(tn(x))}|${esc(t('cost'))}: ${esc(rcName(x.cost))}"/>`);
-    o.push(`<text x="${f1(cp[0])}" y="${f1(cp[1])}" dy="0.36em" text-anchor="middle" font-size="${f1(sz.COST_H * 0.7)}" font-weight="700" pointer-events="none"><tspan fill="#3E3A39">¥</tspan><tspan fill="${cn >= 2 ? '#3E3A39' : '#C4C4CC'}">¥</tspan><tspan fill="${cn >= 3 ? '#3E3A39' : '#C4C4CC'}">¥</tspan></text></g>`);
     // name with status mark
     const mark = st === 'adopted' ? '● ' : st === 'considered' ? '○ ' : st === 'rejected' ? '✕ ' : '';
     const col = st === 'adopted' ? '#861C3C' : st === 'rejected' ? '#A59DA1' : '#3E3A39';
-    o.push(`<text font-size="${f1(sz.NAME_F)}" font-weight="700" letter-spacing="${lang === 'ja' ? 0.3 : 1}" fill="${col}" stroke="#FBF9F8" stroke-width="3" paint-order="stroke" data-tip="${esc(tn(x))}|${esc(lang === 'ja' ? x.sumJa : x.sumEn)}"><textPath href="#tn${k}" startOffset="100%" text-anchor="end">${esc(mark + tn(x))}</textPath></text>`);
+    o.push(`<text data-fit="#tn${k}" font-size="${f1(sz.NAME_F)}" font-weight="700" letter-spacing="${ja ? 0.3 : 1}" fill="${col}" stroke="${halo}" stroke-width="4" paint-order="stroke" data-tip="${esc(tn(x))}|${esc(ja ? x.sumJa : x.sumEn)}"><textPath href="#tn${k}" startOffset="100%" text-anchor="end">${esc(mark + tn(x))}</textPath></text>`);
     o.push('</g>');
   });
 
-  // category titles
-  L.groups.forEach((g, gi) => o.push(`<text font-weight="700" font-size="${f1(sz.TITLE_F)}" letter-spacing="${ls}" fill="#861C3C" stroke="#FBF9F8" stroke-width="4" paint-order="stroke"><textPath href="#gh${gi}" startOffset="100%" text-anchor="end">${g.cat.prio} · ${esc(tn(g.cat))}</textPath></text>`));
-  // priority arrow
-  // the arrow starts above the ring stack, in the open top gap, so its label stays clear of the module labels
-  const PR = (NAME_END + ANG[0] - HALF) / 2, prOut = L.R_OUT + 120, prIn = RING0 - sz.SEG_W / 2 - 4;
-  const pa = P(prOut, PR), pb = P(prIn + 10, PR), tip = P(prIn, PR), hb = P(prIn + 12, PR), ux = Math.sin(PR * Math.PI / 180), uy = -Math.cos(PR * Math.PI / 180);
-  o.push(`<path d="M ${f1(pa[0])} ${f1(pa[1])} L ${f1(pb[0])} ${f1(pb[1])}" stroke="#861C3C" stroke-width="2.5" stroke-linecap="round"/>`);
-  o.push(`<path d="M ${f1(tip[0])} ${f1(tip[1])} L ${f1(hb[0] - uy * 6)} ${f1(hb[1] + ux * 6)} L ${f1(hb[0] + uy * 6)} ${f1(hb[1] - ux * 6)} Z" fill="#861C3C"/>`);
-  o.push(`<text x="${f1(pa[0] - 8)}" y="${f1(pa[1] - 10)}" text-anchor="end" font-size="16" font-weight="700" letter-spacing="${ls}" fill="#861C3C" stroke="#FBF9F8" stroke-width="5" paint-order="stroke">${esc(t('priority'))}</text>`);
-  o.push(`<text x="${f1(pa[0] - 8)}" y="${f1(pa[1] + 6)}" text-anchor="end" font-size="12" font-weight="600" letter-spacing="1.2" fill="#8A8285" stroke="#FBF9F8" stroke-width="5" paint-order="stroke">${esc(t('priorityNote'))}</text>`);
-  // axis
-  o.push(`<path d="M 1000 ${C - RING0 + 24} V ${f1(C - L.R_OUT - 18)} M 992 ${f1(C - L.R_OUT - 18)} H 1008" stroke="#3E3A39" stroke-width="1.5"/>`);
-  o.push(`<text x="988" y="${f1(C - L.R_OUT - 30)}" text-anchor="end" font-size="13" font-weight="700" letter-spacing="1.4" fill="#4E5070" stroke="#FBF9F8" stroke-width="5" paint-order="stroke">← ${esc(t('operational').toUpperCase())}</text>`);
-  o.push(`<text x="1012" y="${f1(C - L.R_OUT - 30)}" font-size="13" font-weight="700" letter-spacing="1.4" fill="#D7262B" stroke="#FBF9F8" stroke-width="5" paint-order="stroke">${esc(t('embodied').toUpperCase())} →</text>`);
-
-  // life-cycle loop (architect) or scope bands (client), brackets and labels
-  groups.forEach((g, i) => {
-    const c0 = g.cols[0], c1 = g.cols[g.cols.length - 1], a0 = c0.ang - c0.half, a1 = c1.ang + c1.half, mid = (a0 + a1) / 2;
-    const col = client ? g.color : g.bar;
-    o.push(`<path d="${arc(GRP_R, a0, a1) + (g.dashed ? '' : ticks(GRP_R - 10, GRP_R, a0, a1))}" fill="none" stroke="${col}" stroke-width="${client ? 2 : 1}"${g.dashed ? ' stroke-dasharray="3 5"' : ''}/>`);
-    const span = Math.max(a1 - a0, 34), b0 = mid - span / 2 - 2, b1 = mid + span / 2 + 2, flip = mid > 100 && mid < 260;
-    const pathD = flip ? arcRev(GRP_R + 22, b0, b1) : arc(GRP_R + 8, b0, b1);
-    o.push(`<defs><path id="br${i}" d="${pathD}"/></defs><text font-weight="700" font-size="${client ? 14 : 15}" letter-spacing="${client ? (lang === 'ja' ? 1 : 2) : ls}" fill="${col}"><textPath href="#br${i}" startOffset="50%" text-anchor="middle">${esc(g.label)}</textPath></text>`);
+  // category headers: numbered badge + name + "priority n", sitting on the category's band just outside its rings
+  L.groups.forEach((g, gi) => {
+    const b = P(g.head, -47.5), br = Math.min(14, sz.GAP * 0.55), hl = PRIO_TINT[g.cat.prio];
+    o.push(`<circle cx="${f1(b[0])}" cy="${f1(b[1])}" r="${f1(br)}" fill="#861C3C"/><text x="${f1(b[0])}" y="${f1(b[1])}" dy="0.36em" text-anchor="middle" font-size="${f1(br * 1.4)}" font-weight="700" fill="#fff">${g.cat.prio}</text>`);
+    o.push(`<text font-weight="700" font-size="${f1(sz.TITLE_F)}" letter-spacing="${ja ? 1 : 2.5}" fill="#861C3C" stroke="${hl}" stroke-width="6" paint-order="stroke"><textPath href="#gh${gi}">${esc(tn(g.cat))}<tspan fill="#8A8285" font-size="${f1(sz.TITLE_F * 0.72)}" font-weight="600" letter-spacing="${ja ? 0.5 : 1.5}">  ·  ${esc(t('prioN', g.cat.prio))}</tspan></textPath></text>`);
   });
-  if (!client) {
-    o.push(`<path d="${arc(UPF_R, 36.5, 113.5) + ticks(UPF_R - 8, UPF_R, 36.5, 113.5)}" fill="none" stroke="#D7262B" stroke-width="2"/>`);
-    o.push(`<defs><path id="tpUP" d="${arc(UPF_R, 36.5, 113.5)}"/></defs><text font-weight="700" font-size="13" letter-spacing="${ls}" fill="#D7262B" dy="-5"><textPath href="#tpUP" startOffset="50%" text-anchor="middle">${esc(t('upfront'))}</textPath></text>`);
-  }
-  // module nodes (architect: circles) or scope category tiles (client: rounded squares)
+  // savings axis
+  o.push(`<path d="M ${C} ${C - RING0 + 24} V ${f1(C - L.R_OUT - 34)} M ${C - 8} ${f1(C - L.R_OUT - 34)} H ${C + 8}" stroke="#3E3A39" stroke-width="1.5"/>`);
+  o.push(`<text x="${C - 12}" y="${f1(C - L.R_OUT - 48)}" text-anchor="end" font-size="16" font-weight="700" letter-spacing="1.4" fill="#4E5070" stroke="#FBF9F8" stroke-width="5" paint-order="stroke">← ${esc(t('operational').toUpperCase())}</text>`);
+  o.push(`<text x="${C + 12}" y="${f1(C - L.R_OUT - 48)}" font-size="16" font-weight="700" letter-spacing="1.4" fill="#D7262B" stroke="#FBF9F8" stroke-width="5" paint-order="stroke">${esc(t('embodied').toUpperCase())} →</text>`);
+
+  // stage brackets with large titles (and the module range or scope detail underneath)
+  const TF = ja ? 27 : 30, SF = ja ? 16 : 17;
+  groups.forEach((g, i) => {
+    const c = g.cols[0], a0 = c.ang - c.half, a1 = c.ang + c.half, flip = c.ang > 100 && c.ang < 260;
+    o.push(`<path d="${arc(GRP_R, a0, a1) + (g.dashed ? '' : ticks(GRP_R - 12, GRP_R, a0, a1))}" fill="none" stroke="${g.color}" stroke-width="2.5"${g.dashed ? ' stroke-dasharray="4 6"' : ''}/>`);
+    const tR = flip ? GRP_R + 12 + TF * 0.72 : GRP_R + 12, sR = flip ? tR + 9 + SF * 0.72 : tR + TF * 0.72 + 9;
+    const path = (R) => (flip ? arcRev(R, a0 - 6, a1 + 6) : arc(R, a0 - 6, a1 + 6));
+    o.push(`<defs><path id="bt${i}" d="${path(tR)}"/><path id="bs${i}" d="${path(sR)}"/></defs>`);
+    o.push(`<text font-weight="700" font-size="${TF}" letter-spacing="${ja ? 2 : 3}" fill="${g.color}"><textPath href="#bt${i}" startOffset="50%" text-anchor="middle">${esc(g.label)}</textPath></text>`);
+    o.push(`<text font-weight="600" font-size="${SF}" letter-spacing="${ja ? 0.5 : 1.5}" fill="#8A8285"><textPath href="#bs${i}" startOffset="50%" text-anchor="middle">${esc(g.sub)}</textPath></text>`);
+  });
+  // stage nodes (architect: circles) or scope tiles (client: rounded squares); the halo shows the best adopted impact
   cs.forEach((c, i) => {
-    const a = c.ang, pt = P(NODE_R, a), rr = a * Math.PI / 180, l = client ? P(NODE_R + 38 + 48 * Math.abs(Math.sin(rr)) + 22 * Math.abs(Math.cos(rr)), a) : P(NODE_R + 42 + 42 * Math.abs(Math.sin(rr)) + 16 * Math.abs(Math.cos(rr)), a);
-    const best = sc.best[i], ring = best !== 'N' ? IMPC[best] : null;
-    const tip = `${esc(colTag(c) + ' · ' + colName(c))}|${best !== 'N' ? esc(t('adopted')) + ': ' + esc(lvName(best)) : esc(t('none'))}`;
-    let tc;
+    const pt = P(NODE_R, c.ang), best = sc.best[i], ring = best !== 'N' ? IMPC[best] : null;
+    const tip = `${esc(colFull(c))}|${best !== 'N' ? esc(t('adopted')) + ': ' + esc(lvName(best)) : esc(t('none'))}`;
     o.push(`<g class="mod" data-c="${i}">`);
     if (client) {
       const st = SC_STYLE[c.sc];
-      if (ring) o.push(`<rect x="${f1(pt[0] - 29)}" y="${f1(pt[1] - 29)}" width="58" height="58" rx="14" fill="none" stroke="${ring}" stroke-width="3.5" pointer-events="none"/>`);
-      o.push(`<rect x="${f1(pt[0] - 23)}" y="${f1(pt[1] - 23)}" width="46" height="46" rx="10" fill="${st.bg}" stroke="${st.c}" stroke-width="1.8" data-tip="${tip}"/>`);
-      o.push(`<path d="${iconPath(c)}" transform="translate(${f1(pt[0] - 13.2)} ${f1(pt[1] - 13.2)}) scale(1.1)" fill="none" stroke="${st.c}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`);
-      tc = st.c;
-      const lines = wrap(colName(c), 78, 11);
-      let y = l[1] - (14 + lines.length * 12) / 2 + 11;
-      o.push(`<text x="${f1(l[0])}" y="${f1(y)}" text-anchor="middle" font-size="12.5" font-weight="700" letter-spacing="0.5" fill="${tc}">${esc(colTag(c).toUpperCase())}</text>`);
-      lines.forEach((s) => { y += 12; o.push(`<text x="${f1(l[0])}" y="${f1(y)}" text-anchor="middle" font-size="11" font-weight="600" fill="#3E3A39">${esc(s)}</text>`); });
+      if (ring) o.push(`<rect x="${f1(pt[0] - 44)}" y="${f1(pt[1] - 44)}" width="88" height="88" rx="22" fill="none" stroke="${ring}" stroke-width="4.5" pointer-events="none"/>`);
+      o.push(`<rect x="${f1(pt[0] - 35)}" y="${f1(pt[1] - 35)}" width="70" height="70" rx="16" fill="${st.bg}" stroke="${st.c}" stroke-width="2.2" data-tip="${tip}"/>`);
+      o.push(`<path d="${iconPath(c)}" transform="translate(${f1(pt[0] - 22.8)} ${f1(pt[1] - 22.8)}) scale(1.9)" fill="none" stroke="${st.c}" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`);
     } else {
       const op = c.kind === 'o', d = c.kind === 'd';
-      o.push(`<circle cx="${f1(pt[0])}" cy="${f1(pt[1])}" r="25" fill="${op ? '#4E5070' : '#fff'}" stroke="${op ? '#4E5070' : d ? '#8A8285' : '#D7262B'}" stroke-width="2"${d ? ' stroke-dasharray="4 3"' : ''} data-tip="${tip}"/>`);
-      if (ring) o.push(`<circle cx="${f1(pt[0])}" cy="${f1(pt[1])}" r="31" fill="none" stroke="${ring}" stroke-width="3.5" pointer-events="none"/>`);
-      o.push(`<path d="${iconPath(c)}" transform="translate(${f1(pt[0] - 12)} ${f1(pt[1] - 12)})" fill="none" stroke="${op ? '#fff' : '#3E3A39'}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`);
-      tc = op ? '#4E5070' : d ? '#8A8285' : '#3E3A39';
-      const lines = wrap(MOD_NAME[lang][c.k].toUpperCase(), 78, 11);
-      let y = l[1] - (15 + lines.length * 11.5) / 2 + 12;
-      o.push(`<text x="${f1(l[0])}" y="${f1(y)}" text-anchor="middle" font-size="14" font-weight="700" fill="${tc}">${c.k}</text>`);
-      lines.forEach((s) => { y += 11.5; o.push(`<text x="${f1(l[0])}" y="${f1(y)}" text-anchor="middle" font-size="11" font-weight="600" letter-spacing="0.4" fill="${tc}">${esc(s)}</text>`); });
+      o.push(`<circle cx="${f1(pt[0])}" cy="${f1(pt[1])}" r="36" fill="${op ? '#4E5070' : '#fff'}" stroke="${op ? '#4E5070' : d ? '#8A8285' : '#D7262B'}" stroke-width="2.5"${d ? ' stroke-dasharray="5 4"' : ''} data-tip="${tip}"/>`);
+      if (ring) o.push(`<circle cx="${f1(pt[0])}" cy="${f1(pt[1])}" r="44" fill="none" stroke="${ring}" stroke-width="4.5" pointer-events="none"/>`);
+      o.push(`<path d="${iconPath(c)}" transform="translate(${f1(pt[0] - 21)} ${f1(pt[1] - 21)}) scale(1.75)" fill="none" stroke="${op ? '#fff' : '#3E3A39'}" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`);
     }
     o.push('</g>');
   });
   // centre: project estimate
   o.push(`<text x="1000" y="905" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="${ls}" fill="#8A8285">${esc(t('projectEstimate'))}</text>`);
-  o.push(`<text x="1000" y="935" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="${lang === 'ja' ? 1 : 3}" fill="#D7262B">${esc(t('embodied').toUpperCase())}</text>`);
+  o.push(`<text x="1000" y="935" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="${ja ? 1 : 3}" fill="#D7262B">${esc(t('embodied').toUpperCase())}</text>`);
   o.push(`<text x="1000" y="1000" text-anchor="middle" font-size="68" font-weight="700" fill="#D7262B">−${sc.emb}<tspan font-size="36">%</tspan></text>`);
   o.push(`<rect x="950" y="1016" width="100" height="1.5" fill="#E6E0E2"/>`);
-  o.push(`<text x="1000" y="1046" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="${lang === 'ja' ? 1 : 3}" fill="#4E5070">${esc(t('operational').toUpperCase())}</text>`);
+  o.push(`<text x="1000" y="1046" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="${ja ? 1 : 3}" fill="#4E5070">${esc(t('operational').toUpperCase())}</text>`);
   o.push(`<text x="1000" y="1111" text-anchor="middle" font-size="68" font-weight="700" fill="#4E5070">−${sc.op}<tspan font-size="36">%</tspan></text>`);
   o.push(`<text x="1000" y="1140" text-anchor="middle" font-size="14" font-weight="600" fill="#8A8285">${sc.adopted} ${esc(t('centreHint'))}</text>`);
   o.push('</svg>');
   return o.join('');
+}
+// shrink a technology name only when it is longer than its arc (e.g. long names on the small inner rings)
+function fitNames() {
+  const svg = document.getElementById('viz');
+  if (!svg) return;
+  svg.querySelectorAll('text[data-fit]').forEach((el) => {
+    const path = svg.querySelector(el.dataset.fit), fs = parseFloat(el.getAttribute('font-size')), avail = path.getTotalLength() - 6;
+    el.style.fontSize = '';
+    const len = el.getComputedTextLength();
+    if (len > avail) el.style.fontSize = (fs * avail / len).toFixed(2) + 'px';
+  });
 }
 
 /* =====================================================================================================
@@ -814,23 +761,13 @@ function filtersHtml() {
     <div class="fcount"><b>${shown}</b>${esc(t('shown', TECHS.length))}<br>${filterOn() ? `<button class="fclear" data-act="clear">${esc(t('clear'))}</button>` : ''}</div>
     <div class="legend"><b style="color:var(--ink)">${esc(t('legend'))}</b>
       <div class="row">${['H', 'M', 'L', 'N'].map((c) => `<span class="sw" style="background:${IMPC[c]}"></span>${esc(lvName(c))}`).join(' ')}</div>
-      <div class="row">${esc(t('legBars'))}</div><div class="row">${esc(t('legBadges'))}</div><div class="row">${esc(t('legStatus'))}</div></div>
+      <div class="row">${esc(t('legPriority'))}</div><div class="row">${esc(t('legBars'))}</div><div class="row">${esc(t('legStatus'))}</div></div>
   </aside>`;
 }
 
 function modsHtml(x, levelsOverride) {
-  if (S.audience === 'client') {
-    const cs = cols(), lv = levelsOverride || cs.map((c) => lvOf(x, c));
-    const icon = (c, col) => `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="${iconPath(c)}" fill="none" stroke="${col}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-    return `<div class="tiles">${groupsOf(cs).map((g) => `<div class="tgrp" style="--sc:${g.color};--scbg:${g.bg}"><div class="tg-head">${esc(g.chip)}</div><div class="tg-row">${g.cols.map((c) => {
-      const v = lv[cs.indexOf(c)], on = v !== 'N';
-      return `<div class="tile${on ? ' on' : ''}" style="--sc:${SC_STYLE[c.sc].c}" title="${esc(colTag(c) + ' · ' + colName(c))}: ${esc(lvName(v))}"><div class="ic" style="${on ? `background:${IMPC[v]}` : ''}">${icon(c, on ? (v === 'L' ? '#3E3A39' : '#fff') : g.color)}</div><b>${esc(colTag(c))}</b><span>${esc(colName(c))}</span></div>`;
-    }).join('')}</div></div>`).join('')}</div>
-      <div class="note">${['1', '2', '3'].map((k) => `<span class="dotk" style="background:${SC_STYLE[k].c}"></span>${esc(S.lang === 'ja' ? SC_STYLE[k].ja : SC_STYLE[k].en)}`).join('  ')}</div>`;
-  }
-  const lv = levelsOverride || MODS.map((m, j) => x.imp[j]);
-  return `<div class="mods">${MODS.map((m, j) => `<div title="${esc(MOD_NAME[S.lang][m])}: ${esc(lvName(lv[j]))}"><i style="background:${IMPC[lv[j]]}"></i>${m}</div>`).join('')}</div>
-    <div class="mods-groups"><span>A</span><span>B</span><span>C</span><span>D</span></div>`;
+  const cs = cols(), lv = levelsOverride || cs.map((c) => lvOf(x, c));
+  return `<div class="mods">${groupsOf(cs).map((g, j) => `<div title="${esc(colFull(g.cols[0]))}: ${esc(lvName(lv[j]))}" style="--sc:${g.color}"><i style="background:${IMPC[lv[j]]}"></i><b>${esc(g.chip)}</b><span>${esc(lvName(lv[j]))}</span></div>`).join('')}</div>`;
 }
 
 function scoreHtml() {
@@ -888,35 +825,31 @@ function stageBar() {
 }
 
 function matrixHtml() {
-  const p = proj(), client = S.audience === 'client', lang = S.lang;
+  const p = proj(), lang = S.lang;
   const cs = cols(), groups = groupsOf(cs), n = cs.length;
-  const gapAt = new Set(groups.map((g) => g.start).filter((i) => i > 0));
   const sc = score(p, cs);
-  const hIcon = (c) => `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="${iconPath(c)}" fill="none" stroke="${SC_STYLE[c.sc].c}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const hIcon = (g) => `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="${iconPath(g.cols[0])}" fill="none" stroke="${g.color}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   const rows = [], hidden = TECHS.filter((x) => !matches(x)).length;
   for (const c of CATS) {
     const list = TECHS.filter((x) => x.cat === c.id && matches(x));
     if (!list.length) continue;
-    rows.push(`<tr class="cat"><td colspan="${n + 5}"><span class="prio">${c.prio}</span>${esc(tn(c))}</td></tr>`);
+    rows.push(`<tr class="cat"><td colspan="${n + 5}"><span class="prio">${c.prio}</span>${esc(tn(c))}<span class="pn">${esc(t('prioN', c.prio))}</span></td></tr>`);
     for (const x of list) {
       const st = p.status[x.id] || '';
       const sb = (v, ic) => `<button class="${v}${st === v ? ' on' : ''}" data-mstatus="${x.id}" data-v="${v}" title="${esc(t(v))}">${ic}</button>`;
       rows.push(`<tr class="t ${st}${S.sel === x.id ? ' sel' : ''}" data-row="${x.id}">
         <td class="st"><span class="sbtn">${sb('adopted', '●')}${sb('considered', '○')}${sb('rejected', '✕')}</span></td>
         <td class="name"><b>${esc(tn(x))}</b><small>${esc(lang === 'ja' ? x.en : x.ja)}</small></td>
-        ${cs.map((col, j) => { const v = lvOf(x, col); return `<td class="cell${gapAt.has(j) ? ' gap' : ''}${client ? ' wide' : ''}" title="${esc(colTag(col) + ' · ' + colName(col))}: ${esc(lvName(v))}"><i style="background:${IMPC[v]}"></i></td>`; }).join('')}
+        ${cs.map((col) => { const v = lvOf(x, col); return `<td class="cell" title="${esc(colFull(col))}: ${esc(lvName(v))}"><i style="background:${IMPC[v]}"></i></td>`; }).join('')}
         <td class="sav"><div class="ln"><div class="bar"><i style="width:${x.emb}%;background:#D7262B"></i></div><b style="color:#D7262B">${x.emb}%</b></div><div class="ln"><div class="bar"><i style="width:${x.op}%;background:#4E5070"></i></div><b style="color:#4E5070">${x.op}%</b></div></td>
         <td class="rc"><span class="res ${x.res}">${x.res}</span></td><td class="rc">${yen(x.cost)}</td></tr>`);
     }
   }
-  return `<div class="mx-wrap"><table class="mx${client ? ' client' : ''}${S.focus === 'project' ? ' focus' : ''}">
-    <thead><tr class="g"><th class="st"></th><th class="name"></th>${groups.map((g) => `<th colspan="${g.cols.length}" class="grph${g.start > 0 ? ' gap' : ''}" style="border-bottom-color:${g.color};color:${g.color}${client ? `;background:${g.bg}` : ''}">${esc(client ? g.chip : t('g' + g.key))}</th>`).join('')}<th colspan="3"></th></tr>
-      <tr class="m${client ? ' client' : ''}"><th class="st"></th><th class="name">${esc(t('tabTech'))}</th>${cs.map((c, j) => client
-        ? `<th class="${gapAt.has(j) ? 'gap' : ''}" title="${esc(colName(c))}">${hIcon(c)}<small>${esc(colName(c))}</small><span class="tagc" style="color:${SC_STYLE[c.sc].c}">${esc(colTag(c))}</span></th>`
-        : `<th class="${gapAt.has(j) ? 'gap' : ''}"><small>${esc(MOD_NAME[lang][c.k])}</small>${c.k}</th>`).join('')}
+  return `<div class="mx-wrap"><table class="mx${S.focus === 'project' ? ' focus' : ''}">
+    <thead><tr class="m"><th class="st"></th><th class="name">${esc(t('tabTech'))}</th>${groups.map((g) => `<th style="--sc:${g.color}">${hIcon(g)}<b>${esc(g.chip)}</b><small>${esc(colSub(g.cols[0]))}</small></th>`).join('')}
         <th style="text-align:left;padding-left:14px">${esc(t('embodied'))} / ${esc(t('operational'))}</th><th>${esc(t('resShort'))}</th><th>${esc(t('cost'))}</th></tr></thead>
     <tbody>${rows.join('')}</tbody>
-    <tfoot><tr><td class="st"></td><td class="name"><b>${esc(t('projectRow'))}</b><small>${sc.adopted} ${esc(t('centreHint'))}</small></td>${cs.map((c, j) => `<td class="cell${gapAt.has(j) ? ' gap' : ''}${client ? ' wide' : ''}"><i style="background:${IMPC[sc.best[j]]}"></i></td>`).join('')}
+    <tfoot><tr><td class="st"></td><td class="name"><b>${esc(t('projectRow'))}</b><small>${sc.adopted} ${esc(t('centreHint'))}</small></td>${cs.map((c, j) => `<td class="cell"><i style="background:${IMPC[sc.best[j]]}"></i></td>`).join('')}
       <td class="sav"><div class="ln"><span style="color:#D7262B">−${sc.emb}%</span><b></b></div><div class="ln"><span style="color:#4E5070">−${sc.op}%</span><b></b></div></td><td></td><td></td></tr></tfoot>
   </table>${hidden ? `<div class="mx-hidden">${esc(t('hiddenN', hidden))}</div>` : ''}</div>`;
 }
@@ -927,7 +860,7 @@ function workHtml() {
 }
 
 /* ---------- wheel zoom and pan ---------- */
-const VB = { x: 85, y: 160, w: 1830, h: 1755 };
+const VB = { x: 150, y: 215, w: 1700, h: 1625 };
 function applyZoom() {
   const svg = document.getElementById('viz');
   if (!svg) return;
@@ -975,6 +908,7 @@ function render() {
   document.documentElement.lang = S.lang;
   app.innerHTML = S.screen === 'picker' ? pickerHtml() : workHtml();
   hotKey = '';
+  fitNames();
   const q = document.getElementById('q');
   if (q) q.addEventListener('input', () => { S.q = q.value; const pos = q.selectionStart; render(); const n = document.getElementById('q'); n.focus(); n.setSelectionRange(pos, pos); });
   document.querySelectorAll('input[type=range]').forEach((r) => r.addEventListener('input', () => { S.f[r.dataset.r] = Number(r.value); render(); }));
@@ -1125,6 +1059,7 @@ function inviteModal(p) {
   if (h.get('present')) { S.present = true; S.mode = 'wheel'; }
   if (h.get('f')) h.get('f').split(',').forEach((c) => S.f.cats.add(c));
   render();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNames);
   if (h.get('sheet')) openSheet(h.get('sheet'));
 })();
 </script>
