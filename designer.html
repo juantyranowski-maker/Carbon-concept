@@ -576,7 +576,7 @@ function matches(x) {
    ===================================================================================================== */
 const C = 1000, ANG = [43, 59, 75, 91, 107, 129, 145, 161, 177, 193, 209, 225, 247, 263, 279, 295, 317], HALF = 6.5;
 // layout (inside → out): project estimate · technology rings · module nodes / scope tiles · stage brackets · upfront bracket
-const RING0 = 300, RING_BUDGET = 370, NODE_R = 725, GRP_R = 862, UPF_R = 912, MAX_DEG = 15, NAME_END = 34;
+const RING0 = 255, RING_BUDGET = 370, NODE_R = 680, GRP_R = 817, UPF_R = 867, MAX_DEG = 15, NAME_END = 34;
 const f1 = (n) => n.toFixed(1);
 const P = (R, a) => { const r = a * Math.PI / 180; return [C + R * Math.sin(r), C - R * Math.cos(r)]; };
 const arc = (R, a, b) => { const p = P(R, a), q = P(R, b); return `M ${f1(p[0])} ${f1(p[1])} A ${R} ${R} 0 ${b - a > 180 ? 1 : 0} 1 ${f1(q[0])} ${f1(q[1])}`; };
@@ -624,7 +624,7 @@ function chartSvg() {
   const cs = cols(), sc = score(p, cs), o = [];
   o.push(`<svg viewBox="${VB.x} ${VB.y} ${VB.w} ${VB.h}" xmlns="http://www.w3.org/2000/svg" font-family="${esc(FONT)}" id="viz" role="img">`);
   o.push('<defs>');
-  L.rings.forEach((r, k) => o.push(`<path id="tn${k}" d="${arc(r.R - sz.NAME_F * 0.33, 2, NAME_END)}"/>`));
+  L.rings.forEach((r, k) => o.push(`<path id="tn${k}" d="${arc(r.R - sz.NAME_F * 0.33, -10, NAME_END)}"/>`));
   L.groups.forEach((g, gi) => o.push(`<path id="gh${gi}" d="${arc(g.last + (sz.STEP + sz.GAP) / 2 - sz.TITLE_F * 0.35, 2, NAME_END)}"/>`));
   o.push(`<radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F6E8EC" stop-opacity=".9"/><stop offset="100%" stop-color="#F6E8EC" stop-opacity="0"/></radialGradient>`);
   o.push('</defs>');
@@ -915,7 +915,7 @@ function workHtml() {
 }
 
 /* ---------- wheel zoom and pan ---------- */
-const VB = { x: 40, y: 170, w: 1920, h: 1790 };
+const VB = { x: 85, y: 215, w: 1830, h: 1700 };
 function applyZoom() {
   const svg = document.getElementById('viz');
   if (!svg) return;
