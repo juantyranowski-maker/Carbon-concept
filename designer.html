@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WLC Catalogue – designer view (mockup)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBF9F8; --surface: #FFFFFF; --ink: #3E3A39; --muted: #8A8285; --hair: #E6E0E2; --panel: #F4F0F1;
+  --accent: #861C3C; --accent-soft: #F6E8EC;
+  --emb: #D7262B; --op: #4E5070;
+  --ui: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', system-ui, sans-serif;
+  --num: 'Barlow Condensed', 'Zen Kaku Gothic New', 'Arial Narrow', sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--ui); }
+button { font: inherit; color: inherit; cursor: pointer; }
+.mock-flag { position: fixed; left: 50%; bottom: 10px; transform: translateX(-50%); z-index: 90; font-size: 11.5px; background: var(--ink); color: #fff; padding: 4px 12px; border-radius: 999px; opacity: .85; pointer-events: none; }
+
+/* ---------- top bar ---------- */
+.top { height: 60px; display: flex; align-items: center; gap: 16px; padding: 0 22px; border-bottom: 1px solid var(--hair); background: var(--surface); }
+.brand { display: flex; align-items: center; gap: 10px; font: 700 19px var(--num); letter-spacing: .12em; }
+.brand i { width: 26px; height: 26px; border-radius: 50%; background: conic-gradient(var(--emb) 0 49%, var(--op) 49% 100%); display: inline-block; box-shadow: inset 0 0 0 7px var(--surface); }
+.crumb { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13.5px; }
+.crumb button { border: 0; background: none; padding: 4px 8px; border-radius: 8px; color: var(--muted); }
+.crumb button:hover { background: var(--panel); color: var(--ink); }
+.crumb b { color: var(--ink); font-weight: 700; }
+.crumb .meta { font-size: 12px; }
+.sp { flex: 1; }
+.seg { display: inline-flex; border: 1px solid var(--hair); background: var(--panel); border-radius: 999px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: none; padding: 5px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 700; color: var(--muted); }
+.seg button.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 4px rgba(60, 30, 40, .12); }
+.seg.dark button.on { background: var(--ink); color: #fff; }
+.seg-label { font-size: 11px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-right: -8px; }
+.btn { border: 1px solid var(--hair); background: var(--surface); border-radius: 999px; padding: 7px 16px; font-weight: 700; font-size: 13px; }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.ghost { background: none; }
+.avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+
+/* ---------- project picker ---------- */
+.picker { max-width: 1240px; margin: 0 auto; padding: 34px 28px 60px; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin: 0 0 6px; }
+.picker h1 { font-size: 34px; margin: 0 0 6px; font-weight: 700; }
+.lede { color: var(--muted); margin: 0 0 22px; max-width: 70ch; }
+.pk-bar { display: flex; gap: 12px; align-items: center; margin-bottom: 18px; }
+.search { border: 1px solid var(--hair); background: var(--surface); border-radius: 999px; padding: 9px 16px; width: 320px; font: inherit; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+.pcard { background: var(--surface); border: 1px solid var(--hair); border-radius: 16px; padding: 18px; box-shadow: 0 2px 14px rgba(60, 30, 40, .05); cursor: pointer; display: flex; flex-direction: column; gap: 10px; transition: transform .12s, box-shadow .12s; position: relative; }
+.pcard:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(60, 30, 40, .10); }
+.pcard .ptype { font-size: 11.5px; font-weight: 700; color: var(--accent); letter-spacing: .08em; text-transform: uppercase; }
+.pcard h3 { margin: 0; font-size: 18px; line-height: 1.3; }
+.pcard .where { color: var(--muted); font-size: 12.5px; }
+.pcard .nums { display: flex; gap: 18px; font-size: 12px; color: var(--muted); }
+.pcard .nums b { display: block; font: 700 24px/1 var(--num); color: var(--ink); }
+.pcard .nums b.e { color: var(--emb); } .pcard .nums b.o { color: var(--op); }
+.strip { display: grid; grid-template-columns: repeat(17, 1fr); gap: 2px; }
+.strip i { height: 8px; border-radius: 1px; display: block; }
+.strip.gap5 i:nth-child(6), .strip.gap5 i:nth-child(13), .strip.gap5 i:nth-child(17) { margin-left: 4px; }
+.pcard .foot { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-top: 2px; }
+.pcard .foot .faces { display: flex; }
+.pcard .foot .faces span { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--surface); margin-left: -6px; display: grid; place-items: center; font-size: 10px; font-weight: 700; background: var(--panel); color: var(--ink); }
+.pcard .foot .faces span:first-child { margin-left: 0; background: var(--accent-soft); color: var(--accent); }
+.pcard .invite { position: absolute; top: 14px; right: 14px; border: 1px solid var(--hair); background: var(--surface); border-radius: 999px; font-size: 11.5px; font-weight: 700; padding: 3px 10px; }
+.pcard.new { border: 1.5px dashed #CFC6C9; background: transparent; box-shadow: none; align-items: center; justify-content: center; color: var(--accent); font-weight: 700; min-height: 220px; }
+.pcard.new .plus { width: 48px; height: 48px; border-radius: 50%; background: var(--accent-soft); display: grid; place-items: center; font-size: 26px; }
+.tabs { display: flex; gap: 6px; }
+
+/* ---------- workspace ---------- */
+.work { display: grid; grid-template-columns: 250px minmax(0, 1fr) 400px; height: calc(100vh - 60px); }
+.filters { border-right: 1px solid var(--hair); padding: 16px 14px; overflow: auto; background: var(--surface); }
+.filters h2 { font-size: 16px; margin: 0 0 2px; }
+.filters .sub { font-size: 12px; color: var(--muted); margin: 0 0 6px; }
+.filters h3 { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 16px 0 6px; font-weight: 700; }
+.fbtn { display: flex; align-items: center; gap: 9px; width: 100%; padding: 6px 8px; border: 0; border-radius: 9px; background: none; font-size: 13px; text-align: left; }
+.fbtn:hover { background: var(--panel); }
+.fbtn.on { background: var(--panel); box-shadow: inset 0 0 0 1.5px var(--ink); font-weight: 700; }
+.fbtn .n { margin-left: auto; color: var(--muted); font-size: 11.5px; font-weight: 500; }
+.fbtn .prio { width: 20px; height: 20px; border-radius: 50%; background: var(--accent); color: #fff; font: 700 11px/20px var(--num); text-align: center; flex: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip { border: 1px solid var(--hair); background: var(--surface); border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 700; }
+.chip.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.chip .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: 0; }
+.range { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.range input { flex: 1; accent-color: var(--accent); }
+.range b { font: 700 15px var(--num); width: 36px; text-align: right; }
+.fcount { margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--hair); font-size: 13px; }
+.fcount b { font: 700 24px var(--num); margin-right: 4px; }
+.fclear { border: 0; background: none; color: var(--accent); font-weight: 700; font-size: 12.5px; padding: 0; margin-top: 4px; }
+.legend { margin-top: 18px; padding-top: 12px; border-top: 1px dashed var(--hair); font-size: 12px; color: var(--muted); }
+.legend .row { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.legend .sw { width: 22px; height: 10px; border-radius: 1px; flex: none; }
+
+.stage { position: relative; min-width: 0; display: flex; flex-direction: column; }
+.stage-head { display: flex; align-items: center; gap: 10px; padding: 10px 16px 0; font-size: 12.5px; color: var(--muted); }
+.stage-head b { color: var(--ink); }
+.stage svg { flex: 1 1 0; width: 100%; height: 0; min-height: 0; display: block; }
+.stage svg .ring { transition: opacity .18s; }
+.stage svg [data-tech] { cursor: pointer; }
+
+.panel { border-left: 1px solid var(--hair); background: var(--surface); overflow: auto; padding: 18px 20px 40px; }
+.ptabs { display: flex; gap: 4px; margin-bottom: 14px; }
+.ptabs button { border: 0; background: none; padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 700; color: var(--muted); }
+.ptabs button.on { background: var(--panel); color: var(--ink); }
+.panel h2 { font-size: 22px; line-height: 1.25; margin: 2px 0 2px; }
+.panel h3 { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 18px 0 8px; }
+.panel p { margin: 0 0 10px; }
+.kick { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.kick .prio { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); color: #fff; font: 700 11px/18px var(--num); text-align: center; }
+.alt { color: var(--muted); font-size: 12.5px; }
+.statusbar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 14px 0 4px; }
+.statusbar button { border: 1.5px solid var(--hair); background: var(--surface); border-radius: 12px; padding: 8px 4px; font-size: 12.5px; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.statusbar button .ic { font-size: 15px; line-height: 1; }
+.statusbar button.on.adopted { background: var(--accent); border-color: var(--accent); color: #fff; }
+.statusbar button.on.considered { border-color: var(--ink); background: var(--panel); }
+.statusbar button.on.rejected { border-color: var(--muted); background: var(--panel); color: var(--muted); }
+.hint { color: var(--muted); font-size: 12px; }
+.sav { display: grid; grid-template-columns: 96px 1fr 52px; align-items: center; gap: 10px; margin: 8px 0; font-size: 12.5px; font-weight: 700; }
+.sav .bar { height: 10px; border-radius: 6px; background: var(--panel); overflow: hidden; }
+.sav .bar i { display: block; height: 100%; border-radius: 6px; }
+.sav b { font: 700 22px var(--num); text-align: right; }
+.kv { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.kv > div { background: var(--panel); border-radius: 12px; padding: 10px 12px; }
+.kv .k { font-size: 11px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; font-weight: 700; }
+.kv .v { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.res { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: #fff; font: 700 12px var(--num); }
+.res.H { background: #1E7F4F; } .res.M { background: #E0A100; color: var(--ink); } .res.L { background: #1E1E28; }
+.yen { display: inline-flex; border: 1.5px solid var(--ink); border-radius: 4px; padding: 0 4px; font: 700 13px var(--num); }
+.yen s { text-decoration: none; color: #C4C4CC; }
+.mods { display: grid; grid-template-columns: repeat(17, 1fr); gap: 2px; }
+.mods div { text-align: center; font: 600 10px var(--num); color: var(--muted); }
+.mods div i { display: block; height: 22px; border-radius: 2px; margin-bottom: 2px; }
+.mods div:nth-child(6), .mods div:nth-child(13), .mods div:nth-child(17) { margin-left: 5px; }
+.mods-groups { display: grid; grid-template-columns: 5fr 7fr 4fr 1fr; gap: 5px; margin-top: 3px; font-size: 10.5px; color: var(--muted); text-align: center; }
+.mods-groups span { border-top: 1.5px solid var(--hair); padding-top: 2px; }
+.open { margin-top: 14px; width: 100%; border: 0; background: var(--ink); color: #fff; border-radius: 999px; padding: 10px 16px; font-weight: 700; }
+.big2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.big2 > div { border-radius: 14px; padding: 12px 14px; background: var(--panel); }
+.big2 .k { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.big2 .v { font: 700 44px/1 var(--num); margin-top: 4px; }
+.big2 .v small { font-size: 22px; }
+.big2 .e .k, .big2 .e .v { color: var(--emb); } .big2 .o .k, .big2 .o .v { color: var(--op); }
+.note { font-size: 11.5px; color: var(--muted); margin-top: 6px; }
+.counts { display: flex; gap: 6px; margin-top: 6px; }
+.counts span { flex: 1; text-align: center; background: var(--panel); border-radius: 10px; padding: 6px 4px; font-size: 11.5px; color: var(--muted); }
+.counts b { display: block; font: 700 20px var(--num); color: var(--ink); }
+.scopes .row { display: grid; grid-template-columns: 110px 1fr 46px; gap: 10px; align-items: center; margin: 7px 0; font-size: 12.5px; font-weight: 700; }
+.scopes .meter { height: 12px; border-radius: 6px; background: var(--panel); overflow: hidden; display: flex; }
+.scopes .meter i { display: block; height: 100%; }
+.scopes .pct { font: 700 16px var(--num); text-align: right; }
+.dist { display: flex; gap: 6px; align-items: center; font-size: 12.5px; }
+.list { list-style: none; padding: 0; margin: 0; }
+.list li { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px dashed var(--hair); font-size: 13px; }
+.list li:last-child { border-bottom: 0; }
+.list li button { all: unset; cursor: pointer; flex: 1; }
+.list li button:hover { text-decoration: underline; }
+.list .tag { font-size: 11px; color: var(--muted); }
+
+/* ---------- tooltip ---------- */
+.tip { position: fixed; z-index: 60; pointer-events: none; opacity: 0; transform: translateY(4px); transition: opacity .12s, transform .12s; background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 9px 12px; max-width: 280px; font-size: 12.5px; box-shadow: 0 6px 22px rgba(60, 30, 40, .14); }
+.tip.on { opacity: 1; transform: none; }
+.tip strong { display: block; font-size: 13.5px; }
+.tip .do { color: var(--accent); font-weight: 700; display: block; margin-top: 4px; font-size: 11.5px; }
+
+/* ---------- full sheet ---------- */
+.overlay { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: 18px; background: rgba(46, 24, 33, .45); backdrop-filter: blur(3px); }
+.overlay[hidden] { display: none; }
+.sheet { width: min(1120px, 100%); max-height: calc(100vh - 36px); overflow: auto; background: var(--surface); border-radius: 18px; box-shadow: 0 24px 70px rgba(30, 10, 18, .35); animation: pop .2s ease-out; }
+@keyframes pop { from { opacity: 0; transform: translateY(8px) scale(.985); } to { opacity: 1; transform: none; } }
+.s-head { position: sticky; top: 0; z-index: 2; display: grid; grid-template-columns: 8px 1fr auto; gap: 16px; align-items: center; padding: 18px 22px 14px; background: var(--surface); border-bottom: 1px solid var(--hair); }
+.s-bar { align-self: stretch; border-radius: 4px; background: var(--accent); }
+.s-head h2 { font-size: 28px; margin: 2px 0 0; line-height: 1.2; }
+.s-nav { display: flex; gap: 6px; }
+.s-body { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px 30px; padding: 20px 26px 8px; }
+.s-body h3 { font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+.s-box { border-radius: 14px; padding: 12px 16px; background: var(--panel); }
+.s-row { display: grid; grid-template-columns: 130px 1fr; gap: 8px; font-size: 13px; padding: 7px 0; border-bottom: 1px dashed var(--hair); align-items: center; }
+.s-row:last-child { border-bottom: 0; }
+.s-row > span:first-child { font-weight: 700; }
+.steps { list-style: none; padding: 0; margin: 0 0 12px; display: grid; gap: 8px; }
+.steps li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; font-size: 13.5px; }
+.steps .num { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font: 700 13px var(--num); }
+.s-cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; padding: 10px 26px 26px; }
+.s-case { border: 1px solid var(--hair); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
+.s-case .ph { height: 120px; background: repeating-linear-gradient(135deg, #EFE9EB 0 10px, #F6F2F3 10px 20px); display: grid; place-items: center; color: var(--muted); font-size: 12px; }
+.s-case header { padding: 10px 14px; background: var(--ink); color: #fff; }
+.s-case header strong { display: block; font-size: 15px; }
+.s-case header span { font-size: 12px; opacity: .85; }
+.s-case section { padding: 10px 14px 4px; font-size: 13px; }
+.s-case h4 { margin: 0 0 4px; font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.s-case ul { margin: 0 0 8px; padding-left: 16px; }
+.s-case .src { margin-top: auto; padding: 6px 14px 10px; font-size: 11px; color: var(--muted); }
+
+/* ---------- modal ---------- */
+.modal { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; background: rgba(46, 24, 33, .45); }
+.modal[hidden] { display: none; }
+.mbox { width: min(560px, 94vw); background: var(--surface); border-radius: 18px; padding: 22px 24px; box-shadow: 0 24px 70px rgba(30, 10, 18, .35); animation: pop .2s ease-out; }
+.mbox h2 { margin: 0 0 4px; font-size: 22px; }
+.mgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; margin: 14px 0; }
+.mgrid label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; color: var(--muted); }
+.mgrid label.full { grid-column: 1 / -1; }
+.mgrid input, .mgrid select { font: inherit; font-weight: 400; color: var(--ink); border: 1px solid var(--hair); border-radius: 10px; padding: 8px 10px; background: var(--surface); }
+.mact { display: flex; justify-content: flex-end; gap: 8px; }
+.members { list-style: none; margin: 12px 0; padding: 0; }
+.members li { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--hair); font-size: 13px; }
+.members li .who { flex: 1; } .members li .who small { display: block; color: var(--muted); font-size: 11.5px; }
+.members select { font: inherit; font-size: 12px; border: 1px solid var(--hair); border-radius: 8px; padding: 3px 6px; }
+.inv { display: flex; gap: 8px; } .inv input { flex: 1; font: inherit; border: 1px solid var(--hair); border-radius: 999px; padding: 8px 14px; }
+.toast { position: fixed; left: 50%; bottom: 44px; transform: translateX(-50%); z-index: 95; background: var(--ink); color: #fff; padding: 10px 18px; border-radius: 10px; font-size: 13px; opacity: 0; transition: opacity .2s; pointer-events: none; max-width: 80vw; }
+.toast.on { opacity: 1; }
+@media (max-width: 1300px) { .work { grid-template-columns: 220px minmax(0, 1fr) 340px; } }
+
+/* ---------- v2: readability ---------- */
+.work.nofilters { grid-template-columns: minmax(0, 1fr) 420px; }
+.work.nofilters .filters { display: none; }
+.work.present { grid-template-columns: minmax(0, 1fr); }
+.work.present .filters, .work.present .panel { display: none; }
+.filters h2 { font-size: 18px; } .filters .sub, .legend { font-size: 13px; }
+.fbtn { font-size: 14px; padding: 7px 8px; } .chip { font-size: 13px; padding: 5px 11px; }
+.panel { font-size: 15px; } .panel h2 { font-size: 26px; } .panel h3 { font-size: 13px; }
+.stage-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--hair); background: var(--surface); flex-wrap: wrap; }
+.stage-bar .seg button { font-size: 13.5px; padding: 6px 16px; }
+.zoom { display: inline-flex; gap: 4px; align-items: center; }
+.zoom button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--hair); background: var(--surface); font-weight: 700; font-size: 17px; line-height: 1; }
+.zoom button.wide { width: auto; padding: 0 14px; border-radius: 999px; font-size: 13px; }
+.zoom span { font: 700 15px var(--num); min-width: 46px; text-align: center; color: var(--muted); }
+.stage-note { font-size: 12.5px; color: var(--muted); }
+.stage svg.zoomable { cursor: grab; } .stage svg.zoomable.panning { cursor: grabbing; }
+
+/* matrix view */
+.mx-wrap { flex: 1 1 0; overflow: auto; min-height: 0; }
+.mx { border-collapse: separate; border-spacing: 0; min-width: 100%; font-size: 14px; }
+.mx th, .mx td { padding: 0; }
+.mx thead th { position: sticky; background: var(--surface); z-index: 3; font-weight: 700; color: var(--muted); }
+.mx thead tr.g th { top: 0; height: 30px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; text-align: center; border-bottom: 2px solid var(--hair); }
+.mx thead tr.g th.grph { border-bottom-width: 3px; border-radius: 8px 8px 0 0; }
+.mx thead tr.m th { top: 30px; height: 62px; font: 700 13px var(--num); text-align: center; vertical-align: bottom; padding-bottom: 6px; border-bottom: 1px solid var(--hair); }
+.mx thead tr.m th small { display: block; font: 500 10px var(--ui); color: var(--muted); line-height: 1.15; max-width: 44px; margin: 0 auto 3px; white-space: normal; }
+.mx th.name, .mx td.name { position: sticky; left: 0; z-index: 2; background: var(--surface); text-align: left; min-width: 250px; max-width: 280px; padding: 0 12px; }
+.mx thead th.name { z-index: 4; }
+.mx td.st { padding: 0 6px 0 10px; white-space: nowrap; }
+.mx tr.cat td { position: sticky; top: 92px; z-index: 1; background: var(--bg); padding: 12px 12px 6px; font-weight: 700; color: var(--accent); letter-spacing: .08em; font-size: 13.5px; }
+.mx tr.cat td .prio { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font: 700 12px var(--num); margin-right: 8px; letter-spacing: 0; }
+.mx tbody tr.t td { border-bottom: 1px solid #F1ECEE; height: 44px; }
+.mx tbody tr.t:hover td { background: #FBF6F7; }
+.mx tbody tr.t.sel td { background: var(--accent-soft); }
+.mx tbody tr.t { cursor: pointer; }
+.mx tbody tr.t.adopted td.name { box-shadow: inset 4px 0 0 var(--accent); }
+.mx tbody tr.t.rejected td { color: #A59DA1; }
+.mx tbody tr.t.rejected td.cell i { opacity: .3; }
+.mx td.name b { display: block; font-size: 14.5px; line-height: 1.25; }
+.mx td.name small { color: var(--muted); font-size: 12px; }
+.mx td.cell { width: 34px; min-width: 34px; text-align: center; }
+.mx td.cell i { display: block; width: 28px; height: 28px; margin: 0 auto; border-radius: 4px; }
+.mx td.cell.gap, .mx th.gap { padding-left: 8px !important; }
+.mx td.sav { min-width: 150px; padding: 0 10px 0 14px; }
+.mx td.sav .ln { display: grid; grid-template-columns: 1fr 40px; gap: 6px; align-items: center; font: 700 14px var(--num); }
+.mx td.sav .ln .bar { height: 7px; border-radius: 4px; background: var(--panel); overflow: hidden; }
+.mx td.sav .ln .bar i { display: block; height: 100%; border-radius: 4px; }
+.mx td.sav .ln b { text-align: right; }
+.mx td.rc { padding: 0 8px; text-align: center; white-space: nowrap; }
+.sbtn { display: inline-flex; border: 1px solid var(--hair); border-radius: 999px; overflow: hidden; background: var(--surface); }
+.sbtn button { border: 0; background: none; width: 30px; height: 28px; font-size: 13px; color: #B9B0B4; }
+.sbtn button + button { border-left: 1px solid var(--hair); }
+.sbtn button.on.adopted { background: var(--accent); color: #fff; }
+.sbtn button.on.considered { background: var(--panel); color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+.sbtn button.on.rejected { background: var(--panel); color: var(--ink); }
+.mx tfoot td { position: sticky; bottom: 0; background: var(--surface); border-top: 2px solid var(--ink); height: 52px; z-index: 2; }
+.mx tfoot td.name b { color: var(--accent); }
+.mx-hidden { padding: 10px 14px; color: var(--muted); font-size: 13px; }
+.mx td.cell.wide { width: 50px; min-width: 50px; } .mx td.cell.wide i { width: 40px; }
+.mx thead tr.m.client th { height: 104px; vertical-align: bottom; width: 50px; }
+.mx thead tr.m.client th small { max-width: 52px; font-size: 10px; color: var(--ink); font-weight: 600; margin-top: 2px; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+html[lang="ja"] .mx thead tr.m.client th small { max-width: 46px; font-size: 9.5px; line-height: 1.2; letter-spacing: 0; }
+html[lang="ja"] .mx thead tr.m.client th .tagc { font-size: 9.5px; letter-spacing: 0; }
+.dotk { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin: 0 4px 0 8px; vertical-align: 0; }
+.mx thead tr.m.client th .tagc { display: block; font: 700 11px var(--num); letter-spacing: .04em; white-space: nowrap; }
+.mx thead tr.m.client th svg { display: block; margin: 0 auto 3px; width: 22px; height: 22px; min-height: 22px; flex: none; }
+.mx.client tr.cat td { top: 134px; }
+/* client tiles in the panel */
+.tiles { display: flex; flex-direction: column; gap: 10px; }
+.tgrp { border-radius: 12px; background: var(--scbg); padding: 8px 10px 10px; }
+.tg-head { font: 700 12px var(--ui); color: var(--sc); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
+.tg-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 6px; }
+.tile { background: var(--surface); border-radius: 10px; padding: 8px 6px 8px; text-align: center; border: 1px solid transparent; }
+.tile .ic { width: 42px; height: 42px; border-radius: 10px; margin: 0 auto 4px; display: grid; place-items: center; background: var(--panel); }
+.tile b { display: block; font: 700 12px var(--num); color: var(--sc); letter-spacing: .04em; }
+.tile span { display: block; font-size: 11.5px; line-height: 1.25; color: var(--ink); }
+.tile:not(.on) span { color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="tip" id="tip"></div>
+<div class="overlay" id="overlay" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+<div class="modal" id="modal" hidden><div class="mbox" id="mbox" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast"></div>
+<div class="mock-flag">Mockup · sample data · nothing is saved</div>
+<script>
+'use strict';
+/* =====================================================================================================
+   DATA (sample)
+   ===================================================================================================== */
+const MODS = ['A1', 'A2', 'A3', 'A4', 'A5', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'C1', 'C2', 'C3', 'C4', 'D'];
+const MOD_NAME = {
+  en: { A1: 'Raw material supply', A2: 'Transport', A3: 'Manufacturing', A4: 'Transport to site', A5: 'Construction', B1: 'Use', B2: 'Maintenance', B3: 'Repair', B4: 'Replacement', B5: 'Refurbishment', B6: 'Operational energy', B7: 'Operational water', C1: 'Demolition', C2: 'Transport', C3: 'Waste processing', C4: 'Disposal', D: 'Reuse · recovery · recycling' },
+  ja: { A1: '原材料調達', A2: '輸送', A3: '製造', A4: '現場への輸送', A5: '施工', B1: '使用', B2: '維持管理', B3: '修繕', B4: '交換', B5: '改修', B6: '運用エネルギー', B7: '運用水', C1: '解体', C2: '輸送', C3: '廃棄物処理', C4: '最終処分', D: '再使用・回収・リサイクル' }
+};
+/* ---------- columns: 17 life-cycle modules (Architect) or GHG Protocol scope categories (Client) ---------- */
+// Scope categories seen from the client (building owner / operator). In the app, administrators set each
+// technology's impact per category; here they are derived from the module values plus a few overrides.
+// Scope colours (tiles) and value-chain stages (groups), following the Ministry of the Environment layout.
+const SC_STYLE = {
+  1: { c: '#2B79A8', bg: '#E4F1F9', en: 'Scope 1', ja: 'スコープ1' },
+  2: { c: '#C2643E', bg: '#FCEAE2', en: 'Scope 2', ja: 'スコープ2' },
+  3: { c: '#4E8A3A', bg: '#EAF4E3', en: 'Scope 3', ja: 'スコープ3' },
+  0: { c: '#7A7376', bg: '#EEEAEB', en: 'Outside the scopes', ja: 'スコープ外' }
+};
+const STAGES = {
+  UP: { c: '#4E8A3A', bg: '#EEF5E8', en: 'Upstream', ja: '上流', subEn: 'Scope 3', subJa: 'スコープ3' },
+  IN: { c: '#3E3A39', bg: '#F1EEEF', en: 'In-house', ja: '自社', subEn: 'Scope 1 · 2 · 3', subJa: 'スコープ1・2・3' },
+  DOWN: { c: '#4E8A3A', bg: '#EEF5E8', en: 'Downstream', ja: '下流', subEn: 'Scope 3', subJa: 'スコープ3' },
+  OUT: { c: '#7A7376', bg: '#EEEAEB', en: 'Removals & offsets', ja: '吸収・オフセット', subEn: 'reported separately', subJa: '別途報告' }
+};
+// from: life-cycle modules a category is derived from (mockup only; administrators set these per technology in the app)
+const CLIENT_DEF = [
+  { k: 'C1', st: 'UP', sc: 3, tag: 'Cat 1', tagJa: 'カテゴリ1', en: 'Purchased goods & services', ja: '購入した製品・サービス', from: ['B2', 'B3', 'B7'], icon: 'cart' },
+  { k: 'C2', st: 'UP', sc: 3, tag: 'Cat 2', tagJa: 'カテゴリ2', en: 'Capital goods', ja: '資本財', from: ['A1', 'A3', 'A5', 'B4', 'B5'], icon: 'build' },
+  { k: 'C3', st: 'UP', sc: 3, tag: 'Cat 3', tagJa: 'カテゴリ3', en: 'Fuel & energy related', ja: '燃料・エネルギー関連', from: ['B6'], down: 1, icon: 'pylon' },
+  { k: 'C4', st: 'UP', sc: 3, tag: 'Cat 4', tagJa: 'カテゴリ4', en: 'Upstream transport', ja: '輸送・配送（上流）', from: ['A2', 'A4'], icon: 'A2' },
+  { k: 'C8', st: 'UP', sc: 3, tag: 'Cat 8', tagJa: 'カテゴリ8', en: 'Upstream leased assets', ja: 'リース資産（上流）', from: ['B6'], down: 1, icon: 'key' },
+  { k: 'S1', st: 'IN', sc: 1, tag: 'Scope 1', tagJa: 'スコープ1', en: 'Direct emissions', ja: '直接排出', from: ['B6'], icon: 'factory' },
+  { k: 'S2', st: 'IN', sc: 2, tag: 'Scope 2', tagJa: 'スコープ2', en: 'Purchased electricity, steam & heat', ja: '電気・蒸気・熱の使用', from: ['B6'], icon: 'plug' },
+  { k: 'C5', st: 'IN', sc: 3, tag: 'Cat 5', tagJa: 'カテゴリ5', en: 'Waste in operations', ja: '事業から出る廃棄物', from: [], icon: 'C4' },
+  { k: 'C6', st: 'IN', sc: 3, tag: 'Cat 6', tagJa: 'カテゴリ6', en: 'Business travel', ja: '出張', from: [], icon: 'plane' },
+  { k: 'C7', st: 'IN', sc: 3, tag: 'Cat 7', tagJa: 'カテゴリ7', en: 'Employee commuting', ja: '雇用者の通勤', from: [], icon: 'car' },
+  { k: 'C10', st: 'DOWN', sc: 3, tag: 'Cat 10', tagJa: 'カテゴリ10', en: 'Processing of sold products', ja: '販売した製品の加工', from: [], icon: 'gear' },
+  { k: 'C11', st: 'DOWN', sc: 3, tag: 'Cat 11', tagJa: 'カテゴリ11', en: 'Use of sold products', ja: '販売した製品の使用', from: ['B6', 'B7'], icon: 'lamp' },
+  { k: 'C12', st: 'DOWN', sc: 3, tag: 'Cat 12', tagJa: 'カテゴリ12', en: 'End-of-life of sold products', ja: '販売した製品の廃棄', from: ['C1', 'C2', 'C3', 'C4'], icon: 'C4' },
+  { k: 'C15', st: 'DOWN', sc: 3, tag: 'Cat 15', tagJa: 'カテゴリ15', en: 'Investments', ja: '投資', from: [], icon: 'yen' },
+  { k: 'RM', st: 'OUT', sc: 0, tag: 'Other', tagJa: 'その他', en: 'Removals & offsets', ja: '吸収・オフセット', from: [], icon: 'leaf' }
+];
+const OVR = {
+  S1: { PV_PANELS: 'N', CARBON_CREDITS: 'N', DEMAND_RESPONSE: 'N', ELECTRIFICATION: 'H', PREDICTIVE_MAINTENANCE: 'M' },
+  S2: { CARBON_CREDITS: 'N' }, C3: { CARBON_CREDITS: 'N' }, C8: { CARBON_CREDITS: 'N' }, C11: { CARBON_CREDITS: 'N' },
+  C5: { ZERO_WASTE: 'M', PREDICTIVE_MAINTENANCE: 'L', FLEX_DESIGN: 'L', DESIGN_FOR_DECONSTRUCTION: 'L' },
+  C6: { GREEN_MOBILITY: 'L' }, C7: { GREEN_MOBILITY: 'M' },
+  C10: { DESIGN_FOR_DECONSTRUCTION: 'L' },
+  C15: { CARBON_CREDITS: 'L' },
+  RM: { CARBON_SINK: 'H', CARBON_CREDITS: 'H', MASS_TIMBER: 'M' }
+};
+const SICON = {
+  cart: 'M3 4 H5.5 L8 15 H18 L20.5 7 H6.4 M9 19 a1.4 1.4 0 1 0 0.1 0 Z M17 19 a1.4 1.4 0 1 0 0.1 0 Z',
+  build: 'M3 21 H21 M5 21 V8 H13 V21 M13 11 H19 V21 M8 11 H10 M8 14 H10 M8 17 H10 M16 14 H17 M16 17 H17 M9 8 V4 H11',
+  pylon: 'M12 2 L7 22 M12 2 L17 22 M5 7 H19 M6 12 H18 M9.5 7 L14.5 12 M14.5 7 L9.5 12',
+  key: 'M3.5 15 a4.5 4.5 0 1 0 9 0 a4.5 4.5 0 1 0 -9 0 Z M11.2 11.8 L20 3 M17 6 L19.5 8.5 M14.5 8.5 L16.5 10.5',
+  factory: 'M3 21 V11 L8 14 V11 L13 14 V8 H16 V3 H19 V21 Z M2 21 H22',
+  plug: 'M9 2 V7 M15 2 V7 M6 7 H18 V11 a6 6 0 0 1 -12 0 Z M12 17 V22',
+  plane: 'M21 3 L3 10.5 L10 13 L12.5 20 Z M10 13 L15 8.5',
+  car: 'M3 16 V11.5 L6 6.5 H18 L21 11.5 V16 Z M3 11.5 H21 M7 19 a1.5 1.5 0 1 0 0.1 0 Z M17 19 a1.5 1.5 0 1 0 0.1 0 Z',
+  gear: 'M8.5 12 a3.5 3.5 0 1 0 7 0 a3.5 3.5 0 1 0 -7 0 Z M12 2.5 V5.5 M12 18.5 V21.5 M2.5 12 H5.5 M18.5 12 H21.5 M5.3 5.3 L7.4 7.4 M16.6 16.6 L18.7 18.7 M5.3 18.7 L7.4 16.6 M16.6 7.4 L18.7 5.3',
+  lamp: 'M9 18 H15 M10 21 H14 M12 3 a6 6 0 0 0 -3.5 10.9 V16 H15.5 V13.9 A6 6 0 0 0 12 3 Z',
+  yen: 'M6 3 L12 11 L18 3 M12 11 V21 M7 12.5 H17 M7 16.5 H17',
+  leaf: 'M5 19 C5 10 10 5 20 4 C19 14 14 19 5 19 Z M5 19 L13 11'
+};
+// angles for the client layout: same open arc as the modules (36.5° → 323.5°); wide gaps between stages, small gaps between scopes
+(function placeClient() {
+  const start = 36.5, end = 323.5, inGap = 2.2, scGap = 4.5, stGap = 9;
+  const gap = (c, p) => (c.st !== p.st ? stGap : c.sc !== p.sc ? scGap : inGap);
+  let gaps = 0;
+  CLIENT_DEF.forEach((c, i) => { if (i) gaps += gap(c, CLIENT_DEF[i - 1]); });
+  const w = (end - start - gaps) / CLIENT_DEF.length;
+  let a = start;
+  CLIENT_DEF.forEach((c, i) => { if (i) a += gap(c, CLIENT_DEF[i - 1]); c.ang = a + w / 2; c.half = w / 2; a += w; });
+})();
+const LVL = { H: 3, M: 2, L: 1, N: 0 }, LVLK = ['N', 'L', 'M', 'H'];
+function lvOf(x, c) {
+  if (c.idx != null) return x.imp[c.idx];
+  const o = OVR[c.k] && OVR[c.k][x.id];
+  if (o) return o;
+  let v = c.from.reduce((m, mod) => Math.max(m, LVL[x.imp[MODS.indexOf(mod)]]), 0);
+  if (c.down) v = Math.max(0, v - c.down);
+  return LVLK[v];
+}
+function cols(aud) {
+  if ((aud || S.audience) === 'client') return CLIENT_DEF.map((c) => ({ ...c, grp: c.st, client: true }));
+  return MODS.map((m, j) => ({ k: m, idx: j, grp: m === 'D' ? 'D' : m[0], ang: ANG[j], half: HALF, icon: m, kind: m === 'B6' || m === 'B7' ? 'o' : m === 'D' ? 'd' : 'e' }));
+}
+function groupsOf(cs) {
+  const out = [];
+  cs.forEach((c, j) => { const g = out[out.length - 1]; if (g && g.key === c.grp) g.cols.push(c); else out.push({ key: c.grp, start: j, cols: [c] }); });
+  for (const g of out) {
+    if (cs[0].client) { const st = STAGES[g.key]; g.color = st.c; g.bg = st.bg; g.label = (S.lang === 'ja' ? st.ja + ' · ' + st.subJa : st.en.toUpperCase() + ' · ' + st.subEn.toUpperCase()); g.chip = S.lang === 'ja' ? st.ja : st.en; g.dashed = g.key === 'OUT'; }
+    else { g.color = g.key === 'D' ? '#8A8285' : g.key === 'B' ? '#4E5070' : '#D7262B'; g.label = t('st' + g.key); g.chip = g.key + ' · ' + t('chip' + g.key); g.dashed = g.key === 'D'; g.bar = g.key === 'D' ? '#8A8285' : '#3E3A39'; }
+  }
+  return out;
+}
+const colName = (c) => (c.client ? (S.lang === 'ja' ? c.ja : c.en) : MOD_NAME[S.lang][c.k]);
+const colTag = (c) => (c.client ? (S.lang === 'ja' ? c.tagJa : c.tag) : c.k);
+const iconPath = (c) => SICON[c.icon] || ICONS[c.icon];
+const CATS = [
+  { id: 'KEEP_LONGER', prio: 1, en: 'KEEP LONGER', ja: '長く使う' },
+  { id: 'BUILD_LIGHTER', prio: 2, en: 'BUILD LIGHTER', ja: '軽くつくる' },
+  { id: 'RUN_CLEANER', prio: 3, en: 'RUN CLEANER', ja: 'クリーンに運用する' },
+  { id: 'GIVE_BACK', prio: 4, en: 'GIVE BACK', ja: '還元する' }
+];
+const T = [
+  ['CARBON_SINK', 'GIVE_BACK', 'CARBON SINK', '炭素の吸収・固定', 'HNLNLHLNNNLLNNMHM', 15, 5, 'H', 'M', 'Stores carbon in bio-based materials, planting and soil on site.', '木材などの生物由来材料や植栽・土壌に炭素を固定する。'],
+  ['CARBON_CREDITS', 'GIVE_BACK', 'CARBON CREDITS', 'カーボンクレジット', 'NNNNNNNNNNHMNNNNN', 0, 20, 'L', 'M', 'Offsets remaining operational emissions with verified credits or renewable energy certificates.', '残る運用時の排出を、認証済みのクレジットや再エネ証書で相殺する。'],
+  ['RAINWATER_HARVESTING', 'GIVE_BACK', 'RAINWATER HARVESTING', '雨水利用', 'LNLNLNLLLNLHNNNNN', 0, 5, 'H', 'L', 'Collects rainwater for flushing and irrigation, reducing mains water demand.', '雨水を貯留して洗浄水や散水に使い、上水使用量を減らす。'],
+  ['ELECTRIFICATION', 'RUN_CLEANER', 'ELECTRIFICATION', '電化', 'LNLNLLLLMNHNNNNLN', 0, 35, 'M', 'M', 'Replaces fossil-fuel heating, hot water and cooking with efficient electric systems such as heat pumps.', '化石燃料による暖房・給湯・調理を、ヒートポンプなどの高効率な電気設備に置き換える。'],
+  ['ENERGY_MANAGEMENT', 'RUN_CLEANER', 'ENERGY MANAGEMENT SYSTEMS', 'エネルギー管理システム', 'NNLNNNMLLNHMNNNNN', 0, 15, 'M', 'L', 'Monitors and controls building systems to cut waste and keep equipment running efficiently.', '設備を監視・制御し、無駄を減らして効率的な運転を維持する。'],
+  ['PV_PANELS', 'RUN_CLEANER', 'PV PANELS', '太陽光発電', 'MLMLLNLLMNHNLLMLM', 0, 20, 'M', 'M', 'Generates renewable electricity on the roof or façade.', '屋根や外壁で再生可能エネルギーによる電力をつくる。'],
+  ['THERMAL_STORAGE', 'RUN_CLEANER', 'THERMAL ENERGY STORAGE', '蓄熱システム', 'LNLNLNLLLNHNNNLNN', 0, 10, 'H', 'H', 'Stores heat or cold to shift loads to low-carbon hours and downsize plant.', '熱や冷熱を蓄え、負荷を低炭素な時間帯へ移し、設備を小型化する。'],
+  ['WASTE_HEAT_RECOVERY', 'RUN_CLEANER', 'WASTE HEAT RECOVERY', '排熱回収', 'LNLNNNLLLNHLNNNNN', 0, 15, 'L', 'M', 'Reuses heat from exhaust air, equipment or processes for heating and hot water.', '排気・機器・工程の排熱を暖房や給湯に再利用する。'],
+  ['DEMAND_RESPONSE', 'RUN_CLEANER', 'DEMAND RESPONSE', 'デマンドレスポンス', 'NNNNNNNNNNHNNNNNL', 0, 5, 'M', 'L', 'Shifts or reduces electricity use when the grid is under stress or most carbon-intensive.', '電力需給が逼迫する時間帯やCO₂排出係数が高い時間帯に、電力使用を移す・減らす。'],
+  ['PASSIVHAUS', 'RUN_CLEANER', 'PASSIVHAUS', 'パッシブハウス', 'MLMLMNLLLMHNLLLLN', 0, 55, 'H', 'H', 'Very high insulation, airtightness and heat-recovery ventilation to minimise heating and cooling.', '高断熱・高気密と熱交換換気により、冷暖房負荷を最小限に抑える。'],
+  ['NATURAL_VENTILATION', 'RUN_CLEANER', 'NATURAL VENTILATION', '自然換気', 'LNLNLNLNLNHNNNNNN', 5, 20, 'H', 'L', 'Uses wind and stack effect to ventilate and cool, reducing fan and cooling energy.', '風力や重力換気を利用して換気・冷却し、送風・冷房エネルギーを減らす。'],
+  ['GREEN_MOBILITY', 'RUN_CLEANER', 'GREEN MOBILITY', 'グリーンモビリティ', 'NMNHMNNNNNNNNMNNN', 5, 0, 'L', 'M', 'Low-emission transport of materials, plant and workers to and from site.', '資材・機械・作業員の輸送を低排出化する。'],
+  ['FORM_FACTOR', 'BUILD_LIGHTER', 'FORM FACTOR', '建物形状の最適化', 'HMHMMNLLLLHNLLLLN', 15, 15, 'M', 'L', 'Compact, efficient massing that needs less structure and envelope per floor area.', '床面積あたりの構造体・外皮が少なくて済む、コンパクトで効率的な形状にする。'],
+  ['SEMI_OUTDOOR_SPACE', 'BUILD_LIGHTER', 'SEMI-OUTDOOR SPACE', '半屋外空間', 'MLMLLNLLLNHNLLLLN', 10, 15, 'M', 'L', 'Covered but unconditioned spaces that replace fully enclosed, air-conditioned floor area.', '屋根はあるが空調しない空間で、空調された屋内床面積の一部を置き換える。'],
+  ['GREEN_CONCRETE', 'BUILD_LIGHTER', 'GREEN CONCRETE', '環境配慮型コンクリート', 'HLHLLLNNNNNNNNLLL', 25, 0, 'H', 'M', 'Concrete with cement partly replaced by slag, fly ash or other low-carbon binders.', 'セメントの一部を高炉スラグやフライアッシュなどの低炭素結合材に置き換えたコンクリート。'],
+  ['MASS_TIMBER', 'BUILD_LIGHTER', 'MASS TIMBER', 'マスティンバー', 'HMHMHMLLLLLNMLMHH', 35, 5, 'M', 'H', 'Engineered timber (CLT, glulam) in place of concrete or steel structure.', 'CLTや集成材などの木質材料を、コンクリートや鉄骨の構造体に代えて使う。'],
+  ['ZERO_WASTE', 'BUILD_LIGHTER', 'ZERO WASTE', 'ゼロウェイスト', 'MLMLHNLLLMNNMMHHM', 5, 0, 'L', 'L', 'Designs out and diverts construction waste through reuse, recycling and precise ordering.', '再使用・リサイクル・適正な発注により、建設廃棄物の発生と処分を減らす。'],
+  ['RETROFIT_RENOVATION', 'KEEP_LONGER', 'RETROFIT / RENOVATION', '改修・リノベーション', 'HHHMMNLLMHHLHMMML', 60, 35, 'H', 'M', 'Upgrades an existing building instead of replacing it, keeping the structure and envelope.', '建て替えずに既存建物を改修し、構造体や外皮を活かす。'],
+  ['ADAPTIVE_REUSE', 'KEEP_LONGER', 'ADAPTIVE REUSE', 'コンバージョン（用途転用）', 'HHHMMNLLLHMLHMMML', 65, 15, 'M', 'M', 'Converts an existing building to a new use, avoiding demolition and new construction.', '既存建物を別の用途に転用し、解体と新築を避ける。'],
+  ['FLEX_DESIGN', 'KEEP_LONGER', 'FLEX / ADAPTABLE DESIGN', 'フレキシブル設計', 'LNLNLNLLHHNNMLLMM', 20, 0, 'H', 'M', 'Floor plates, grids and services designed to accommodate future changes of use.', '将来の用途変更に対応できる平面・グリッド・設備計画にする。'],
+  ['DESIGN_FOR_DECONSTRUCTION', 'KEEP_LONGER', 'DESIGN FOR DECONSTRUCTION', '解体容易性設計', 'LNLNMNLMMMNNHMHHH', 10, 0, 'M', 'M', 'Bolted, reversible connections and material passports so components can be reused.', 'ボルト接合など取り外し可能な接合と材料情報の記録により、部材を再使用できるようにする。'],
+  ['PREDICTIVE_MAINTENANCE', 'KEEP_LONGER', 'PREDICTIVE MAINTENANCE', '予知保全', 'NNNNNNHHMLMLNNNNN', 5, 10, 'H', 'L', 'Sensors and data predict failures, extending equipment life and avoiding early replacement.', 'センサーとデータで故障を予測し、機器を長持ちさせて早期の交換を避ける。']
+];
+const TECHS = T.map((r) => ({ id: r[0], cat: r[1], en: r[2], ja: r[3], imp: r[4], emb: r[5], op: r[6], res: r[7], cost: r[8], sumEn: r[9], sumJa: r[10] }));
+const TECH = Object.fromEntries(TECHS.map((t) => [t.id, t]));
+
+const ME = { name: 'Konuklar Cagatay', short: 'KC' };
+const PROJECTS = [
+  { id: 'p1', name: 'Sample office tower', nameJa: 'サンプル オフィスタワー', type: 'office', stage: 'design', place: 'Osaka', placeJa: '大阪市中央区', mine: true,
+    members: [['KC', 'Konuklar Cagatay', 'owner'], ['YS', 'Yamada Saki', 'edit'], ['TK', 'Tanaka Ken', 'view']],
+    status: { MASS_TIMBER: 'adopted', GREEN_CONCRETE: 'adopted', ENERGY_MANAGEMENT: 'adopted', PV_PANELS: 'adopted', FORM_FACTOR: 'considered', NATURAL_VENTILATION: 'considered', PASSIVHAUS: 'rejected' } },
+  { id: 'p2', name: 'Sample hotel conversion', nameJa: 'サンプル ホテル用途転用', type: 'hotel', stage: 'construction', place: 'Tokyo', placeJa: '東京都千代田区', mine: true,
+    members: [['KC', 'Konuklar Cagatay', 'owner']],
+    status: { ADAPTIVE_REUSE: 'adopted', RETROFIT_RENOVATION: 'adopted', ELECTRIFICATION: 'adopted', WASTE_HEAT_RECOVERY: 'considered' } },
+  { id: 'p3', name: 'Sample school', nameJa: 'サンプル 学校', type: 'education', stage: 'completed', place: 'Nagoya', placeJa: '名古屋市中区', mine: false, owner: 'Sato Yui',
+    members: [['SY', 'Sato Yui', 'owner'], ['KC', 'Konuklar Cagatay', 'view']],
+    status: { MASS_TIMBER: 'adopted', NATURAL_VENTILATION: 'adopted', PV_PANELS: 'adopted', RAINWATER_HARVESTING: 'adopted', CARBON_SINK: 'considered' } }
+];
+const BTYPE = { en: { office: 'Office', hotel: 'Hotel', education: 'Education', residential: 'Residential', retail: 'Retail' }, ja: { office: '事務所', hotel: 'ホテル', education: '教育施設', residential: '住宅', retail: '商業施設' } };
+const PSTAGE = { en: { planning: 'Planning', design: 'Design', construction: 'Construction', completed: 'Completed' }, ja: { planning: '企画', design: '設計', construction: '施工', completed: '竣工' } };
+
+/* =====================================================================================================
+   TEXT
+   ===================================================================================================== */
+const STR = {
+  en: {
+    brand: 'WLC CATALOGUE', projects: 'Projects', chooseEyebrow: 'Whole life carbon technology catalogue', chooseTitle: 'Choose a project',
+    chooseLede: 'Open one of your projects, or one shared with you, to explore the technologies and decide what to use. Start a new project if it is not here yet.',
+    mine: 'My projects', shared: 'Shared with me', newProject: 'New project', search: 'Search projects', invite: 'Invite',
+    adoptedN: 'adopted', embodied: 'Embodied', operational: 'Operational', ownerIs: 'Owner: {0}', members: '{0} people',
+    audience: 'Audience', architect: 'Architect', client: 'Client', pdf: 'Export PDF', designerView: 'Designer', adminView: 'Admin',
+    filtersTitle: 'Highlight', filtersSub: 'Pick technologies to bring forward; the rest fade.', categories: 'Categories',
+    stage: 'Life-cycle stage', scope: 'GHG scope', status: 'On this project', cost: 'Cost', resilience: 'Resilience',
+    minEmb: 'Min. embodied saving', minOp: 'Min. operational saving', shown: 'of {0} technologies shown', clear: 'Clear all',
+    adopted: 'Adopted', considered: 'Considered', rejected: 'Rejected', notSet: 'Not decided',
+    high: 'High', mid: 'Mid', low: 'Low', medium: 'Medium', none: 'No impact',
+    legend: 'How to read', legImpact: 'Impact on a module', legBars: 'Bars at the top: % saving (left operational, right embodied)', legBadges: 'Badges: resilience (circle), cost (¥)',
+    legStatus: '● adopted · ○ considered · ✕ rejected', tabScore: 'Project score', tabTech: 'Technology',
+    scoreKick: 'Estimated for the adopted technologies', estimate: 'Estimate: savings are combined so overlapping technologies are not double-counted (1 − Π(1 − s)). Not a substitute for a project LCA.',
+    coverage: 'Coverage of the life cycle', coverScopes: 'Coverage by GHG scope', coverText: '{0} of 17 modules addressed · {1} strongly',
+    costMix: 'Cost profile', resMix: 'Resilience profile', adoptedList: 'Adopted technologies', none0: 'Nothing adopted yet. Click a technology on the chart to start.',
+    statusQ: 'Use on this project?', statusHint: 'Saved to the project for everyone invited.', savings: 'Carbon saving vs baseline', modules: 'Impact per module', scopes: 'Impact per GHG scope',
+    openSheet: 'Open full sheet · case studies', prev: '← Previous', next: 'Next →', close: 'Close',
+    keyFacts: 'Key facts', summary: 'What it is', how: 'How it reduces carbon', cases: 'Case studies', caseSample: 'Sample case study',
+    caseNote: 'Placeholder: case studies are added by administrators.', did: 'What was done', results: 'Results', challenges: 'Challenges',
+    projectEstimate: 'PROJECT ESTIMATE', centreHint: 'adopted technologies',
+    stA: 'A · PRODUCT & CONSTRUCTION', stB: 'B · USE — BUILDING FABRIC & OPERATION', stC: 'C · END OF LIFE', stD: 'D · BEYOND', upfront: 'UPFRONT CARBON · A1–A5',
+    cA: 'SCOPE 3 · MATERIALS & CONSTRUCTION', cB: 'SCOPE 3 · UPKEEP', cB6: 'SCOPE 1·2', cB7: 'SCOPE 3', cC: 'SCOPE 3 · END OF LIFE', cD: 'OUTSIDE',
+    S12: 'Scope 1 · 2', S3: 'Scope 3', OUT: 'Outside scopes', S12long: 'Scope 1 · 2 — energy used on site and bought in', S3long: 'Scope 3 — materials, construction, upkeep, end of life', OUTlong: 'Outside — benefits beyond the life cycle',
+    priority: 'PRIORITY', priorityNote: 'CONSIDER FROM THE OUTER CATEGORY INWARDS', clickOpen: 'Click to open',
+    newTitle: 'New project', pName: 'Project name', pType: 'Building type', pWork: 'Work type', pStage: 'Stage', pAddr: 'Address', pInvite: 'Invite people (optional)',
+    create: 'Create project', cancel: 'Cancel', inviteTitle: 'Invite to “{0}”', inviteSub: 'Invited people see this project in “Shared with me”.', email: 'name@takenaka.co.jp', send: 'Invite',
+    canView: 'Can view', canEdit: 'Can edit', owner: 'Owner', pdfToast: 'In the app this creates the client PDF: chart with this project’s choices, the score, then one page per adopted technology.',
+    adminToast: 'Admin view: to be designed next (editing the catalogue, savings, module impacts).', invited: 'Invitation sent (mockup).',
+    workNew: 'New build', workRetro: 'Retrofit / renovation', workReuse: 'Adaptive reuse', strong: 'strong', addressed: 'addressed', avg: 'average',
+    matrix: 'Matrix', wheel: 'Wheel', zoomIn: 'Zoom in', zoomOut: 'Zoom out', fit: 'Fit', zoomHint: 'Scroll to zoom · drag to move',
+    matrixHint: 'Click a row for details · ● ○ ✕ to decide', hideFilters: 'Hide filters', showFilters: 'Show filters', present: 'Present', exitPresent: 'Exit presentation',
+    gA: 'A · Product & construction', gB: 'B · Use', gC: 'C · End of life', gD: 'D', resShort: 'Resil.', projectRow: 'This project (adopted)', hiddenN: '{0} technologies hidden by the filters',
+    chipA: 'Product', chipB: 'Use', chipC: 'End of life', chipD: 'Beyond', coverTextC: '{0} of {2} scope categories addressed · {1} strongly'
+  },
+  ja: {
+    brand: 'WLC カタログ', projects: 'プロジェクト', chooseEyebrow: 'ホールライフカーボン 技術カタログ', chooseTitle: 'プロジェクトを選択',
+    chooseLede: '自分のプロジェクト、または共有されたプロジェクトを開いて、技術を比較・検討します。まだない場合は新しく作成してください。',
+    mine: '自分のプロジェクト', shared: '共有されたプロジェクト', newProject: 'プロジェクトを作成', search: 'プロジェクトを検索', invite: '招待',
+    adoptedN: '採用', embodied: 'エンボディド', operational: 'オペレーショナル', ownerIs: '所有者：{0}', members: '{0}人',
+    audience: '対象', architect: '設計者', client: '顧客', pdf: 'PDF出力', designerView: '設計者', adminView: '管理者',
+    filtersTitle: 'ハイライト', filtersSub: '条件に合う技術を強調し、それ以外は薄く表示します。', categories: 'カテゴリー',
+    stage: 'ライフサイクル段階', scope: 'GHGスコープ', status: 'このプロジェクトでの状況', cost: 'コスト', resilience: 'レジリエンス',
+    minEmb: 'エンボディド削減率（下限）', minOp: 'オペレーショナル削減率（下限）', shown: '/ {0}件の技術を表示', clear: 'すべて解除',
+    adopted: '採用', considered: '検討', rejected: '不採用', notSet: '未決定',
+    high: '高', mid: '中', low: '低', medium: '中', none: '影響なし',
+    legend: '図の見方', legImpact: '段階ごとの影響度', legBars: '上部のバー：削減率（左 オペレーショナル、右 エンボディド）', legBadges: 'バッジ：レジリエンス（円）、コスト（¥）',
+    legStatus: '● 採用 · ○ 検討 · ✕ 不採用', tabScore: 'プロジェクト評価', tabTech: '技術',
+    scoreKick: '採用した技術による推定値', estimate: '推定値：重複する効果を二重に数えないよう合成しています（1 − Π(1 − s)）。プロジェクトのLCAに代わるものではありません。',
+    coverage: 'ライフサイクルの網羅状況', coverScopes: 'GHGスコープ別の網羅状況', coverText: '17段階中 {0}段階に効果 · うち{1}段階で大きい',
+    costMix: 'コストの傾向', resMix: 'レジリエンスの傾向', adoptedList: '採用した技術', none0: 'まだ採用した技術はありません。図の技術をクリックして始めてください。',
+    statusQ: 'このプロジェクトで使いますか？', statusHint: '招待された全員のプロジェクトに保存されます。', savings: 'ベースライン比のCO₂削減率', modules: '段階ごとの影響度', scopes: 'GHGスコープごとの影響度',
+    openSheet: '詳細シートを開く · 事例', prev: '← 前へ', next: '次へ →', close: '閉じる',
+    keyFacts: '主な情報', summary: '概要', how: '削減の仕組み', cases: '事例', caseSample: 'サンプル事例',
+    caseNote: '仮の内容です：事例は管理者が追加します。', did: '取り組み', results: '成果', challenges: '課題',
+    projectEstimate: 'プロジェクト推定', centreHint: '件の技術を採用',
+    stA: 'A · 製造・施工段階', stB: 'B · 使用段階 — 建物躯体・運用', stC: 'C · 解体・廃棄段階', stD: 'D · 境界外', upfront: 'アップフロントカーボン · A1–A5',
+    cA: 'スコープ3 · 資材・施工', cB: 'スコープ3 · 維持', cB6: 'スコープ1·2', cB7: 'スコープ3', cC: 'スコープ3 · 解体・廃棄', cD: '対象外',
+    S12: 'スコープ1·2', S3: 'スコープ3', OUT: 'スコープ外', S12long: 'スコープ1·2 — 敷地内で使う・購入するエネルギー', S3long: 'スコープ3 — 資材、施工、維持、解体・廃棄', OUTlong: '対象外 — ライフサイクル外の便益',
+    priority: '優先順位', priorityNote: '外側のカテゴリーから順に検討', clickOpen: 'クリックで開く',
+    newTitle: 'プロジェクトを作成', pName: 'プロジェクト名', pType: '建物用途', pWork: '工事種別', pStage: '段階', pAddr: '住所', pInvite: 'メンバーを招待（任意）',
+    create: '作成', cancel: 'キャンセル', inviteTitle: '「{0}」に招待', inviteSub: '招待された人の「共有されたプロジェクト」に表示されます。', email: 'name@takenaka.co.jp', send: '招待',
+    canView: '閲覧のみ', canEdit: '編集可', owner: '所有者', pdfToast: 'アプリでは顧客向けPDFを作成します：このプロジェクトの選択を反映した図、評価、採用した技術ごとのページ。',
+    adminToast: '管理者画面：次に設計します（カタログ・削減率・段階ごとの影響度の編集）。', invited: '招待を送信しました（モックアップ）。',
+    workNew: '新築', workRetro: '改修', workReuse: 'コンバージョン', strong: '大', addressed: '効果あり', avg: '平均',
+    matrix: 'マトリクス', wheel: 'ホイール', zoomIn: '拡大', zoomOut: '縮小', fit: '全体表示', zoomHint: 'スクロールで拡大・縮小 · ドラッグで移動',
+    matrixHint: '行をクリックで詳細 · ● ○ ✕ で判断', hideFilters: 'フィルターを隠す', showFilters: 'フィルターを表示', present: 'プレゼン', exitPresent: 'プレゼン終了',
+    gA: 'A · 製造・施工', gB: 'B · 使用', gC: 'C · 解体・廃棄', gD: 'D', resShort: 'レジリエンス', projectRow: 'このプロジェクト（採用）', hiddenN: 'フィルターにより {0}件の技術を非表示',
+    chipA: '製造・施工', chipB: '使用', chipC: '解体・廃棄', chipD: '境界外', coverTextC: '{2}カテゴリ中 {0}カテゴリに効果 · うち{1}カテゴリで大きい'
+  }
+};
+
+/* =====================================================================================================
+   STATE
+   ===================================================================================================== */
+const S = {
+  screen: 'picker', lang: 'en', audience: 'architect', view: 'designer', tab: 'mine', projectId: null, sel: null, ptab: 'score', q: '',
+  mode: 'matrix', showFilters: true, present: false, zoom: { k: 1, cx: 1000, cy: 1000 },
+  f: { cats: new Set(), stages: new Set(), status: new Set(), cost: new Set(), res: new Set(), minEmb: 0, minOp: 0 }
+};
+const t = (k, ...a) => String((STR[S.lang][k] ?? STR.en[k] ?? k)).replace(/\{(\d)\}/g, (_, i) => a[i] ?? '');
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const tn = (x) => (S.lang === 'ja' ? x.ja : x.en);
+const proj = () => PROJECTS.find((p) => p.id === S.projectId);
+const LV = { H: 3, M: 2, L: 1, N: 0 }, LVK = ['N', 'L', 'M', 'H'];
+const IMPC = { H: '#D7262B', M: '#EE9A86', L: '#3E7CC9', N: '#DADAE1' };
+const RESC = { H: '#1E7F4F', M: '#E0A100', L: '#1E1E28' };
+const lvName = (c) => ({ H: t('high'), M: t('medium'), L: t('low'), N: t('none') }[c]);
+const rcName = (c) => ({ H: t('high'), M: t('mid'), L: t('low') }[c]);
+const yen = (c) => { const n = c === 'H' ? 3 : c === 'M' ? 2 : 1; return `<span class="yen">${'¥'.repeat(n)}<s>${'¥'.repeat(3 - n)}</s></span>`; };
+const catOf = (x) => CATS.find((c) => c.id === x.cat);
+
+function toast(msg) { const el = document.getElementById('toast'); el.textContent = msg; el.classList.add('on'); clearTimeout(toast.h); toast.h = setTimeout(() => el.classList.remove('on'), 3800); }
+
+/* ---------- project score ---------- */
+function score(p, cs = cols()) {
+  const st = p.status, ad = TECHS.filter((x) => st[x.id] === 'adopted');
+  const comb = (k) => Math.round((1 - ad.reduce((m, x) => m * (1 - x[k] / 100), 1)) * 100);
+  const best = cs.map((c) => LVK[ad.reduce((b, x) => Math.max(b, LV[lvOf(x, c)]), 0)]);
+  const cnt = (s) => TECHS.filter((x) => st[x.id] === s).length;
+  const dist = (k) => ({ H: ad.filter((x) => x[k] === 'H').length, M: ad.filter((x) => x[k] === 'M').length, L: ad.filter((x) => x[k] === 'L').length });
+  return { ad, emb: comb('emb'), op: comb('op'), best, adopted: cnt('adopted'), considered: cnt('considered'), rejected: cnt('rejected'), cost: dist('cost'), res: dist('res') };
+}
+
+/* ---------- filters ---------- */
+function filterOn() { const f = S.f; return f.cats.size || f.stages.size || f.status.size || f.cost.size || f.res.size || f.minEmb || f.minOp; }
+function matches(x) {
+  const f = S.f, p = proj(), st = (p && p.status[x.id]) || 'none';
+  if (f.cats.size && !f.cats.has(x.cat)) return false;
+  if (f.stages.size && !cols().some((c) => f.stages.has(c.grp) && lvOf(x, c) !== 'N')) return false;
+  if (f.status.size && !f.status.has(st)) return false;
+  if (f.cost.size && !f.cost.has(x.cost)) return false;
+  if (f.res.size && !f.res.has(x.res)) return false;
+  if (x.emb < f.minEmb || x.op < f.minOp) return false;
+  return true;
+}
+
+/* =====================================================================================================
+   CHART (SVG)
+   ===================================================================================================== */
+const C = 1000, ANG = [43, 59, 75, 91, 107, 129, 145, 161, 177, 193, 209, 225, 247, 263, 279, 295, 317], HALF = 6.5;
+// layout (inside → out): project estimate · technology rings · module nodes / scope tiles · stage brackets · upfront bracket
+const RING0 = 300, RING_BUDGET = 370, NODE_R = 725, GRP_R = 862, UPF_R = 912, MAX_DEG = 15, NAME_END = 34;
+const f1 = (n) => n.toFixed(1);
+const P = (R, a) => { const r = a * Math.PI / 180; return [C + R * Math.sin(r), C - R * Math.cos(r)]; };
+const arc = (R, a, b) => { const p = P(R, a), q = P(R, b); return `M ${f1(p[0])} ${f1(p[1])} A ${R} ${R} 0 ${b - a > 180 ? 1 : 0} 1 ${f1(q[0])} ${f1(q[1])}`; };
+const arcRev = (R, a, b) => { const p = P(R, b), q = P(R, a); return `M ${f1(p[0])} ${f1(p[1])} A ${R} ${R} 0 ${b - a > 180 ? 1 : 0} 0 ${f1(q[0])} ${f1(q[1])}`; };
+const ticks = (r1, r2, a, b) => { const p = P(r1, a), q = P(r2, a), s = P(r1, b), u = P(r2, b); return ` M ${f1(p[0])} ${f1(p[1])} L ${f1(q[0])} ${f1(q[1])} M ${f1(s[0])} ${f1(s[1])} L ${f1(u[0])} ${f1(u[1])}`; };
+const ICONS = {
+  A1: 'M12 3 L6 12 H9 L5 18 H19 L15 12 H18 Z M12 18 V22', A2: 'M2 7 H14 V16 H2 Z M14 10 H18 L21 13 V16 H14 M4.2 17.5 a1.8 1.8 0 1 0 3.6 0 a1.8 1.8 0 1 0 -3.6 0 M15.2 17.5 a1.8 1.8 0 1 0 3.6 0 a1.8 1.8 0 1 0 -3.6 0',
+  A3: 'M3 21 V10 L8 13 V10 L13 13 V10 L18 13 V4 H21 V21 Z', A4: 'M3 12 C2 8 8 5 12 7 C15 8.5 14 12 11 13 C8 14 3.8 14.5 3 12 Z M14 10 H18 L21 13 V16 H2 M4.2 17.5 a1.8 1.8 0 1 0 3.6 0 a1.8 1.8 0 1 0 -3.6 0 M15.2 17.5 a1.8 1.8 0 1 0 3.6 0 a1.8 1.8 0 1 0 -3.6 0',
+  A5: 'M7 21 V4 M3 4 H21 M7 4 L11 8 M18 4 V10 M16 10 H20 V13 H16 Z M4 21 H10', B1: 'M6 3 H18 V21 H6 Z M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2',
+  B2: 'M14.7 6.3a4 4 0 0 0 -5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z', B3: 'M14 4 L20 10 L17 13 L11 7 Z M12.5 8.5 L4 17 L7 20 L15.5 11.5',
+  B4: 'M4 8 H19 L16 5 M20 16 H5 L8 19', B5: 'M5 3 H16 V8 H5 Z M17 5.5 H20 V11 H11 V14 M9.5 14 H12.5 V21 H9.5 Z', B6: 'M13 2 L4 14 H11 L10 22 L19 10 H12 Z',
+  B7: 'M12 3 C12 3 5 11 5 15 a7 7 0 0 0 14 0 C19 11 12 3 12 3 Z', C1: 'M4 21 V5 H18 M16 5 V10 M13 13 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0 M2 21 H10 M13 21 L15 18 L17 21 L20 19 L21 21',
+  C2: 'M2 9 L5 7 H14 V16 H2 Z M14 10 H18 L21 13 V16 H14 M4.2 17.5 a1.8 1.8 0 1 0 3.6 0 a1.8 1.8 0 1 0 -3.6 0 M15.2 17.5 a1.8 1.8 0 1 0 3.6 0 a1.8 1.8 0 1 0 -3.6 0',
+  C3: 'M3 4 H21 L14 12 V19 L10 21 V12 Z', C4: 'M4 7 H20 M9 7 V4 H15 V7 M6 7 L7 21 H17 L18 7 M10 11 V17 M14 11 V17', D: 'M20 12 a8 8 0 0 1 -14 5.3 M4 12 a8 8 0 0 1 14 -5.3 M18 3 V7 H14 M6 21 V17 H10'
+};
+const FONT = "'Barlow Condensed', 'Zen Kaku Gothic New', 'Arial Narrow', sans-serif";
+function textW(s, fs, ls = 0) { let w = 0; for (const ch of String(s)) { const c = ch.codePointAt(0); w += (c >= 0x2E80 ? 1 : ch === ' ' ? 0.25 : /[A-Z0-9%¥]/.test(ch) ? 0.52 : 0.45) * fs + ls; } return w; }
+function wrap(s, maxW, fs) {
+  const sp = /\s/.test(s), parts = sp ? s.split(/\s+/) : s.split(/(?<=[・·])/), lines = []; let cur = '';
+  for (const p of parts) { const cand = cur ? cur + (sp ? ' ' : '') + p : p; if (cur && textW(cand, fs) > maxW) { lines.push(cur); cur = p; } else cur = cand; }
+  if (cur) lines.push(cur);
+  return lines;
+}
+
+const LAYOUT = (() => {
+  const inner = [...CATS].sort((a, b) => b.prio - a.prio), members = inner.map((c) => TECHS.filter((x) => x.cat === c.id));
+  const nS = TECHS.length, nG = inner.length, budget = RING_BUDGET;
+  let STEP = 24, GAP = 26;
+  if ((nS - 1) * STEP + (nG - 1) * GAP > budget) GAP = Math.max(16, (budget - (nS - 1) * STEP) / (nG - 1));
+  if ((nS - 1) * STEP + (nG - 1) * GAP > budget) STEP = Math.max(12, (budget - (nG - 1) * GAP) / (nS - 1));
+  const sz = { STEP, GAP, SEG_W: Math.min(16, STEP * 0.67), BAR_W: Math.min(8, STEP * 0.45), NAME_F: Math.min(12, STEP * 0.8), BADGE_R: Math.min(9, STEP * 0.42), COST_H: Math.min(17, STEP - 2), TITLE_F: Math.min(15, 11 + (GAP - 16) * 0.4) };
+  sz.COST_W = Math.min(30, sz.COST_H * 1.8);
+  const rings = [], groups = []; let R = null, R_OUT = RING0;
+  members.forEach((L, gi) => {
+    R = R === null ? RING0 : R + STEP + GAP;
+    const first = R;
+    L.forEach((x, k) => { if (k) R += STEP; rings.push({ x, R, gi }); });
+    groups.push({ cat: inner[gi], first, last: R }); R_OUT = R;
+  });
+  return { rings, groups, sz, R_OUT };
+})();
+
+function chartSvg() {
+  const L = LAYOUT, sz = L.sz, p = proj(), lang = S.lang, client = S.audience === 'client', ls = lang === 'ja' ? 1 : 3;
+  const cs = cols(), sc = score(p, cs), o = [];
+  o.push(`<svg viewBox="${VB.x} ${VB.y} ${VB.w} ${VB.h}" xmlns="http://www.w3.org/2000/svg" font-family="${esc(FONT)}" id="viz" role="img">`);
+  o.push('<defs>');
+  L.rings.forEach((r, k) => o.push(`<path id="tn${k}" d="${arc(r.R - sz.NAME_F * 0.33, 2, NAME_END)}"/>`));
+  L.groups.forEach((g, gi) => o.push(`<path id="gh${gi}" d="${arc(g.last + (sz.STEP + sz.GAP) / 2 - sz.TITLE_F * 0.35, 2, NAME_END)}"/>`));
+  o.push(`<radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F6E8EC" stop-opacity=".9"/><stop offset="100%" stop-color="#F6E8EC" stop-opacity="0"/></radialGradient>`);
+  o.push('</defs>');
+  o.push(`<circle cx="${C}" cy="${C}" r="250" fill="url(#glow)"/>`);
+  // life-cycle loop (architect) or stage arcs (client) through the module nodes; drawn first so labels sit on top
+  const groups = groupsOf(cs);
+  if (!client) o.push(`<path d="${arc(NODE_R, 43, 295)}" fill="none" stroke="#3E3A39" stroke-width="1.5"/><path d="${arc(NODE_R, 295, 403)}" fill="none" stroke="#3E3A39" stroke-width="1.5" stroke-dasharray="3 6"/>`);
+  else groups.forEach((g) => { if (g.cols.length > 1) o.push(`<path d="${arc(NODE_R, g.cols[0].ang, g.cols[g.cols.length - 1].ang)}" fill="none" stroke="${g.color}" stroke-width="2"${g.dashed ? ' stroke-dasharray="3 6"' : ''}/>`); });
+
+  // technology rings
+  L.rings.forEach((r, k) => {
+    const x = r.x, st = p.status[x.id], match = matches(x), sel = S.sel === x.id;
+    const op = filterOn() && !match ? 0.12 : 1;
+    o.push(`<g class="ring" opacity="${op}" data-tech="${x.id}">`);
+    o.push(`<circle cx="${C}" cy="${C}" r="${f1(r.R)}" fill="none" stroke="${sel ? '#3E3A39' : '#DDD6D8'}" stroke-width="${sel ? 1.6 : 0.75}"/>`);
+    if (st === 'adopted' || st === 'considered') {
+      // thin wine rail just outside the segments: solid = adopted, dashed = considered
+      const rr = r.R + sz.SEG_W / 2 + 1.6;
+      o.push(`<path d="${arc(rr, ANG[0] - HALF, ANG[16] + HALF)}" fill="none" stroke="#861C3C" stroke-width="2"${st === 'considered' ? ' stroke-dasharray="4 4"' : ''}/>`);
+    }
+    const segOp = st === 'rejected' ? 0.3 : 1;
+    cs.forEach((col) => {
+      const c = lvOf(x, col);
+      o.push(`<path d="${arc(r.R, col.ang - col.half, col.ang + col.half)}" fill="none" stroke="${IMPC[c]}" stroke-width="${f1(sz.SEG_W)}" opacity="${segOp}" data-tip="${esc(tn(x))}|${esc(colTag(col) + ' · ' + colName(col))}: ${esc(lvName(c))}"/>`);
+    });
+    // saving bars
+    const deg = (px) => px / r.R * 180 / Math.PI, g0 = deg(2);
+    if (x.op) o.push(`<path d="${arc(r.R, -(g0 + x.op * MAX_DEG / 100), -g0)}" fill="none" stroke="#4E5070" stroke-width="${f1(sz.BAR_W)}" stroke-linecap="round" opacity="${segOp}"/>`);
+    if (x.emb) o.push(`<path d="${arc(r.R, g0, g0 + x.emb * MAX_DEG / 100)}" fill="none" stroke="#D7262B" stroke-width="${f1(sz.BAR_W)}" stroke-linecap="round" opacity="${segOp}"/>`);
+    o.push(`<path d="${arc(r.R, -(g0 + MAX_DEG), g0 + MAX_DEG)}" fill="none" stroke="transparent" stroke-width="${f1(sz.STEP)}" data-tip="${esc(tn(x))}|${esc(t('operational'))} ${x.op}% · ${esc(t('embodied'))} ${x.emb}%"/>`);
+    // badges
+    const gapLo = ANG[16] + HALF - 360, gapHi = -(g0 + MAX_DEG);
+    const clear = ((gapHi - gapLo) * Math.PI / 180 * r.R - 2 * sz.BADGE_R - sz.COST_W) / 3;
+    const s0 = gapLo + deg(clear + sz.BADGE_R), bp = P(r.R, s0), ca = s0 + deg(sz.BADGE_R + clear + sz.COST_W / 2), cp = P(r.R, ca);
+    const cn = x.cost === 'H' ? 3 : x.cost === 'M' ? 2 : 1;
+    o.push(`<circle cx="${f1(bp[0])}" cy="${f1(bp[1])}" r="${f1(sz.BADGE_R)}" fill="${RESC[x.res]}" data-tip="${esc(tn(x))}|${esc(t('resilience'))}: ${esc(rcName(x.res))}"/>`);
+    o.push(`<text x="${f1(bp[0])}" y="${f1(bp[1])}" dy="0.36em" text-anchor="middle" font-size="${f1(sz.BADGE_R * 1.3)}" font-weight="700" fill="${x.res === 'M' ? '#1E1E28' : '#fff'}" pointer-events="none">${x.res}</text>`);
+    o.push(`<g transform="rotate(${ca.toFixed(2)} ${f1(cp[0])} ${f1(cp[1])})"><rect x="${f1(cp[0] - sz.COST_W / 2)}" y="${f1(cp[1] - sz.COST_H / 2)}" width="${f1(sz.COST_W)}" height="${f1(sz.COST_H)}" rx="3" fill="#fff" stroke="#3E3A39" stroke-width="1.2" data-tip="${esc(tn(x))}|${esc(t('cost'))}: ${esc(rcName(x.cost))}"/>`);
+    o.push(`<text x="${f1(cp[0])}" y="${f1(cp[1])}" dy="0.36em" text-anchor="middle" font-size="${f1(sz.COST_H * 0.7)}" font-weight="700" pointer-events="none"><tspan fill="#3E3A39">¥</tspan><tspan fill="${cn >= 2 ? '#3E3A39' : '#C4C4CC'}">¥</tspan><tspan fill="${cn >= 3 ? '#3E3A39' : '#C4C4CC'}">¥</tspan></text></g>`);
+    // name with status mark
+    const mark = st === 'adopted' ? '● ' : st === 'considered' ? '○ ' : st === 'rejected' ? '✕ ' : '';
+    const col = st === 'adopted' ? '#861C3C' : st === 'rejected' ? '#A59DA1' : '#3E3A39';
+    o.push(`<text font-size="${f1(sz.NAME_F)}" font-weight="700" letter-spacing="${lang === 'ja' ? 0.3 : 1}" fill="${col}" stroke="#FBF9F8" stroke-width="3" paint-order="stroke" data-tip="${esc(tn(x))}|${esc(lang === 'ja' ? x.sumJa : x.sumEn)}"><textPath href="#tn${k}" startOffset="100%" text-anchor="end">${esc(mark + tn(x))}</textPath></text>`);
+    o.push('</g>');
+  });
+
+  // category titles
+  L.groups.forEach((g, gi) => o.push(`<text font-weight="700" font-size="${f1(sz.TITLE_F)}" letter-spacing="${ls}" fill="#861C3C" stroke="#FBF9F8" stroke-width="4" paint-order="stroke"><textPath href="#gh${gi}" startOffset="100%" text-anchor="end">${g.cat.prio} · ${esc(tn(g.cat))}</textPath></text>`));
+  // priority arrow
+  // the arrow starts above the ring stack, in the open top gap, so its label stays clear of the module labels
+  const PR = (NAME_END + ANG[0] - HALF) / 2, prOut = L.R_OUT + 120, prIn = RING0 - sz.SEG_W / 2 - 4;
+  const pa = P(prOut, PR), pb = P(prIn + 10, PR), tip = P(prIn, PR), hb = P(prIn + 12, PR), ux = Math.sin(PR * Math.PI / 180), uy = -Math.cos(PR * Math.PI / 180);
+  o.push(`<path d="M ${f1(pa[0])} ${f1(pa[1])} L ${f1(pb[0])} ${f1(pb[1])}" stroke="#861C3C" stroke-width="2.5" stroke-linecap="round"/>`);
+  o.push(`<path d="M ${f1(tip[0])} ${f1(tip[1])} L ${f1(hb[0] - uy * 6)} ${f1(hb[1] + ux * 6)} L ${f1(hb[0] + uy * 6)} ${f1(hb[1] - ux * 6)} Z" fill="#861C3C"/>`);
+  o.push(`<text x="${f1(pa[0] - 8)}" y="${f1(pa[1] - 10)}" text-anchor="end" font-size="16" font-weight="700" letter-spacing="${ls}" fill="#861C3C" stroke="#FBF9F8" stroke-width="5" paint-order="stroke">${esc(t('priority'))}</text>`);
+  o.push(`<text x="${f1(pa[0] - 8)}" y="${f1(pa[1] + 6)}" text-anchor="end" font-size="12" font-weight="600" letter-spacing="1.2" fill="#8A8285" stroke="#FBF9F8" stroke-width="5" paint-order="stroke">${esc(t('priorityNote'))}</text>`);
+  // axis
+  o.push(`<path d="M 1000 ${C - RING0 + 24} V ${f1(C - L.R_OUT - 18)} M 992 ${f1(C - L.R_OUT - 18)} H 1008" stroke="#3E3A39" stroke-width="1.5"/>`);
+  o.push(`<text x="988" y="${f1(C - L.R_OUT - 30)}" text-anchor="end" font-size="13" font-weight="700" letter-spacing="1.4" fill="#4E5070" stroke="#FBF9F8" stroke-width="5" paint-order="stroke">← ${esc(t('operational').toUpperCase())}</text>`);
+  o.push(`<text x="1012" y="${f1(C - L.R_OUT - 30)}" font-size="13" font-weight="700" letter-spacing="1.4" fill="#D7262B" stroke="#FBF9F8" stroke-width="5" paint-order="stroke">${esc(t('embodied').toUpperCase())} →</text>`);
+
+  // life-cycle loop (architect) or scope bands (client), brackets and labels
+  groups.forEach((g, i) => {
+    const c0 = g.cols[0], c1 = g.cols[g.cols.length - 1], a0 = c0.ang - c0.half, a1 = c1.ang + c1.half, mid = (a0 + a1) / 2;
+    const col = client ? g.color : g.bar;
+    o.push(`<path d="${arc(GRP_R, a0, a1) + (g.dashed ? '' : ticks(GRP_R - 10, GRP_R, a0, a1))}" fill="none" stroke="${col}" stroke-width="${client ? 2 : 1}"${g.dashed ? ' stroke-dasharray="3 5"' : ''}/>`);
+    const span = Math.max(a1 - a0, 34), b0 = mid - span / 2 - 2, b1 = mid + span / 2 + 2, flip = mid > 100 && mid < 260;
+    const pathD = flip ? arcRev(GRP_R + 22, b0, b1) : arc(GRP_R + 8, b0, b1);
+    o.push(`<defs><path id="br${i}" d="${pathD}"/></defs><text font-weight="700" font-size="${client ? 14 : 15}" letter-spacing="${client ? (lang === 'ja' ? 1 : 2) : ls}" fill="${col}"><textPath href="#br${i}" startOffset="50%" text-anchor="middle">${esc(g.label)}</textPath></text>`);
+  });
+  if (!client) {
+    o.push(`<path d="${arc(UPF_R, 36.5, 113.5) + ticks(UPF_R - 8, UPF_R, 36.5, 113.5)}" fill="none" stroke="#D7262B" stroke-width="2"/>`);
+    o.push(`<defs><path id="tpUP" d="${arc(UPF_R, 36.5, 113.5)}"/></defs><text font-weight="700" font-size="13" letter-spacing="${ls}" fill="#D7262B" dy="-5"><textPath href="#tpUP" startOffset="50%" text-anchor="middle">${esc(t('upfront'))}</textPath></text>`);
+  }
+  // module nodes (architect: circles) or scope category tiles (client: rounded squares)
+  cs.forEach((c, i) => {
+    const a = c.ang, pt = P(NODE_R, a), rr = a * Math.PI / 180, l = client ? P(NODE_R + 38 + 48 * Math.abs(Math.sin(rr)) + 22 * Math.abs(Math.cos(rr)), a) : P(NODE_R + 42 + 42 * Math.abs(Math.sin(rr)) + 16 * Math.abs(Math.cos(rr)), a);
+    const best = sc.best[i], ring = best !== 'N' ? IMPC[best] : null;
+    const tip = `${esc(colTag(c) + ' · ' + colName(c))}|${best !== 'N' ? esc(t('adopted')) + ': ' + esc(lvName(best)) : esc(t('none'))}`;
+    let tc;
+    if (client) {
+      const st = SC_STYLE[c.sc];
+      if (ring) o.push(`<rect x="${f1(pt[0] - 29)}" y="${f1(pt[1] - 29)}" width="58" height="58" rx="14" fill="none" stroke="${ring}" stroke-width="3.5" pointer-events="none"/>`);
+      o.push(`<rect x="${f1(pt[0] - 23)}" y="${f1(pt[1] - 23)}" width="46" height="46" rx="10" fill="${st.bg}" stroke="${st.c}" stroke-width="1.8" data-tip="${tip}"/>`);
+      o.push(`<path d="${iconPath(c)}" transform="translate(${f1(pt[0] - 13.2)} ${f1(pt[1] - 13.2)}) scale(1.1)" fill="none" stroke="${st.c}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`);
+      tc = st.c;
+      const lines = wrap(colName(c), 78, 11);
+      let y = l[1] - (14 + lines.length * 12) / 2 + 11;
+      o.push(`<text x="${f1(l[0])}" y="${f1(y)}" text-anchor="middle" font-size="12.5" font-weight="700" letter-spacing="0.5" fill="${tc}">${esc(colTag(c).toUpperCase())}</text>`);
+      lines.forEach((s) => { y += 12; o.push(`<text x="${f1(l[0])}" y="${f1(y)}" text-anchor="middle" font-size="11" font-weight="600" fill="#3E3A39">${esc(s)}</text>`); });
+    } else {
+      const op = c.kind === 'o', d = c.kind === 'd';
+      o.push(`<circle cx="${f1(pt[0])}" cy="${f1(pt[1])}" r="25" fill="${op ? '#4E5070' : '#fff'}" stroke="${op ? '#4E5070' : d ? '#8A8285' : '#D7262B'}" stroke-width="2"${d ? ' stroke-dasharray="4 3"' : ''} data-tip="${tip}"/>`);
+      if (ring) o.push(`<circle cx="${f1(pt[0])}" cy="${f1(pt[1])}" r="31" fill="none" stroke="${ring}" stroke-width="3.5" pointer-events="none"/>`);
+      o.push(`<path d="${iconPath(c)}" transform="translate(${f1(pt[0] - 12)} ${f1(pt[1] - 12)})" fill="none" stroke="${op ? '#fff' : '#3E3A39'}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`);
+      tc = op ? '#4E5070' : d ? '#8A8285' : '#3E3A39';
+      const lines = wrap(MOD_NAME[lang][c.k].toUpperCase(), 78, 11);
+      let y = l[1] - (15 + lines.length * 11.5) / 2 + 12;
+      o.push(`<text x="${f1(l[0])}" y="${f1(y)}" text-anchor="middle" font-size="14" font-weight="700" fill="${tc}">${c.k}</text>`);
+      lines.forEach((s) => { y += 11.5; o.push(`<text x="${f1(l[0])}" y="${f1(y)}" text-anchor="middle" font-size="11" font-weight="600" letter-spacing="0.4" fill="${tc}">${esc(s)}</text>`); });
+    }
+  });
+  // centre: project estimate
+  o.push(`<text x="1000" y="905" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="${ls}" fill="#8A8285">${esc(t('projectEstimate'))}</text>`);
+  o.push(`<text x="1000" y="935" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="${lang === 'ja' ? 1 : 3}" fill="#D7262B">${esc(t('embodied').toUpperCase())}</text>`);
+  o.push(`<text x="1000" y="1000" text-anchor="middle" font-size="68" font-weight="700" fill="#D7262B">−${sc.emb}<tspan font-size="36">%</tspan></text>`);
+  o.push(`<rect x="950" y="1016" width="100" height="1.5" fill="#E6E0E2"/>`);
+  o.push(`<text x="1000" y="1046" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="${lang === 'ja' ? 1 : 3}" fill="#4E5070">${esc(t('operational').toUpperCase())}</text>`);
+  o.push(`<text x="1000" y="1111" text-anchor="middle" font-size="68" font-weight="700" fill="#4E5070">−${sc.op}<tspan font-size="36">%</tspan></text>`);
+  o.push(`<text x="1000" y="1140" text-anchor="middle" font-size="14" font-weight="600" fill="#8A8285">${sc.adopted} ${esc(t('centreHint'))}</text>`);
+  o.push('</svg>');
+  return o.join('');
+}
+
+/* =====================================================================================================
+   SCREENS
+   ===================================================================================================== */
+function topBar() {
+  const p = proj(), work = S.screen === 'work';
+  return `<header class="top">
+    <div class="brand"><i></i>${esc(t('brand'))}</div>
+    ${work ? `<div class="crumb"><button data-act="home">${esc(t('projects'))}</button>/<b>${esc(S.lang === 'ja' ? p.nameJa : p.name)}</b><span class="meta">${esc(BTYPE[S.lang][p.type])} · ${esc(S.lang === 'ja' ? p.placeJa : p.place)}</span></div>` : ''}
+    <span class="sp"></span>
+    ${work ? `<span class="seg-label">${esc(t('audience'))}</span><div class="seg" data-g="audience"><button data-v="architect" class="${S.audience === 'architect' ? 'on' : ''}">${esc(t('architect'))}</button><button data-v="client" class="${S.audience === 'client' ? 'on' : ''}">${esc(t('client'))}</button></div>
+      <button class="btn" data-act="invite">${esc(t('invite'))}</button><button class="btn primary" data-act="pdf">${esc(t('pdf'))}</button>` : ''}
+    <div class="seg dark" data-g="lang"><button data-v="en" class="${S.lang === 'en' ? 'on' : ''}">EN</button><button data-v="ja" class="${S.lang === 'ja' ? 'on' : ''}">日本語</button></div>
+    <div class="seg" data-g="view" title="Visible to administrators only"><button data-v="designer" class="${S.view === 'designer' ? 'on' : ''}">${esc(t('designerView'))}</button><button data-v="admin" class="${S.view === 'admin' ? 'on' : ''}">${esc(t('adminView'))}</button></div>
+    <div class="avatar" title="${esc(ME.name)}">${ME.short}</div>
+  </header>`;
+}
+
+function stripHtml(levels, gap = true) { return `<div class="strip${gap ? ' gap5' : ''}">${levels.map((c) => `<i style="background:${IMPC[c]}"></i>`).join('')}</div>`; }
+
+function pickerHtml() {
+  const list = PROJECTS.filter((p) => (S.tab === 'mine' ? p.mine : !p.mine)).filter((p) => !S.q || (p.name + p.nameJa + p.place + p.placeJa).toLowerCase().includes(S.q.toLowerCase()));
+  const card = (p) => {
+    const sc = score(p, cols('architect'));
+    return `<article class="pcard" data-open="${p.id}">
+      ${p.mine ? `<button class="invite" data-invite="${p.id}">+ ${esc(t('invite'))}</button>` : ''}
+      <div class="ptype">${esc(BTYPE[S.lang][p.type])} · ${esc(PSTAGE[S.lang][p.stage])}</div>
+      <h3>${esc(S.lang === 'ja' ? p.nameJa : p.name)}</h3>
+      <div class="where">${esc(S.lang === 'ja' ? p.placeJa : p.place)}</div>
+      <div class="nums"><span><b>${sc.adopted}</b>${esc(t('adoptedN'))}</span><span><b class="e">−${sc.emb}%</b>${esc(t('embodied'))}</span><span><b class="o">−${sc.op}%</b>${esc(t('operational'))}</span></div>
+      ${stripHtml(sc.best)}
+      <div class="foot"><span class="faces">${p.members.slice(0, 4).map((m) => `<span title="${esc(m[1])}">${m[0]}</span>`).join('')}</span>${p.mine ? esc(t('members', p.members.length)) : esc(t('ownerIs', p.owner))}</div>
+    </article>`;
+  };
+  return topBar() + `<main class="picker">
+    <p class="eyebrow">${esc(t('chooseEyebrow'))}</p><h1>${esc(t('chooseTitle'))}</h1><p class="lede">${esc(t('chooseLede'))}</p>
+    <div class="pk-bar"><div class="seg" data-g="tab"><button data-v="mine" class="${S.tab === 'mine' ? 'on' : ''}">${esc(t('mine'))} · ${PROJECTS.filter((p) => p.mine).length}</button><button data-v="shared" class="${S.tab === 'shared' ? 'on' : ''}">${esc(t('shared'))} · ${PROJECTS.filter((p) => !p.mine).length}</button></div>
+      <input class="search" id="q" placeholder="${esc(t('search'))}" value="${esc(S.q)}"></div>
+    <div class="cards">${S.tab === 'mine' ? `<article class="pcard new" data-act="new"><span class="plus">+</span>${esc(t('newProject'))}</article>` : ''}${list.map(card).join('')}</div>
+  </main>`;
+}
+
+function filtersHtml() {
+  const f = S.f, p = proj(), client = S.audience === 'client';
+  const count = (fn) => TECHS.filter(fn).length;
+  const shown = TECHS.filter(matches).length;
+  const stKeys = groupsOf(cols()).map((g) => [g.key, g.chip, g.color]);
+  const chip = (g, v, label, extra = '') => `<button class="chip${f[g].has(v) ? ' on' : ''}" data-f="${g}" data-v="${v}">${extra}${esc(label)}</button>`;
+  return `<aside class="filters">
+    <h2>${esc(t('filtersTitle'))}</h2><p class="sub">${esc(t('filtersSub'))}</p>
+    <h3>${esc(t('categories'))}</h3>
+    ${CATS.map((c) => `<button class="fbtn${f.cats.has(c.id) ? ' on' : ''}" data-f="cats" data-v="${c.id}"><span class="prio">${c.prio}</span>${esc(tn(c))}<span class="n">${count((x) => x.cat === c.id)}</span></button>`).join('')}
+    <h3>${esc(client ? t('scope') : t('stage'))}</h3>
+    <div class="chips">${stKeys.map(([v, label, col]) => chip('stages', v, label, `<span class="dot" style="background:${col}"></span>`)).join('')}</div>
+    <h3>${esc(t('status'))}</h3>
+    <div class="chips">${[['adopted', '● ' + t('adopted')], ['considered', '○ ' + t('considered')], ['rejected', '✕ ' + t('rejected')], ['none', t('notSet')]].map(([v, l]) => chip('status', v, l + ' ' + count((x) => (p.status[x.id] || 'none') === v))).join('')}</div>
+    <h3>${esc(t('cost'))}</h3>
+    <div class="chips">${['L', 'M', 'H'].map((v) => chip('cost', v, '¥'.repeat(v === 'H' ? 3 : v === 'M' ? 2 : 1) + ' ' + rcName(v))).join('')}</div>
+    <h3>${esc(t('resilience'))}</h3>
+    <div class="chips">${['H', 'M', 'L'].map((v) => chip('res', v, rcName(v), `<span class="dot" style="background:${RESC[v]}"></span>`)).join('')}</div>
+    <h3>${esc(t('minEmb'))}</h3><div class="range"><input type="range" min="0" max="60" step="5" value="${f.minEmb}" data-r="minEmb"><b style="color:#D7262B">${f.minEmb}%</b></div>
+    <h3>${esc(t('minOp'))}</h3><div class="range"><input type="range" min="0" max="60" step="5" value="${f.minOp}" data-r="minOp"><b style="color:#4E5070">${f.minOp}%</b></div>
+    <div class="fcount"><b>${shown}</b>${esc(t('shown', TECHS.length))}<br>${filterOn() ? `<button class="fclear" data-act="clear">${esc(t('clear'))}</button>` : ''}</div>
+    <div class="legend"><b style="color:var(--ink)">${esc(t('legend'))}</b>
+      <div class="row">${['H', 'M', 'L', 'N'].map((c) => `<span class="sw" style="background:${IMPC[c]}"></span>${esc(lvName(c))}`).join(' ')}</div>
+      <div class="row">${esc(t('legBars'))}</div><div class="row">${esc(t('legBadges'))}</div><div class="row">${esc(t('legStatus'))}</div></div>
+  </aside>`;
+}
+
+function modsHtml(x, levelsOverride) {
+  if (S.audience === 'client') {
+    const cs = cols(), lv = levelsOverride || cs.map((c) => lvOf(x, c));
+    const icon = (c, col) => `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="${iconPath(c)}" fill="none" stroke="${col}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    return `<div class="tiles">${groupsOf(cs).map((g) => `<div class="tgrp" style="--sc:${g.color};--scbg:${g.bg}"><div class="tg-head">${esc(g.chip)}</div><div class="tg-row">${g.cols.map((c) => {
+      const v = lv[cs.indexOf(c)], on = v !== 'N';
+      return `<div class="tile${on ? ' on' : ''}" style="--sc:${SC_STYLE[c.sc].c}" title="${esc(colTag(c) + ' · ' + colName(c))}: ${esc(lvName(v))}"><div class="ic" style="${on ? `background:${IMPC[v]}` : ''}">${icon(c, on ? (v === 'M' ? '#3E3A39' : '#fff') : g.color)}</div><b>${esc(colTag(c))}</b><span>${esc(colName(c))}</span></div>`;
+    }).join('')}</div></div>`).join('')}</div>
+      <div class="note">${['1', '2', '3'].map((k) => `<span class="dotk" style="background:${SC_STYLE[k].c}"></span>${esc(S.lang === 'ja' ? SC_STYLE[k].ja : SC_STYLE[k].en)}`).join('  ')}</div>`;
+  }
+  const lv = levelsOverride || MODS.map((m, j) => x.imp[j]);
+  return `<div class="mods">${MODS.map((m, j) => `<div title="${esc(MOD_NAME[S.lang][m])}: ${esc(lvName(lv[j]))}"><i style="background:${IMPC[lv[j]]}"></i>${m}</div>`).join('')}</div>
+    <div class="mods-groups"><span>A</span><span>B</span><span>C</span><span>D</span></div>`;
+}
+
+function scoreHtml() {
+  const p = proj(), sc = score(p), client = S.audience === 'client';
+  const addressed = sc.best.filter((c) => c !== 'N').length, strong = sc.best.filter((c) => c === 'H' || c === 'M').length, total = sc.best.length;
+  const dist = (d, kind) => ['H', 'M', 'L'].map((k) => `<span>${kind === 'cost' ? yen(k) : `<span class="res ${k}">${k}</span>`} ×${d[k]}</span>`).join(' ');
+  return `<div class="kick">${esc(t('scoreKick'))}</div>
+    <h2>${esc(S.lang === 'ja' ? p.nameJa : p.name)}</h2>
+    <div class="counts"><span><b>${sc.adopted}</b>● ${esc(t('adopted'))}</span><span><b>${sc.considered}</b>○ ${esc(t('considered'))}</span><span><b>${sc.rejected}</b>✕ ${esc(t('rejected'))}</span></div>
+    <h3>${esc(t('savings'))}</h3>
+    <div class="big2"><div class="e"><div class="k">${esc(t('embodied'))}</div><div class="v">−${sc.emb}<small>%</small></div></div><div class="o"><div class="k">${esc(t('operational'))}</div><div class="v">−${sc.op}<small>%</small></div></div></div>
+    <p class="note">${esc(t('estimate'))}</p>
+    <h3>${esc(client ? t('coverScopes') : t('coverage'))}</h3>
+    ${modsHtml(null, sc.best)}
+    <p class="note">${esc(t(client ? 'coverTextC' : 'coverText', addressed, strong, total))}</p>
+    <div class="kv" style="margin-top:14px"><div><div class="k">${esc(t('costMix'))}</div><div class="v dist">${dist(sc.cost, 'cost')}</div></div><div><div class="k">${esc(t('resMix'))}</div><div class="v dist">${dist(sc.res, 'res')}</div></div></div>
+    <h3>${esc(t('adoptedList'))}</h3>
+    ${sc.ad.length ? `<ul class="list">${sc.ad.map((x) => `<li><span class="res ${x.res}" style="width:16px;height:16px;font-size:10px">${x.res}</span><button data-sel="${x.id}">${esc(tn(x))}</button><span class="tag">−${x.emb}% / −${x.op}%</span></li>`).join('')}</ul>` : `<p class="hint">${esc(t('none0'))}</p>`}`;
+}
+
+function techHtml(x) {
+  const p = proj(), st = p.status[x.id], c = catOf(x);
+  const sb = (v, ic) => `<button class="${v}${st === v ? ' on' : ''}" data-status="${v}"><span class="ic">${ic}</span>${esc(t(v))}</button>`;
+  return `<div class="kick"><span class="prio">${c.prio}</span>${esc(tn(c))}</div>
+    <h2>${esc(tn(x))}</h2><div class="alt">${esc(S.lang === 'ja' ? x.en : x.ja)}</div>
+    <h3>${esc(t('statusQ'))}</h3>
+    <div class="statusbar">${sb('adopted', '●')}${sb('considered', '○')}${sb('rejected', '✕')}</div>
+    <div class="hint">${esc(t('statusHint'))}</div>
+    <p style="margin-top:14px">${esc(S.lang === 'ja' ? x.sumJa : x.sumEn)}</p>
+    <h3>${esc(t('savings'))}</h3>
+    <div class="sav"><span style="color:#D7262B">${esc(t('embodied'))}</span><div class="bar"><i style="width:${x.emb}%;background:#D7262B"></i></div><b style="color:#D7262B">${x.emb}%</b></div>
+    <div class="sav"><span style="color:#4E5070">${esc(t('operational'))}</span><div class="bar"><i style="width:${x.op}%;background:#4E5070"></i></div><b style="color:#4E5070">${x.op}%</b></div>
+    <div class="kv" style="margin-top:12px"><div><div class="k">${esc(t('resilience'))}</div><div class="v"><span class="res ${x.res}">${x.res}</span>${esc(rcName(x.res))}</div></div><div><div class="k">${esc(t('cost'))}</div><div class="v">${yen(x.cost)}${esc(rcName(x.cost))}</div></div></div>
+    <h3>${esc(S.audience === 'client' ? t('scopes') : t('modules'))}</h3>
+    ${modsHtml(x)}
+    <button class="open" data-act="sheet">${esc(t('openSheet'))}</button>`;
+}
+
+function panelHtml() {
+  const x = S.sel && TECH[S.sel];
+  return `<aside class="panel"><div class="ptabs"><button data-ptab="score" class="${S.ptab === 'score' ? 'on' : ''}">${esc(t('tabScore'))}</button><button data-ptab="tech" class="${S.ptab === 'tech' ? 'on' : ''}"${x ? '' : ' disabled'}>${esc(t('tabTech'))}${x ? ' · ' + esc(tn(x)) : ''}</button></div>
+    ${S.ptab === 'tech' && x ? techHtml(x) : scoreHtml()}</aside>`;
+}
+
+function stageBar() {
+  const z = S.zoom;
+  return `<div class="stage-bar">
+    <div class="seg dark" data-g="mode"><button data-v="matrix" class="${S.mode === 'matrix' ? 'on' : ''}">▦ ${esc(t('matrix'))}</button><button data-v="wheel" class="${S.mode === 'wheel' ? 'on' : ''}">◎ ${esc(t('wheel'))}</button></div>
+    ${S.mode === 'wheel' ? `<div class="zoom"><button data-z="out" title="${esc(t('zoomOut'))}">−</button><span>${Math.round(z.k * 100)}%</span><button data-z="in" title="${esc(t('zoomIn'))}">+</button><button class="wide" data-z="fit">${esc(t('fit'))}</button></div><span class="stage-note">${esc(t('zoomHint'))}</span>` : `<span class="stage-note">${esc(t('matrixHint'))}</span>`}
+    <span class="sp"></span>
+    ${S.present ? '' : `<button class="btn" data-act="toggleFilters">${esc(S.showFilters ? t('hideFilters') : t('showFilters'))}</button>`}
+    <button class="btn${S.present ? ' primary' : ''}" data-act="present">${esc(S.present ? t('exitPresent') : t('present'))}</button>
+  </div>`;
+}
+
+function matrixHtml() {
+  const p = proj(), client = S.audience === 'client', lang = S.lang;
+  const cs = cols(), groups = groupsOf(cs), n = cs.length;
+  const gapAt = new Set(groups.map((g) => g.start).filter((i) => i > 0));
+  const sc = score(p, cs);
+  const hIcon = (c) => `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="${iconPath(c)}" fill="none" stroke="${SC_STYLE[c.sc].c}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const rows = [], hidden = TECHS.filter((x) => !matches(x)).length;
+  for (const c of CATS) {
+    const list = TECHS.filter((x) => x.cat === c.id && matches(x));
+    if (!list.length) continue;
+    rows.push(`<tr class="cat"><td colspan="${n + 5}"><span class="prio">${c.prio}</span>${esc(tn(c))}</td></tr>`);
+    for (const x of list) {
+      const st = p.status[x.id] || '';
+      const sb = (v, ic) => `<button class="${v}${st === v ? ' on' : ''}" data-mstatus="${x.id}" data-v="${v}" title="${esc(t(v))}">${ic}</button>`;
+      rows.push(`<tr class="t ${st}${S.sel === x.id ? ' sel' : ''}" data-row="${x.id}">
+        <td class="st"><span class="sbtn">${sb('adopted', '●')}${sb('considered', '○')}${sb('rejected', '✕')}</span></td>
+        <td class="name"><b>${esc(tn(x))}</b><small>${esc(lang === 'ja' ? x.en : x.ja)}</small></td>
+        ${cs.map((col, j) => { const v = lvOf(x, col); return `<td class="cell${gapAt.has(j) ? ' gap' : ''}${client ? ' wide' : ''}" title="${esc(colTag(col) + ' · ' + colName(col))}: ${esc(lvName(v))}"><i style="background:${IMPC[v]}"></i></td>`; }).join('')}
+        <td class="sav"><div class="ln"><div class="bar"><i style="width:${x.emb}%;background:#D7262B"></i></div><b style="color:#D7262B">${x.emb}%</b></div><div class="ln"><div class="bar"><i style="width:${x.op}%;background:#4E5070"></i></div><b style="color:#4E5070">${x.op}%</b></div></td>
+        <td class="rc"><span class="res ${x.res}">${x.res}</span></td><td class="rc">${yen(x.cost)}</td></tr>`);
+    }
+  }
+  return `<div class="mx-wrap"><table class="mx${client ? ' client' : ''}">
+    <thead><tr class="g"><th class="st"></th><th class="name"></th>${groups.map((g) => `<th colspan="${g.cols.length}" class="grph${g.start > 0 ? ' gap' : ''}" style="border-bottom-color:${g.color};color:${g.color}${client ? `;background:${g.bg}` : ''}">${esc(client ? g.chip : t('g' + g.key))}</th>`).join('')}<th colspan="3"></th></tr>
+      <tr class="m${client ? ' client' : ''}"><th class="st"></th><th class="name">${esc(t('tabTech'))}</th>${cs.map((c, j) => client
+        ? `<th class="${gapAt.has(j) ? 'gap' : ''}" title="${esc(colName(c))}">${hIcon(c)}<small>${esc(colName(c))}</small><span class="tagc" style="color:${SC_STYLE[c.sc].c}">${esc(colTag(c))}</span></th>`
+        : `<th class="${gapAt.has(j) ? 'gap' : ''}"><small>${esc(MOD_NAME[lang][c.k])}</small>${c.k}</th>`).join('')}
+        <th style="text-align:left;padding-left:14px">${esc(t('embodied'))} / ${esc(t('operational'))}</th><th>${esc(t('resShort'))}</th><th>${esc(t('cost'))}</th></tr></thead>
+    <tbody>${rows.join('')}</tbody>
+    <tfoot><tr><td class="st"></td><td class="name"><b>${esc(t('projectRow'))}</b><small>${sc.adopted} ${esc(t('centreHint'))}</small></td>${cs.map((c, j) => `<td class="cell${gapAt.has(j) ? ' gap' : ''}${client ? ' wide' : ''}"><i style="background:${IMPC[sc.best[j]]}"></i></td>`).join('')}
+      <td class="sav"><div class="ln"><span style="color:#D7262B">−${sc.emb}%</span><b></b></div><div class="ln"><span style="color:#4E5070">−${sc.op}%</span><b></b></div></td><td></td><td></td></tr></tfoot>
+  </table>${hidden ? `<div class="mx-hidden">${esc(t('hiddenN', hidden))}</div>` : ''}</div>`;
+}
+
+function workHtml() {
+  const cls = S.present ? ' present' : S.showFilters ? '' : ' nofilters';
+  return topBar() + `<div class="work${cls}">${filtersHtml()}<section class="stage" id="stage">${stageBar()}${S.mode === 'wheel' ? chartSvg() : matrixHtml()}</section>${panelHtml()}</div>`;
+}
+
+/* ---------- wheel zoom and pan ---------- */
+const VB = { x: 40, y: 170, w: 1920, h: 1790 };
+function applyZoom() {
+  const svg = document.getElementById('viz');
+  if (!svg) return;
+  const z = S.zoom, w = VB.w / z.k, h = VB.h / z.k;
+  z.cx = Math.max(VB.x + w / 2, Math.min(VB.x + VB.w - w / 2, z.cx));
+  z.cy = Math.max(VB.y + h / 2, Math.min(VB.y + VB.h - h / 2, z.cy));
+  svg.setAttribute('viewBox', `${(z.cx - w / 2).toFixed(1)} ${(z.cy - h / 2).toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
+  svg.classList.add('zoomable');
+  const lab = document.querySelector('.zoom span');
+  if (lab) lab.textContent = Math.round(z.k * 100) + '%';
+}
+function zoomBy(f, px, py) {
+  const z = S.zoom, k2 = Math.max(1, Math.min(6, z.k * f));
+  if (px != null) { z.cx = px + (z.cx - px) * (z.k / k2); z.cy = py + (z.cy - py) * (z.k / k2); }
+  z.k = k2; applyZoom();
+}
+function svgPoint(svg, e) { const r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal, s = Math.max(vb.width / r.width, vb.height / r.height); return { x: vb.x + (e.clientX - r.left - (r.width - vb.width / s) / 2) * s, y: vb.y + (e.clientY - r.top - (r.height - vb.height / s) / 2) * s, s }; }
+
+function sheetHtml(x) {
+  const c = catOf(x), list = TECHS.filter(matches), i = list.findIndex((y) => y.id === x.id);
+  const prev = list[(i - 1 + list.length) % list.length], next = list[(i + 1) % list.length];
+  const caseCard = (n) => `<article class="s-case"><div class="ph">photo</div><header><strong>${esc(t('caseSample'))} ${n}</strong><span>${esc(S.lang === 'ja' ? '所在地 · 年' : 'Location · year')}</span></header>
+    <section><h4>${esc(t('did'))}</h4><ul><li>${esc(S.lang === 'ja' ? '取り組み内容の例' : 'Example of what was done')}</li></ul><h4>${esc(t('results'))}</h4><ul><li>${esc(S.lang === 'ja' ? '定量的な成果の例' : 'Example of a measured result')}</li></ul><h4>${esc(t('challenges'))}</h4><ul><li>${esc(S.lang === 'ja' ? '課題の例' : 'Example of a challenge')}</li></ul></section>
+    <div class="src">${esc(t('caseNote'))}</div></article>`;
+  return `<div class="s-head"><div class="s-bar"></div><div><div class="kick"><span class="prio">${c.prio}</span>${esc(tn(c))}</div><h2>${esc(tn(x))}</h2><div class="alt">${esc(S.lang === 'ja' ? x.en : x.ja)}</div></div>
+      <div class="s-nav"><button class="btn" data-sheet="${prev.id}">${esc(t('prev'))}</button><button class="btn" data-sheet="${next.id}">${esc(t('next'))}</button><button class="btn" data-act="closeSheet">${esc(t('close'))}</button></div></div>
+    <div class="s-body"><div><h3>${esc(t('summary'))}</h3><p style="font-size:16px;font-weight:700">${esc(S.lang === 'ja' ? x.sumJa : x.sumEn)}</p>
+      <h3 style="margin-top:16px">${esc(t('how'))}</h3>
+      <ol class="steps"><li><span class="num">1</span><span>${esc(S.lang === 'ja' ? '手順や仕組みの説明（管理者が記入）' : 'Step or mechanism (written by administrators)')}</span></li><li><span class="num">2</span><span>${esc(S.lang === 'ja' ? '手順や仕組みの説明' : 'Step or mechanism')}</span></li><li><span class="num">3</span><span>${esc(S.lang === 'ja' ? '手順や仕組みの説明' : 'Step or mechanism')}</span></li></ol></div>
+      <div><h3>${esc(t('keyFacts'))}</h3><div class="s-box">
+        <div class="s-row"><span>${esc(t('embodied'))}</span><span style="font:700 20px var(--num);color:#D7262B">${x.emb}%</span></div>
+        <div class="s-row"><span>${esc(t('operational'))}</span><span style="font:700 20px var(--num);color:#4E5070">${x.op}%</span></div>
+        <div class="s-row"><span>${esc(t('resilience'))}</span><span><span class="res ${x.res}">${x.res}</span> ${esc(rcName(x.res))}</span></div>
+        <div class="s-row"><span>${esc(t('cost'))}</span><span>${yen(x.cost)} ${esc(rcName(x.cost))}</span></div>
+        <div class="s-row" style="display:block"><span>${esc(S.audience === 'client' ? t('scopes') : t('modules'))}</span><div style="margin-top:8px">${modsHtml(x)}</div></div></div></div></div>
+    <div style="padding:0 26px"><h3 style="font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:8px 0 0">${esc(t('cases'))}</h3></div>
+    <div class="s-cases">${caseCard(1)}${caseCard(2)}</div>`;
+}
+
+/* =====================================================================================================
+   RENDER + EVENTS
+   ===================================================================================================== */
+const app = document.getElementById('app');
+function render() {
+  document.documentElement.lang = S.lang;
+  app.innerHTML = S.screen === 'picker' ? pickerHtml() : workHtml();
+  const q = document.getElementById('q');
+  if (q) q.addEventListener('input', () => { S.q = q.value; const pos = q.selectionStart; render(); const n = document.getElementById('q'); n.focus(); n.setSelectionRange(pos, pos); });
+  document.querySelectorAll('input[type=range]').forEach((r) => r.addEventListener('input', () => { S.f[r.dataset.r] = Number(r.value); render(); }));
+  const svg = document.getElementById('viz');
+  if (svg) {
+    applyZoom();
+    svg.addEventListener('wheel', (e) => { e.preventDefault(); const p = svgPoint(svg, e); zoomBy(e.deltaY < 0 ? 1.18 : 1 / 1.18, p.x, p.y); }, { passive: false });
+    svg.addEventListener('pointerdown', (e) => {
+      if (S.zoom.k <= 1 || e.button !== 0) return;
+      const start = svgPoint(svg, e), cx0 = S.zoom.cx, cy0 = S.zoom.cy, x0 = e.clientX, y0 = e.clientY;
+      let moved = false;
+      const move = (ev) => {
+        if (!moved && Math.abs(ev.clientX - x0) + Math.abs(ev.clientY - y0) < 5) return;
+        moved = true; svg.classList.add('panning');
+        S.zoom.cx = cx0 - (ev.clientX - x0) * start.s; S.zoom.cy = cy0 - (ev.clientY - y0) * start.s; applyZoom();
+      };
+      const up = () => { removeEventListener('pointermove', move); removeEventListener('pointerup', up); svg.classList.remove('panning'); if (moved) { suppressClick = true; setTimeout(() => { suppressClick = false; }, 60); } };
+      addEventListener('pointermove', move); addEventListener('pointerup', up);
+    });
+  }
+}
+let suppressClick = false;
+function openProject(id) { S.projectId = id; S.screen = 'work'; S.sel = null; S.ptab = 'score'; render(); }
+function select(id) { S.sel = id; S.ptab = 'tech'; if (S.present) { openSheet(id); return; } render(); }
+function openSheet(id) { S.sel = id; const o = document.getElementById('overlay'); document.getElementById('sheet').innerHTML = sheetHtml(TECH[id]); o.hidden = false; }
+
+app.addEventListener('click', (e) => {
+  if (suppressClick) return;
+  const b = e.target.closest('button, [data-open], [data-act], [data-tech], [data-row]');
+  if (!b) return;
+  if (b.dataset.z) { if (b.dataset.z === 'fit') { S.zoom = { k: 1, cx: 1000, cy: 1000 }; applyZoom(); } else zoomBy(b.dataset.z === 'in' ? 1.4 : 1 / 1.4); return; }
+  if (b.dataset.mstatus) { const p = proj(), id = b.dataset.mstatus; p.status[id] === b.dataset.v ? delete p.status[id] : (p.status[id] = b.dataset.v); S.sel = id; S.ptab = 'tech'; render(); return; }
+  if (b.dataset.row) { select(b.dataset.row); return; }
+  const seg = b.closest('.seg');
+  if (seg && b.dataset.v) {
+    const g = seg.dataset.g;
+    if (g === 'view') { if (b.dataset.v === 'admin') toast(t('adminToast')); return; }
+    if (g === 'audience') S.f.stages.clear();
+    S[g] = b.dataset.v; render(); return;
+  }
+  if (b.dataset.invite) { e.stopPropagation(); inviteModal(PROJECTS.find((p) => p.id === b.dataset.invite)); return; }
+  if (b.dataset.open) { openProject(b.dataset.open); return; }
+  const act = b.dataset.act;
+  if (act === 'home') { S.screen = 'picker'; render(); return; }
+  if (act === 'new') { newModal(); return; }
+  if (act === 'invite') { inviteModal(proj()); return; }
+  if (act === 'pdf') { toast(t('pdfToast')); return; }
+  if (act === 'toggleFilters') { S.showFilters = !S.showFilters; render(); return; }
+  if (act === 'present') { S.present = !S.present; if (S.present) S.mode = 'wheel'; render(); return; }
+  if (act === 'clear') { S.f = { cats: new Set(), stages: new Set(), status: new Set(), cost: new Set(), res: new Set(), minEmb: 0, minOp: 0 }; render(); return; }
+  if (act === 'sheet') { openSheet(S.sel); return; }
+  if (b.dataset.f) { const s = S.f[b.dataset.f]; s.has(b.dataset.v) ? s.delete(b.dataset.v) : s.add(b.dataset.v); render(); return; }
+  if (b.dataset.ptab) { if (b.dataset.ptab === 'tech' && !S.sel) return; S.ptab = b.dataset.ptab; render(); return; }
+  if (b.dataset.sel) { select(b.dataset.sel); return; }
+  if (b.dataset.status) { const p = proj(); p.status[S.sel] === b.dataset.status ? delete p.status[S.sel] : (p.status[S.sel] = b.dataset.status); render(); return; }
+  if (b.dataset.tech) { select(b.dataset.tech); }
+});
+app.addEventListener('dblclick', (e) => { const g = e.target.closest('[data-tech]'); if (g) openSheet(g.dataset.tech); });
+
+// tooltip
+const tip = document.getElementById('tip');
+app.addEventListener('mousemove', (e) => {
+  const el = e.target.closest('[data-tip]');
+  if (!el || !el.closest('svg')) { tip.classList.remove('on'); return; }
+  const [a, b] = el.getAttribute('data-tip').split('|');
+  tip.innerHTML = `<strong>${esc(a)}</strong>${esc(b || '')}${el.closest('[data-tech]') ? `<span class="do">${esc(t('clickOpen'))}</span>` : ''}`;
+  const w = 290, x = Math.min(e.clientX + 16, innerWidth - w), y = Math.min(e.clientY + 16, innerHeight - 90);
+  tip.style.left = x + 'px'; tip.style.top = y + 'px'; tip.classList.add('on');
+});
+app.addEventListener('mouseleave', () => tip.classList.remove('on'));
+
+// sheet
+const overlay = document.getElementById('overlay');
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay || e.target.closest('[data-act="closeSheet"]')) { overlay.hidden = true; render(); return; }
+  const n = e.target.closest('[data-sheet]');
+  if (n) openSheet(n.dataset.sheet);
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { overlay.hidden = true; document.getElementById('modal').hidden = true; } });
+
+// modals
+const modal = document.getElementById('modal'), mbox = document.getElementById('mbox');
+function closeModal() { modal.hidden = true; }
+modal.addEventListener('click', (e) => { if (e.target === modal || e.target.closest('[data-m="cancel"]')) closeModal(); });
+function newModal() {
+  const opt = (o) => Object.entries(o).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('');
+  mbox.innerHTML = `<h2>${esc(t('newTitle'))}</h2>
+    <div class="mgrid"><label class="full">${esc(t('pName'))}<input id="nName" value="${S.lang === 'ja' ? '新しいプロジェクト' : 'New project'}"></label>
+      <label>${esc(t('pType'))}<select>${opt(BTYPE[S.lang])}</select></label>
+      <label>${esc(t('pWork'))}<select><option>${esc(t('workNew'))}</option><option>${esc(t('workRetro'))}</option><option>${esc(t('workReuse'))}</option></select></label>
+      <label>${esc(t('pStage'))}<select>${opt(PSTAGE[S.lang])}</select></label>
+      <label>${esc(t('pAddr'))}<input placeholder="${S.lang === 'ja' ? '例：大阪市中央区' : 'e.g. Chuo-ku, Osaka'}"></label>
+      <label class="full">${esc(t('pInvite'))}<input placeholder="${esc(t('email'))}, …"></label></div>
+    <div class="mact"><button class="btn ghost" data-m="cancel">${esc(t('cancel'))}</button><button class="btn primary" data-m="create">${esc(t('create'))}</button></div>`;
+  modal.hidden = false;
+  mbox.querySelector('[data-m="create"]').onclick = () => {
+    const name = document.getElementById('nName').value || 'New project';
+    const id = 'p' + (PROJECTS.length + 1);
+    PROJECTS.unshift({ id, name, nameJa: name, type: 'office', stage: 'planning', place: '—', placeJa: '—', mine: true, members: [[ME.short, ME.name, 'owner']], status: {} });
+    closeModal(); openProject(id);
+  };
+}
+function inviteModal(p) {
+  const roleSel = (r) => r === 'owner' ? `<b style="font-size:12px">${esc(t('owner'))}</b>` : `<select><option${r === 'view' ? ' selected' : ''}>${esc(t('canView'))}</option><option${r === 'edit' ? ' selected' : ''}>${esc(t('canEdit'))}</option></select>`;
+  const draw = () => {
+    mbox.innerHTML = `<h2>${esc(t('inviteTitle', S.lang === 'ja' ? p.nameJa : p.name))}</h2><p class="hint">${esc(t('inviteSub'))}</p>
+      <div class="inv"><input id="invEmail" placeholder="${esc(t('email'))}"><button class="btn primary" data-m="send">${esc(t('send'))}</button></div>
+      <ul class="members">${p.members.map((m) => `<li><span class="avatar">${m[0]}</span><span class="who">${esc(m[1])}<small>${esc(m[1].toLowerCase().replace(' ', '.'))}@takenaka.co.jp</small></span>${roleSel(m[2])}</li>`).join('')}</ul>
+      <div class="mact"><button class="btn" data-m="cancel">${esc(t('close'))}</button></div>`;
+    mbox.querySelector('[data-m="send"]').onclick = () => {
+      const v = document.getElementById('invEmail').value.trim();
+      if (!v) return;
+      const nm = v.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+      p.members.push([nm.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase(), nm, 'view']);
+      toast(t('invited')); draw();
+    };
+  };
+  draw(); modal.hidden = false;
+}
+
+// deep links for review: #p=p1&sel=MASS_TIMBER&aud=client&lang=ja&sheet=MASS_TIMBER&f=BUILD_LIGHTER
+(function boot() {
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (h.get('lang')) S.lang = h.get('lang');
+  if (h.get('aud')) S.audience = h.get('aud');
+  if (h.get('p')) { S.projectId = h.get('p'); S.screen = 'work'; }
+  if (h.get('sel')) { S.sel = h.get('sel'); S.ptab = 'tech'; }
+  if (h.get('mode')) S.mode = h.get('mode');
+  if (h.get('zoom')) { const [k, cx, cy] = h.get('zoom').split(',').map(Number); S.zoom = { k, cx, cy }; }
+  if (h.get('nofilters')) S.showFilters = false;
+  if (h.get('present')) { S.present = true; S.mode = 'wheel'; }
+  if (h.get('f')) h.get('f').split(',').forEach((c) => S.f.cats.add(c));
+  render();
+  if (h.get('sheet')) openSheet(h.get('sheet'));
+})();
+</script>
+</body>
+</html>
