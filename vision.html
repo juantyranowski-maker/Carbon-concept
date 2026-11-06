@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decarbonization Vision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FBF9F8; --surface: #FFFFFF; --ink: #3E3A39; --muted: #8A8285; --hair: #E6E0E2; --panel: #F4F0F1;
+  --accent: #861C3C; --accent-soft: #F6E8EC; --community: #F1EDEE;
+  /* strategy colours: validated categorical set (all pairs, colour-blind safe); aqua is low-contrast, so every use carries a text label */
+  --mit: #2a78d6; --ada: #1baf7a; --res: #eb6834;
+  --ui: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', system-ui, sans-serif;
+  --num: 'Barlow Condensed', 'Zen Kaku Gothic New', 'Arial Narrow', sans-serif;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--ui); }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+.app { display: grid; grid-template-columns: minmax(0, 1fr) 370px; min-height: 100vh; }
+.stage { display: flex; flex-direction: column; min-width: 0; height: 100vh; padding: 22px 28px 12px; }
+.head { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.eyebrow { font: 700 12.5px var(--num); letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin: 0 0 4px; }
+h1 { font: 700 36px/1.05 var(--num); letter-spacing: .05em; text-transform: uppercase; margin: 0; }
+html[lang="ja"] h1 { text-transform: none; font: 700 28px/1.2 var(--ui); letter-spacing: .08em; }
+.sub { margin: 6px 0 0; color: var(--muted); font-size: 13.5px; }
+.sp { flex: 1; }
+.chart-wrap { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 6px 0 0; }
+#viz { width: 100%; height: 100%; display: block; font-family: var(--num); }
+.foot-note { font-size: 12px; color: var(--muted); text-align: center; margin: 4px 0 0; }
+.table-wrap { flex: 1; min-height: 0; overflow: auto; margin-top: 16px; }
+
+.seg { display: inline-flex; border: 1px solid var(--hair); background: var(--panel); border-radius: 999px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: none; padding: 5px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 700; color: var(--muted); }
+.seg button.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 4px rgba(60, 30, 40, .12); }
+.seg.dark button.on { background: var(--ink); color: #fff; }
+
+/* ---------- chart ---------- */
+#viz .z-com { fill: var(--community); }
+#viz .z-bld { fill: var(--surface); stroke: var(--hair); stroke-width: 1; }
+#viz .sepline { stroke: var(--hair); stroke-width: 1.5; }
+#viz .ms { fill: none; stroke: var(--ink); }
+#viz .ms.today { stroke-dasharray: 2 6; stroke-width: 1.4; stroke-linecap: round; }
+#viz .ms.y2030 { stroke-width: 2; }
+#viz .ms.future { stroke-width: 1.2; }
+#viz .pfill { fill: url(#pg); transition: opacity .35s; }
+#viz .pedge { fill: none; stroke: var(--ink); stroke-width: 2.6; stroke-linecap: round; transition: opacity .35s; }
+#viz .dimmed { opacity: .15; }
+
+#viz .tech { cursor: pointer; transition: opacity .35s; }
+#viz .tech.dim { opacity: .1; }
+#viz .hit { fill: transparent; stroke: none; transition: fill .2s; }
+#viz .tech:hover .hit { fill: rgba(62, 58, 57, .045); }
+#viz .tech.sel .hit { fill: rgba(62, 58, 57, .07); stroke: var(--ink); stroke-width: 1.3; }
+#viz .lane { stroke-width: 0; transition: fill-opacity .4s, opacity .35s; }
+#viz .lane.M { fill: var(--mit); stroke: var(--mit); }
+#viz .lane.A { fill: var(--ada); stroke: var(--ada); }
+#viz .lane.R { fill: var(--res); stroke: var(--res); }
+#viz .tech.later .lane { fill-opacity: .13; stroke-width: 1.2; stroke-dasharray: 3 3; }
+#viz .lane.off { opacity: .25; }
+#viz .tlabel { fill: var(--ink); font-size: 20px; font-weight: 600; transition: fill .35s; }
+#viz .tech.later .tlabel { fill: var(--muted); }
+#viz .well { fill: var(--accent); }
+#viz .tech.later .well { fill: none; stroke: var(--accent); stroke-width: 1.2; }
+
+#viz .core { cursor: pointer; }
+#viz .core circle.bg { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; transition: stroke-width .2s; }
+#viz .core.on circle.bg { stroke-width: 4; }
+#viz .core .icon { fill: var(--accent); }
+#viz .band { fill: none; stroke: var(--ink); stroke-width: 7; transition: opacity .35s; }
+#viz .slabel { cursor: pointer; transition: opacity .35s; }
+#viz .pill { cursor: pointer; }
+#viz .pill rect { fill: var(--surface); stroke: var(--ink); stroke-width: 1.5; transition: fill .3s; }
+#viz .pill text { fill: var(--ink); transition: fill .3s; }
+#viz .pill.on rect { fill: var(--ink); }
+#viz .pill.on text { fill: #fff; }
+#viz .axis { stroke: var(--ink); stroke-width: 1.4; fill: none; }
+#viz .zlabel { font-weight: 700; letter-spacing: 3px; fill: var(--muted); }
+
+/* ---------- panel ---------- */
+.panel { background: var(--surface); border-left: 1px solid var(--hair); padding: 20px 22px 30px; overflow-y: auto; height: 100vh; position: sticky; top: 0; }
+.p-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.brand { display: flex; align-items: center; gap: 9px; font: 700 17px var(--num); letter-spacing: .12em; }
+.brand i { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(var(--mit) 0 50%, var(--ada) 50% 75%, var(--res) 75% 100%); box-shadow: inset 0 0 0 6px var(--surface); }
+.panel h3 { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 22px 0 8px; }
+.hint { font-size: 12.5px; color: var(--muted); margin: -2px 0 10px; line-height: 1.45; }
+
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; position: relative; }
+.step { border: 1px solid var(--hair); background: var(--surface); border-radius: 12px; padding: 8px 6px 9px; text-align: center; line-height: 1.2; }
+.step b { display: block; font: 700 19px var(--num); letter-spacing: .04em; }
+.step span { font-size: 11px; color: var(--muted); }
+.step.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.step.on span { color: #D8D2D4; }
+.play { margin-top: 8px; width: 100%; border: 1px solid var(--ink); background: var(--surface); border-radius: 999px; padding: 7px; font-weight: 700; font-size: 13px; }
+.play:hover { background: var(--panel); }
+
+.read { margin-top: 12px; }
+.read .rt { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; }
+.read .rt b { font-weight: 700; }
+.read .rt span { color: var(--ink); font: 700 15px var(--num); letter-spacing: .02em; text-align: right; }
+.rbar { position: relative; height: 8px; border-radius: 4px; background: var(--panel); margin-top: 5px; }
+.rbar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--ink); transition: width .8s ease; }
+.rbar em { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--accent); }
+.rscale { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); margin-top: 4px; }
+.rscale span:nth-child(2) { position: relative; left: 6%; color: var(--accent); font-weight: 700; }
+
+.lens { display: flex; align-items: center; gap: 11px; width: 100%; border: 1px solid var(--hair); background: var(--surface); border-radius: 12px; padding: 9px 12px; text-align: left; margin-bottom: 6px; }
+.lens:hover { border-color: var(--muted); }
+.lens.on { box-shadow: inset 0 0 0 2px var(--c); border-color: var(--c); }
+.lens i { width: 16px; height: 16px; border-radius: 5px; background: var(--c); flex: none; }
+.lens i.round { border-radius: 50%; }
+.lens span { flex: 1; font-weight: 700; font-size: 14px; line-height: 1.25; }
+.lens small { display: block; font-weight: 400; color: var(--muted); font-size: 11.5px; }
+.lens b { font: 700 17px var(--num); color: var(--muted); }
+.reset { border: 0; background: none; color: var(--accent); font-weight: 700; font-size: 12.5px; padding: 2px 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--hair); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-size: 12.5px; font-weight: 700; }
+.chip small { color: var(--muted); font-weight: 400; margin-left: 4px; }
+.chip.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.chip.on small { color: #D8D2D4; }
+
+.card { border: 1px solid var(--hair); border-radius: 14px; padding: 14px 16px; background: var(--bg); }
+.card h2 { font: 700 22px/1.15 var(--num); letter-spacing: .03em; margin: 0; }
+html[lang="ja"] .card h2 { font: 700 18px/1.3 var(--ui); }
+.card .alt { color: var(--muted); font-size: 12.5px; }
+.card p { font-size: 13.5px; margin: 10px 0 0; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 13px; margin-top: 10px; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; font-weight: 700; }
+.dots { letter-spacing: 2px; }
+.tag { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; margin-right: 8px; }
+.tag i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+.x { float: right; border: 0; background: none; color: var(--muted); font-size: 18px; line-height: 1; padding: 0 0 0 8px; }
+.howto { margin: 0; padding: 0; list-style: none; font-size: 13px; }
+.howto li { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; border-bottom: 1px dashed var(--hair); }
+.howto li:last-child { border-bottom: 0; }
+.howto svg { flex: none; margin-top: 3px; }
+
+/* ---------- table view ---------- */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--surface); border: 1px solid var(--hair); border-radius: 12px; overflow: hidden; }
+.tbl th { text-align: left; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 9px 12px; border-bottom: 1px solid var(--hair); background: var(--panel); }
+.tbl td { padding: 8px 12px; border-bottom: 1px solid #F1ECEE; vertical-align: top; }
+.tbl tr.grp td { background: var(--bg); font-weight: 700; color: var(--accent); letter-spacing: .06em; }
+.tbl tr.dim td { opacity: .3; }
+.tbl tr.later td.nm { color: var(--muted); }
+.tbl td.nm b { display: block; }
+.tbl td.nm small { color: var(--muted); }
+
+.tip { position: fixed; z-index: 50; pointer-events: none; background: var(--surface); border: 1px solid var(--hair); border-radius: 10px; padding: 9px 12px; box-shadow: 0 6px 20px rgba(60, 30, 40, .12); font-size: 12.5px; max-width: 290px; opacity: 0; transition: opacity .12s; }
+.tip.on { opacity: 1; }
+.tip strong { display: block; font-size: 13.5px; }
+.tip .m { color: var(--muted); }
+
+@media (max-width: 1000px) {
+  .app { grid-template-columns: 1fr; }
+  .stage { height: auto; padding: 16px; }
+  .chart-wrap { flex: none; }
+  #viz { height: auto; aspect-ratio: 1 / 1; }
+  .panel { height: auto; position: static; border-left: 0; border-top: 1px solid var(--hair); padding: 16px; }
+  h1 { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <main class="stage">
+    <header class="head">
+      <div><p class="eyebrow" id="eyebrow"></p><h1 id="title"></h1><p class="sub" id="sub"></p></div>
+      <span class="sp"></span>
+      <div class="seg" id="viewSeg"></div>
+    </header>
+    <div class="chart-wrap" id="chartWrap"></div>
+    <div class="table-wrap" id="tableWrap" hidden></div>
+    <p class="foot-note" id="footNote"></p>
+  </main>
+  <aside class="panel" id="panel"></aside>
+</div>
+<div class="tip" id="tip"></div>
+<script>
+'use strict';
+/* =====================================================================================================
+   GEOMETRY  (viewBox 1400 × 1400, angles in degrees clockwise from 12 o'clock)
+   inside → out: people core · technology names · bars from TODAY ring · 2030 ring (building edge) · community ring
+   ===================================================================================================== */
+const C = 700, R_P = 100, R0 = 330, R_B = 505, R_C = 620, BAND_R = 652, SEC_R = 674, NAME_F = 20;
+const TOP_GAP = 9, GAP = 2.5, BAR_W = 30, LABEL_END = R0 - 12, LABEL_START = R_P + 22;
+const LANES = ['M', 'A', 'R'];
+
+/* =====================================================================================================
+   DATA (sample, illustrative)
+   ===================================================================================================== */
+const SECTORS = [
+  { k: 'carbon', a0: 180, a1: 360, pct: 50, en: 'Decarbonization', ja: '脱炭素' },
+  { k: 'nature', a0: 0, a1: 90, pct: 25, en: 'Biodiversity', ja: '生物多様性' },
+  { k: 'circular', a0: 90, a1: 180, pct: 25, en: 'Circulation', ja: '資源循環' }
+];
+const STRAT = {
+  M: { en: 'Mitigation', enSub: 'Decarbonization: cutting emissions', ja: '緩和', jaSub: '脱炭素：排出を減らす', c: 'var(--mit)' },
+  A: { en: 'Adaptation', enSub: 'Living well in a changing climate', ja: '適応', jaSub: '変化する気候に適応する', c: 'var(--ada)' },
+  R: { en: 'Resilience', enSub: 'Coping with shocks and outages', ja: 'レジリエンス', jaSub: '災害・停電などへの備え', c: 'var(--res)' }
+};
+// id, sector, phase (0 today · 1 by 2030 · 2 future), impact 1–5, scale (b building · c community), strategies, wellness, EN, JA, about EN, about JA
+const T = [
+  ['FORM', 'carbon', 0, 3, 'b', 'M', 0, 'Form optimisation', '形状の最適化', 'Compact massing that needs less structure and envelope.', '構造体と外皮を減らせるコンパクトな形状にする。'],
+  ['BEMS', 'carbon', 0, 3, 'b', 'MR', 0, 'Energy management', 'エネルギー管理（BEMS）', 'Monitors and tunes building systems to cut wasted energy.', '設備を監視・調整し、無駄なエネルギーを減らす。'],
+  ['CONCRETE', 'carbon', 0, 3, 'b', 'M', 0, 'Low-carbon concrete', '低炭素コンクリート', 'Cement partly replaced by slag or fly ash.', 'セメントの一部を高炉スラグやフライアッシュに置き換える。'],
+  ['LED', 'carbon', 0, 2, 'b', 'M', 1, 'LED & daylighting', 'LED照明・昼光利用', 'Efficient lighting with daylight and occupancy controls.', '昼光・人感センサー制御による高効率照明。'],
+  ['ENVELOPE', 'carbon', 1, 5, 'b', 'MAR', 1, 'High-performance envelope', '高断熱・高気密外皮', 'High insulation and airtightness: comfortable in heatwaves and during outages.', '高断熱・高気密で、猛暑や停電時も快適さを保つ。'],
+  ['HEATPUMP', 'carbon', 1, 4, 'b', 'M', 0, 'Heat pumps', 'ヒートポンプ（電化）', 'Replaces fossil-fuel heating and hot water with efficient electric systems.', '化石燃料による暖房・給湯を高効率な電気設備に置き換える。'],
+  ['TIMBER', 'carbon', 1, 4, 'b', 'M', 1, 'Mass timber structure', '木造・木質構造', 'Engineered timber stores carbon in the structure.', '木質構造材が建物の中に炭素を貯蔵する。'],
+  ['PV', 'carbon', 1, 4, 'b', 'MR', 0, 'Rooftop PV + battery', '太陽光発電＋蓄電池', 'On-site solar with batteries that keep essentials running in an outage.', '敷地内の太陽光と蓄電池。停電時も重要な設備を動かせる。'],
+  ['NATVENT', 'carbon', 1, 3, 'b', 'MA', 1, 'Natural ventilation', '自然換気', 'Wind and stack effect ventilate and cool the building.', '風力や重力換気で換気・冷却する。'],
+  ['SEMIOUT', 'carbon', 1, 3, 'b', 'MA', 1, 'Semi-outdoor spaces', '半屋外空間', 'Covered, unconditioned spaces that stay usable and comfortable in a warmer climate.', '屋根のある非空調空間。暑くなる気候でも快適に使える。'],
+  ['DR', 'carbon', 1, 3, 'b', 'MR', 0, 'Demand response', 'デマンドレスポンス', 'Shifts electricity use to low-carbon hours and supports the grid.', '電力使用を低炭素な時間帯へ移し、電力網を支える。'],
+  ['DISTRICT', 'carbon', 2, 4, 'c', 'MR', 0, 'District energy sharing', '地域エネルギー融通', 'Shares heat and power with neighbouring buildings.', '近隣の建物と熱・電力を融通し合う。'],
+  ['EXPORT', 'carbon', 2, 4, 'c', 'M', 0, 'Renewables for the area', '再エネの地域供給', 'Surplus renewable power supplied to the community.', '余剰の再生可能エネルギーを地域に供給する。'],
+  ['MOBILITY', 'carbon', 2, 3, 'c', 'M', 1, 'Green mobility hub', 'グリーンモビリティ拠点', 'EV charging, bikes and shared mobility for the neighbourhood.', 'EV充電・自転車・シェアモビリティの地域拠点。'],
+  ['PLANTING', 'nature', 0, 2, 'b', 'A', 1, 'Native planting', '在来種の植栽', 'Native species that support local wildlife and need little water.', '地域の生き物を支え、水やりも少なく済む在来種を植える。'],
+  ['GREENROOF', 'nature', 1, 3, 'b', 'AR', 1, 'Green roof', '屋上緑化', 'A planted roof that cools, holds rainwater and adds habitat.', '屋上の植栽が暑さを和らげ、雨水を蓄え、生息地をつくる。'],
+  ['FACADE', 'nature', 1, 3, 'b', 'A', 1, 'Green façade', '壁面緑化', 'Planted walls that shade, cool and host wildlife.', '壁面の植栽が日射を遮り、冷却し、生き物のすみかになる。'],
+  ['RAINGARDEN', 'nature', 1, 3, 'b', 'AR', 0, 'Rain gardens', 'レインガーデン', 'Planted basins that soak up heavy rain and reduce flooding.', '豪雨を吸収し、浸水を減らす植栽帯。'],
+  ['HABITAT', 'nature', 1, 2, 'b', 'R', 0, 'Wildlife habitats', '生き物のすみか', 'Nesting boxes, insect hotels and log piles.', '巣箱や昆虫ホテルなど、生き物のすみかをつくる。'],
+  ['CORRIDOR', 'nature', 2, 5, 'c', 'AR', 1, 'Ecological corridor', '生態系ネットワーク', 'Links the site to parks and rivers so wildlife can move.', '敷地を公園や河川とつなぎ、生き物が移動できるようにする。'],
+  ['TREES', 'nature', 2, 4, 'c', 'MA', 1, 'Street tree canopy', '街路樹・樹冠の拡大', 'More street trees for shade and carbon uptake.', '街路樹を増やし、日陰とCO₂吸収をもたらす。'],
+  ['RETROFIT', 'circular', 0, 5, 'b', 'M', 0, 'Retain & retrofit', '既存躯体の保存・改修', 'Keeps the existing structure instead of rebuilding.', '建て替えずに既存の躯体を活かす。'],
+  ['ZEROWASTE', 'circular', 0, 3, 'b', 'M', 0, 'Zero-waste construction', 'ゼロウェイスト施工', 'Designs out and diverts construction waste.', '建設廃棄物の発生を抑え、再資源化する。'],
+  ['REUSED', 'circular', 1, 3, 'b', 'M', 0, 'Reused materials', 'リユース・リサイクル材', 'Second-hand and recycled-content materials.', 'リユース材やリサイクル材を使う。'],
+  ['DFD', 'circular', 1, 3, 'b', 'MR', 0, 'Design for disassembly', '解体容易性設計', 'Reversible connections so parts can be taken apart and reused.', '取り外せる接合で、部材を再使用できるようにする。'],
+  ['FLEX', 'circular', 1, 3, 'b', 'AR', 0, 'Flexible floor plates', 'フレキシブルな平面計画', 'Floors that adapt to new uses over time.', '将来の用途変更に対応できる平面計画にする。'],
+  ['WATER', 'circular', 1, 2, 'b', 'AR', 0, 'Rain & greywater reuse', '雨水・中水利用', 'Collects and reuses water; a backup in droughts.', '雨水・中水を再利用し、渇水時の備えにもなる。'],
+  ['BANK', 'circular', 2, 4, 'c', 'MR', 0, 'Material bank', 'マテリアルバンク', 'Records and stores materials for reuse in the area.', '部材を記録・保管し、地域での再利用につなげる。']
+];
+const TECHS = T.map((r) => ({ id: r[0], sector: r[1], phase: r[2], impact: r[3], scale: r[4], tags: r[5].split(''), well: !!r[6], en: r[7], ja: r[8], aboutEn: r[9], aboutJa: r[10] }));
+const TECH = Object.fromEntries(TECHS.map((x) => [x.id, x]));
+
+// angles: within each theme, technologies run clockwise from what is in place today to the community-scale future
+SECTORS.forEach((s) => {
+  s.lo = s.a0 + (s.a0 === 0 ? TOP_GAP : GAP);
+  s.hi = s.a1 - (s.a1 === 360 ? TOP_GAP : GAP);
+  s.techs = TECHS.filter((x) => x.sector === s.k);
+  s.pitch = (s.hi - s.lo) / s.techs.length;
+  s.techs.forEach((x, i) => { x.ang = s.lo + s.pitch * (i + 0.5); x.pitch = s.pitch; });
+});
+const SEC = Object.fromEntries(SECTORS.map((s) => [s.k, s]));
+
+// bar length = impact and scale: building-scale bars stay inside the building ring, community-scale bars cross into the community ring
+const barEnd = (x) => (x.scale === 'c' ? R_B + 12 + (x.impact / 5) * (R_C - R_B - 24) : R0 + (x.impact / 5) * (R_B - 12 - R0));
+// progress per theme: share of the 2030 set already in place; 1 = 2030 target; the future step goes beyond it
+function levels(phase) {
+  const sum = (k, p) => SEC[k].techs.filter((x) => x.phase <= p).reduce((a, x) => a + x.impact, 0);
+  const fut = (k) => SEC[k].techs.filter((x) => x.phase === 2).reduce((a, x) => a + x.impact, 0);
+  const maxFut = Math.max(...SECTORS.map((s) => fut(s.k)));
+  return SECTORS.map((s) => (phase === 0 ? sum(s.k, 0) / sum(s.k, 1) : phase === 1 ? 1 : 1 + 0.3 * fut(s.k) / maxFut));
+}
+const rOf = (lv) => (lv <= 1 ? R0 + lv * (R_B - R0) : R_B + Math.min(lv - 1, 0.4) / 0.4 * (R_C - R_B));
+
+/* =====================================================================================================
+   TEXT
+   ===================================================================================================== */
+const STR = {
+  en: {
+    eyebrow: 'Client vision · Whole-life carbon', title: 'Whole-life decarbonization vision', sub: 'Sample office tower · Osaka — illustrative pathway with sample data',
+    chart: 'Chart', table: 'Table', foot: 'Illustrative pathway · sample data · hover a bar for details, click to pin it',
+    people: 'PEOPLE', wellness: 'WELLNESS', building: 'BUILDING', community: 'COMMUNITY',
+    phase: ['Today', '2030', 'Future'], phaseSub: ['Current state', 'Zero carbon', 'Carbon negative'], pillSub: ['BASELINE', 'ZERO CARBON', 'CARBON NEGATIVE'],
+    pathway: 'Pathway', pathwayHint: 'Step through the vision: the further out, the further along.', play: '▶ Play the pathway', stop: '■ Stop',
+    highlight: 'Highlight strategies', highlightHint: 'Click to bring forward the technologies that serve a strategy.', wellLens: 'People · wellness', wellSub: 'Better health and comfort', showAll: 'Show all',
+    themes: 'Themes', howto: 'How to read',
+    how: ['Rings, inside out: <b>People</b> (wellness) → <b>Building</b> → <b>Community</b>. The further out, the further along: today → 2030 zero carbon → carbon negative.',
+      'Each bar is a technology. <b>Bar length = impact and scale</b>: bars that cross into the Community ring act beyond the site.',
+      '<b>Colour = strategy</b>, striped when a technology serves several (always in the order mitigation · adaptation · resilience).',
+      '<b>Solid</b> = in place at the selected step · <b>outline</b> = comes later.',
+      '<b>Shaded area</b> = how far each theme has come.', '<b>●</b> by the centre = benefits people’s wellness.'],
+    scale: { b: 'Building scale', c: 'Community scale' }, when: ['In place today', 'By 2030', 'Future'], impact: 'Impact', strategies: 'Strategies', theme: 'Theme', inPlace: 'When', wellYes: 'Benefits wellness', technology: 'Technology', scaleH: 'Scale',
+    read: {
+      carbon: (lv) => (lv < 0.999 ? `−${Math.round(lv * 100)}% CO₂e` : lv < 1.001 ? 'Zero carbon' : `Carbon negative · −${Math.round(lv * 100)}%`),
+      nature: (lv) => (lv < 0.999 ? `${Math.round(lv * 100)}% to no net loss` : lv < 1.001 ? 'No net loss' : `Nature positive · +${Math.round((lv - 1) * 100)}%`),
+      circular: (lv) => (lv < 0.999 ? `${Math.round(lv * 100)}% to zero waste` : lv < 1.001 ? 'Zero waste' : `Regenerative · +${Math.round((lv - 1) * 100)}%`)
+    }, scaleTicks: ['Today', '2030 target', 'Beyond']
+  },
+  ja: {
+    eyebrow: '顧客向けビジョン · ホールライフカーボン', title: 'ホールライフ脱炭素ビジョン', sub: 'サンプル オフィスタワー · 大阪 — 想定パスウェイ（サンプルデータ）',
+    chart: '図', table: '表', foot: '想定パスウェイ · サンプルデータ · バーにカーソルを合わせると詳細、クリックで固定',
+    people: '人', wellness: 'ウェルネス', building: '建物', community: '地域',
+    phase: ['現在', '2030', '将来'], phaseSub: ['現状', 'ゼロカーボン', 'カーボンネガティブ'], pillSub: ['ベースライン', 'ゼロカーボン', 'カーボンネガティブ'],
+    pathway: 'パスウェイ', pathwayHint: '外側へ進むほど、ビジョンに近づきます。', play: '▶ パスウェイを再生', stop: '■ 停止',
+    highlight: '戦略をハイライト', highlightHint: 'クリックすると、その戦略に役立つ技術を強調します。', wellLens: '人 · ウェルネス', wellSub: '健康と快適性の向上', showAll: 'すべて表示',
+    themes: 'テーマ', howto: '図の見方',
+    how: ['内側から <b>人</b>（ウェルネス）→ <b>建物</b> → <b>地域</b>。外側ほど進んだ段階：現在 → 2030 ゼロカーボン → カーボンネガティブ。',
+      '各バーが1つの技術。<b>バーの長さ＝効果と規模</b>：地域リングまで伸びるバーは敷地を越えて効果を発揮します。',
+      '<b>色＝戦略</b>。複数の戦略に役立つ技術は縞模様（常に 緩和 · 適応 · レジリエンス の順）。',
+      '<b>塗り</b>＝選択した段階で導入済み · <b>線のみ</b>＝その後に導入。',
+      '<b>網掛け</b>＝各テーマの到達度。', '中心付近の <b>●</b>＝人のウェルネスに効果あり。'],
+    scale: { b: '建物スケール', c: '地域スケール' }, when: ['導入済み', '2030年まで', '将来'], impact: '効果', strategies: '戦略', theme: 'テーマ', inPlace: '導入時期', wellYes: 'ウェルネスに効果', technology: '技術', scaleH: '規模',
+    read: {
+      carbon: (lv) => (lv < 0.999 ? `CO₂e −${Math.round(lv * 100)}%` : lv < 1.001 ? 'ゼロカーボン' : `カーボンネガティブ · −${Math.round(lv * 100)}%`),
+      nature: (lv) => (lv < 0.999 ? `ノーネットロスまで ${Math.round(lv * 100)}%` : lv < 1.001 ? 'ノーネットロス' : `ネイチャーポジティブ · +${Math.round((lv - 1) * 100)}%`),
+      circular: (lv) => (lv < 0.999 ? `ゼロウェイストまで ${Math.round(lv * 100)}%` : lv < 1.001 ? 'ゼロウェイスト' : `リジェネラティブ · +${Math.round((lv - 1) * 100)}%`)
+    }, scaleTicks: ['現在', '2030目標', 'その先']
+  }
+};
+
+/* =====================================================================================================
+   STATE + HELPERS
+   ===================================================================================================== */
+const S = { lang: 'en', phase: 0, lens: null, sector: null, sel: null, view: 'chart', timer: null };
+const t = (k) => STR[S.lang][k];
+const nm = (x) => (S.lang === 'ja' ? x.ja : x.en);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const f1 = (n) => n.toFixed(1);
+const P = (r, a) => { const q = a * Math.PI / 180; return [C + r * Math.sin(q), C - r * Math.cos(q)]; };
+const arc = (r, a, b) => { const p = P(r, a), q = P(r, b); return `M ${f1(p[0])} ${f1(p[1])} A ${r} ${r} 0 ${b - a > 180 ? 1 : 0} 1 ${f1(q[0])} ${f1(q[1])}`; };
+const arcRev = (r, a, b) => { const p = P(r, b), q = P(r, a); return `M ${f1(p[0])} ${f1(p[1])} A ${r} ${r} 0 ${b - a > 180 ? 1 : 0} 0 ${f1(q[0])} ${f1(q[1])}`; };
+function wedge(r0, r1, a, b) {
+  const p = P(r1, a), q = P(r1, b), u = P(r0, b), v = P(r0, a), L = b - a > 180 ? 1 : 0;
+  return `M ${f1(p[0])} ${f1(p[1])} A ${r1} ${r1} 0 ${L} 1 ${f1(q[0])} ${f1(q[1])} L ${f1(u[0])} ${f1(u[1])} A ${r0} ${r0} 0 ${L} 0 ${f1(v[0])} ${f1(v[1])} Z`;
+}
+function matches(x) {
+  if (S.sector && x.sector !== S.sector) return false;
+  if (!S.lens) return true;
+  return S.lens === 'W' ? x.well : x.tags.includes(S.lens);
+}
+const dotsOf = (n) => '●'.repeat(n) + '<span style="color:#D5CFD1">' + '●'.repeat(5 - n) + '</span>';
+const tagsHtml = (x) => x.tags.map((k) => `<span class="tag" style="--c:${STRAT[k].c}"><i></i>${esc(S.lang === 'ja' ? STRAT[k].ja : STRAT[k].en)}</span>`).join('');
+
+/* =====================================================================================================
+   CHART (built once per language; state changes only toggle classes)
+   ===================================================================================================== */
+function chartSvg() {
+  const o = [], ja = S.lang === 'ja';
+  o.push(`<svg id="viz" viewBox="0 0 1400 1400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(t('title'))}">`);
+  o.push(`<defs><radialGradient id="pg" gradientUnits="userSpaceOnUse" cx="${C}" cy="${C}" r="${R_C}">
+    <stop offset="${(R0 / R_C).toFixed(3)}" stop-color="#3E3A39" stop-opacity=".02"/><stop offset="${(R_B / R_C).toFixed(3)}" stop-color="#3E3A39" stop-opacity=".06"/><stop offset="1" stop-color="#3E3A39" stop-opacity=".1"/></radialGradient></defs>`);
+  // zones
+  o.push(`<circle class="z-com" cx="${C}" cy="${C}" r="${R_C}"/><circle class="z-bld" cx="${C}" cy="${C}" r="${R_B}"/>`);
+  [90, 180].forEach((a) => { const p = P(R_P + 4, a), q = P(R_C, a); o.push(`<line class="sepline" x1="${f1(p[0])}" y1="${f1(p[1])}" x2="${f1(q[0])}" y2="${f1(q[1])}"/>`); });
+  // progress: shaded per theme from the TODAY ring outward
+  SECTORS.forEach((s) => o.push(`<path class="pfill" data-sector="${s.k}" d=""/><path class="pedge" data-sector="${s.k}" d=""/>`));
+  // milestone rings
+  o.push(`<circle class="ms today" cx="${C}" cy="${C}" r="${R0}"/><circle class="ms y2030" cx="${C}" cy="${C}" r="${R_B}"/><circle class="ms future" cx="${C}" cy="${C}" r="${R_C}"/>`);
+  // people core
+  o.push(`<g class="core" data-act="well"><circle class="bg" cx="${C}" cy="${C}" r="${R_P}"/>
+    <circle class="icon" cx="${C}" cy="${C - 40}" r="16"/><path class="icon" d="M ${C - 29} ${C + 10} Q ${C - 29} ${C - 15} ${C} ${C - 15} Q ${C + 29} ${C - 15} ${C + 29} ${C + 10} Z"/>
+    <text x="${C}" y="${C + 40}" text-anchor="middle" font-size="${ja ? 21 : 23}" font-weight="700" letter-spacing="${ja ? 2 : 3}" fill="#861C3C">${esc(t('people'))}</text>
+    <text x="${C}" y="${C + 62}" text-anchor="middle" font-size="15" font-weight="600" letter-spacing="${ja ? 1 : 2}" fill="#8A8285">${esc(t('wellness'))}</text></g>`);
+  // technologies
+  TECHS.forEach((x) => {
+    const end = barEnd(x), h = (x.pitch / 2 - 0.6) * Math.PI / 180, r1 = Math.max(end, R0 + 40) + 8, r0 = R_P + 3;
+    const hit = `M ${f1(r0 * Math.cos(-h))} ${f1(r0 * Math.sin(-h))} L ${f1(r1 * Math.cos(-h))} ${f1(r1 * Math.sin(-h))} A ${r1} ${r1} 0 0 1 ${f1(r1 * Math.cos(h))} ${f1(r1 * Math.sin(h))} L ${f1(r0 * Math.cos(h))} ${f1(r0 * Math.sin(h))} A ${r0} ${r0} 0 0 0 ${f1(r0 * Math.cos(-h))} ${f1(r0 * Math.sin(-h))} Z`;
+    const tags = LANES.filter((k) => x.tags.includes(k)), n = tags.length, lw = (BAR_W - (n - 1) * 2) / n;
+    const left = x.ang > 180; // names on the left half are turned so they never read upside down
+    o.push(`<g class="tech" data-id="${x.id}" transform="translate(${C} ${C}) rotate(${(x.ang - 90).toFixed(2)})"><path class="hit" d="${hit}"/>`);
+    if (x.well) o.push(`<circle class="well" cx="${R_P + 11}" cy="0" r="4.5"/>`);
+    o.push(left
+      ? `<text class="tlabel" x="${LABEL_END}" y="0" dy="0.35em" text-anchor="start" transform="rotate(180 ${LABEL_END} 0)">${esc(nm(x))}</text>`
+      : `<text class="tlabel" x="${LABEL_END}" y="0" dy="0.35em" text-anchor="end">${esc(nm(x))}</text>`);
+    tags.forEach((k, i) => o.push(`<rect class="lane ${k}" data-k="${k}" x="${R0}" y="${f1(-BAR_W / 2 + i * (lw + 2))}" width="${f1(end - R0)}" height="${f1(lw)}" rx="${f1(Math.min(3, lw / 2))}"/>`));
+    o.push('</g>');
+  });
+  // theme bands (exactly 50 / 25 / 25 %) with names
+  SECTORS.forEach((s, i) => {
+    o.push(`<path class="band" data-sector="${s.k}" d="${arc(BAND_R, s.a0 + 0.6, s.a1 - 0.6)}"/>`);
+    const mid = (s.a0 + s.a1) / 2, flip = mid > 90 && mid < 270 && mid !== 270;
+    const d = flip ? arcRev(SEC_R + 21, s.a0 + 1, s.a1 - 1) : arc(SEC_R, s.a0 + 1, s.a1 - 1);
+    o.push(`<defs><path id="sl${i}" d="${d}"/></defs><text class="slabel" data-act="sector" data-k="${s.k}" font-size="${ja ? 24 : 27}" font-weight="700" letter-spacing="4" fill="#3E3A39"><textPath href="#sl${i}" startOffset="50%" text-anchor="middle">${esc(ja ? s.ja : s.en.toUpperCase())}<tspan fill="#8A8285" font-weight="600">  ·  ${s.pct}%</tspan></textPath></text>`);
+  });
+  // top axis: milestones (outward = further along) and ring names
+  const ax = (r1, r2) => `<path class="axis" d="M ${C} ${C - r1} V ${C - r2} M ${C - 6} ${C - r2 + 9} L ${C} ${C - r2} L ${C + 6} ${C - r2 + 9}"/>`;
+  o.push(ax(R0 + 26, R_B - 27) + ax(R_B + 27, R_C - 27));
+  o.push(`<text class="zlabel" x="${C}" y="${C - (R0 + R_B) / 2}" dy="0.35em" text-anchor="middle" font-size="18" stroke="#FFFFFF" stroke-width="8" paint-order="stroke">${esc(t('building'))}</text>`);
+  o.push(`<text class="zlabel" x="${C}" y="${C - (R_B + R_C) / 2}" dy="0.35em" text-anchor="middle" font-size="18" stroke="#F1EDEE" stroke-width="8" paint-order="stroke">${esc(t('community'))}</text>`);
+  [R0, R_B, R_C].forEach((r, i) => o.push(`<g class="pill" data-act="phase" data-v="${i}"><rect x="${C - 70}" y="${C - r - 24}" width="140" height="48" rx="24"/>
+    <text x="${C}" y="${C - r - 3}" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="1.5">${esc(t('phase')[i].toUpperCase())}</text>
+    <text x="${C}" y="${C - r + 15}" text-anchor="middle" font-size="13" font-weight="600" letter-spacing="${ja ? 0.5 : 1.4}">${esc(t('pillSub')[i])}</text></g>`));
+  o.push('</svg>');
+  return o.join('');
+}
+
+// fit names to the label band and size the milestone pills to their text (needs the fonts to be loaded)
+function fitText() {
+  const svg = document.getElementById('viz');
+  if (!svg) return;
+  const budget = LABEL_END - LABEL_START;
+  svg.querySelectorAll('.tlabel').forEach((el) => { el.style.fontSize = ''; const L = el.getComputedTextLength(); if (L > budget) el.style.fontSize = (NAME_F * budget / L).toFixed(2) + 'px'; });
+  svg.querySelectorAll('.pill').forEach((g) => {
+    const w = Math.max(...[...g.querySelectorAll('text')].map((x) => x.getComputedTextLength())) + 30, r = g.querySelector('rect');
+    r.setAttribute('x', f1(C - w / 2)); r.setAttribute('width', f1(w));
+  });
+}
+
+let cur = null, raf = 0;
+function drawProgress(v) {
+  const svg = document.getElementById('viz');
+  if (!svg) return;
+  SECTORS.forEach((s, i) => {
+    const r = rOf(v[i]);
+    svg.querySelector(`.pfill[data-sector="${s.k}"]`).setAttribute('d', r > R0 + 0.5 ? wedge(R0, r, s.lo - 1, s.hi + 1) : '');
+    svg.querySelector(`.pedge[data-sector="${s.k}"]`).setAttribute('d', arc(r, s.lo - 1, s.hi + 1));
+  });
+}
+function tweenProgress(target) {
+  const from = cur || target.map(() => 0), t0 = performance.now(), dur = 850;
+  cancelAnimationFrame(raf);
+  const step = (now) => {
+    const k = Math.min(1, (now - t0) / dur), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    cur = from.map((f, i) => f + (target[i] - f) * e);
+    drawProgress(cur);
+    if (k < 1) raf = requestAnimationFrame(step);
+  };
+  raf = requestAnimationFrame(step);
+}
+
+/* =====================================================================================================
+   PANEL + TABLE
+   ===================================================================================================== */
+function panelHtml() {
+  const ja = S.lang === 'ja', lv = levels(S.phase);
+  const count = (fn) => TECHS.filter(fn).length;
+  const lens = (k, label, sub, c, n, round) => `<button class="lens${S.lens === k ? ' on' : ''}" data-act="lens" data-v="${k}" style="--c:${c}"><i${round ? ' class="round"' : ''}></i><span>${esc(label)}<small>${esc(sub)}</small></span><b>${n}</b></button>`;
+  const x = S.sel && TECH[S.sel];
+  const detail = x ? `<div class="card"><button class="x" data-act="close" aria-label="Close">×</button>
+      <div class="alt">${esc(ja ? SEC[x.sector].ja : SEC[x.sector].en)}</div><h2>${esc(nm(x))}</h2><div class="alt">${esc(ja ? x.en : x.ja)}</div>
+      <p>${esc(ja ? x.aboutJa : x.aboutEn)}</p>
+      <dl class="kv"><dt>${esc(t('impact'))}</dt><dd class="dots">${dotsOf(x.impact)}</dd><dt>${esc(t('scaleH'))}</dt><dd>${esc(t('scale')[x.scale])}</dd>
+      <dt>${esc(t('inPlace'))}</dt><dd>${esc(t('when')[x.phase])}</dd><dt>${esc(t('strategies'))}</dt><dd>${tagsHtml(x)}</dd>${x.well ? `<dt>●</dt><dd style="color:var(--accent)">${esc(t('wellYes'))}</dd>` : ''}</dl></div>` : '';
+  const glyph = (inner) => `<svg width="34" height="16" viewBox="0 0 34 16" aria-hidden="true">${inner}</svg>`;
+  const howIcons = [
+    glyph('<circle cx="17" cy="8" r="7" fill="#F1EDEE" stroke="#3E3A39"/><circle cx="17" cy="8" r="4.5" fill="#fff" stroke="#3E3A39"/><circle cx="17" cy="8" r="2" fill="#861C3C"/>'),
+    glyph('<rect x="1" y="5" width="20" height="6" rx="2" fill="#3E3A39"/><rect x="1" y="5" width="32" height="6" rx="2" fill="none" stroke="#3E3A39" stroke-dasharray="2 2"/>'),
+    glyph('<rect x="1" y="2" width="32" height="3.5" rx="1.5" fill="#2a78d6"/><rect x="1" y="6.5" width="32" height="3.5" rx="1.5" fill="#1baf7a"/><rect x="1" y="11" width="32" height="3.5" rx="1.5" fill="#eb6834"/>'),
+    glyph('<rect x="1" y="2" width="14" height="12" rx="2" fill="#2a78d6"/><rect x="19" y="2" width="14" height="12" rx="2" fill="#2a78d6" fill-opacity=".13" stroke="#2a78d6" stroke-dasharray="3 3"/>'),
+    glyph('<path d="M1 15 A 16 16 0 0 1 33 15" fill="none" stroke="#3E3A39" stroke-width="2.5"/><path d="M1 15 A 16 16 0 0 1 33 15 L 33 16 L 1 16 Z" fill="#3E3A39" fill-opacity=".14"/>'),
+    glyph('<circle cx="17" cy="8" r="4.5" fill="#861C3C"/>')
+  ];
+  return `<div class="p-top"><div class="brand"><i></i>WLC</div><div class="seg dark" data-g="lang"><button data-v="en" class="${S.lang === 'en' ? 'on' : ''}">EN</button><button data-v="ja" class="${ja ? 'on' : ''}">日本語</button></div></div>
+    <h3>${esc(t('pathway'))}</h3><p class="hint">${esc(t('pathwayHint'))}</p>
+    <div class="steps">${[0, 1, 2].map((i) => `<button class="step${S.phase === i ? ' on' : ''}" data-act="phase" data-v="${i}"><b>${esc(t('phase')[i])}</b><span>${esc(t('phaseSub')[i])}</span></button>`).join('')}</div>
+    <button class="play" data-act="play">${esc(S.timer ? t('stop') : t('play'))}</button>
+    ${SECTORS.map((s, i) => `<div class="read"><div class="rt"><b>${esc(ja ? s.ja : s.en)}</b><span>${esc(t('read')[s.k](lv[i]))}</span></div>
+      <div class="rbar"><i style="width:${(Math.min(lv[i], 1.4) / 1.4 * 100).toFixed(1)}%"></i><em style="left:${(100 / 1.4).toFixed(1)}%"></em></div></div>`).join('')}
+    <div class="rscale"><span>${esc(t('scaleTicks')[0])}</span><span>${esc(t('scaleTicks')[1])}</span><span>${esc(t('scaleTicks')[2])}</span></div>
+    <h3>${esc(t('highlight'))}</h3><p class="hint">${esc(t('highlightHint'))}</p>
+    ${LANES.map((k) => lens(k, ja ? STRAT[k].ja : STRAT[k].en, ja ? STRAT[k].jaSub : STRAT[k].enSub, STRAT[k].c, count((y) => y.tags.includes(k)))).join('')}
+    ${lens('W', t('wellLens'), t('wellSub'), 'var(--accent)', count((y) => y.well), true)}
+    ${S.lens || S.sector ? `<button class="reset" data-act="reset">${esc(t('showAll'))}</button>` : ''}
+    <h3>${esc(t('themes'))}</h3>
+    <div class="chips">${SECTORS.map((s) => `<button class="chip${S.sector === s.k ? ' on' : ''}" data-act="sector" data-k="${s.k}">${esc(ja ? s.ja : s.en)}<small>${s.pct}%</small></button>`).join('')}</div>
+    <h3>${esc(x ? t('technology') : t('howto'))}</h3>
+    ${detail || `<ul class="howto">${t('how').map((h, i) => `<li>${howIcons[i]}<span>${h}</span></li>`).join('')}</ul>`}`;
+}
+
+function tableHtml() {
+  const ja = S.lang === 'ja';
+  const rows = SECTORS.map((s) => `<tr class="grp"><td colspan="5">${esc(ja ? s.ja : s.en.toUpperCase())} · ${s.pct}%</td></tr>` + s.techs.map((x) => `<tr class="${matches(x) ? '' : 'dim'}${x.phase > S.phase ? ' later' : ''}">
+      <td class="nm"><b>${x.well ? '<span style="color:var(--accent)">● </span>' : ''}${esc(nm(x))}</b><small>${esc(ja ? x.aboutJa : x.aboutEn)}</small></td>
+      <td>${esc(t('scale')[x.scale])}</td><td>${esc(t('when')[x.phase])}</td><td class="dots">${dotsOf(x.impact)}</td><td>${tagsHtml(x)}</td></tr>`).join('')).join('');
+  return `<table class="tbl"><thead><tr><th>${esc(t('technology'))}</th><th>${esc(t('scaleH'))}</th><th>${esc(t('inPlace'))}</th><th>${esc(t('impact'))}</th><th>${esc(t('strategies'))}</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+/* =====================================================================================================
+   RENDER
+   ===================================================================================================== */
+function build() {
+  document.documentElement.lang = S.lang;
+  document.getElementById('eyebrow').textContent = t('eyebrow');
+  document.getElementById('title').textContent = t('title');
+  document.getElementById('sub').textContent = t('sub');
+  document.getElementById('footNote').textContent = t('foot');
+  document.getElementById('chartWrap').innerHTML = chartSvg();
+  fitText();
+  if (cur) drawProgress(cur);
+  update();
+}
+function update() {
+  const svg = document.getElementById('viz');
+  document.getElementById('viewSeg').innerHTML = `<button data-v="chart" class="${S.view === 'chart' ? 'on' : ''}">◎ ${esc(t('chart'))}</button><button data-v="table" class="${S.view === 'table' ? 'on' : ''}">▤ ${esc(t('table'))}</button>`;
+  document.getElementById('chartWrap').hidden = S.view !== 'chart';
+  const tw = document.getElementById('tableWrap');
+  tw.hidden = S.view !== 'table';
+  if (S.view === 'table') tw.innerHTML = tableHtml();
+  svg.querySelectorAll('.tech').forEach((g) => {
+    const x = TECH[g.dataset.id];
+    g.classList.toggle('later', x.phase > S.phase);
+    g.classList.toggle('dim', !matches(x));
+    g.classList.toggle('sel', S.sel === x.id);
+    g.querySelectorAll('.lane').forEach((l) => l.classList.toggle('off', LANES.includes(S.lens) && l.dataset.k !== S.lens));
+  });
+  svg.querySelectorAll('.pill').forEach((g) => g.classList.toggle('on', Number(g.dataset.v) === S.phase));
+  svg.querySelector('.core').classList.toggle('on', S.lens === 'W');
+  svg.querySelectorAll('[data-sector], .slabel').forEach((el) => { const k = el.dataset.sector || el.dataset.k; el.classList.toggle('dimmed', !!S.sector && k !== S.sector); });
+  document.getElementById('panel').innerHTML = panelHtml();
+  tweenProgress(levels(S.phase));
+}
+function setPhase(i) { S.phase = i; update(); }
+function stopPlay() { clearInterval(S.timer); S.timer = null; }
+function play() {
+  if (S.timer) { stopPlay(); update(); return; }
+  let i = S.phase >= 2 ? 0 : S.phase;
+  S.phase = i;
+  S.timer = setInterval(() => { i++; if (i > 2) { stopPlay(); update(); return; } setPhase(i); }, 1800);
+  update();
+}
+
+/* =====================================================================================================
+   EVENTS
+   ===================================================================================================== */
+document.addEventListener('click', (e) => {
+  const seg = e.target.closest('.seg button');
+  if (seg) {
+    const g = seg.closest('.seg');
+    if (g.dataset.g === 'lang') { S.lang = seg.dataset.v; build(); return; }
+    if (g.id === 'viewSeg') { S.view = seg.dataset.v; update(); return; }
+  }
+  const tech = e.target.closest('#viz .tech');
+  if (tech) { S.sel = S.sel === tech.dataset.id ? null : tech.dataset.id; update(); return; }
+  const a = e.target.closest('[data-act]');
+  if (!a) return;
+  const act = a.dataset.act;
+  if (act === 'phase') { stopPlay(); setPhase(Number(a.dataset.v)); }
+  else if (act === 'play') play();
+  else if (act === 'lens') { S.lens = S.lens === a.dataset.v ? null : a.dataset.v; update(); }
+  else if (act === 'well') { S.lens = S.lens === 'W' ? null : 'W'; update(); }
+  else if (act === 'sector') { S.sector = S.sector === a.dataset.k ? null : a.dataset.k; update(); }
+  else if (act === 'reset') { S.lens = null; S.sector = null; update(); }
+  else if (act === 'close') { S.sel = null; update(); }
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && (S.sel || S.lens || S.sector)) { S.sel = null; S.lens = null; S.sector = null; update(); } });
+
+const tip = document.getElementById('tip');
+document.addEventListener('mousemove', (e) => {
+  const g = e.target.closest('#viz .tech');
+  if (!g) { tip.classList.remove('on'); return; }
+  const x = TECH[g.dataset.id], ja = S.lang === 'ja';
+  tip.innerHTML = `<strong>${esc(nm(x))}</strong><div class="m">${esc(ja ? SEC[x.sector].ja : SEC[x.sector].en)} · ${esc(t('scale')[x.scale])} · ${esc(t('when')[x.phase])}</div>
+    <div>${esc(t('impact'))} <span class="dots">${dotsOf(x.impact)}</span></div><div style="margin-top:4px">${tagsHtml(x)}</div>${x.well ? `<div style="color:var(--accent);margin-top:2px">● ${esc(t('wellYes'))}</div>` : ''}`;
+  const w = 300, px = Math.min(e.clientX + 16, innerWidth - w), py = Math.min(e.clientY + 16, innerHeight - 120);
+  tip.style.left = px + 'px'; tip.style.top = py + 'px'; tip.classList.add('on');
+});
+
+// deep links for review: #phase=2&lens=A&lang=ja&sector=carbon&sel=SEMIOUT&view=table
+(function boot() {
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (h.get('lang')) S.lang = h.get('lang');
+  if (h.get('phase')) S.phase = Number(h.get('phase'));
+  if (h.get('lens')) S.lens = h.get('lens');
+  if (h.get('sector')) S.sector = h.get('sector');
+  if (h.get('sel')) S.sel = h.get('sel');
+  if (h.get('view')) S.view = h.get('view');
+  build();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitText);
+})();
+</script>
+</body>
+</html>
