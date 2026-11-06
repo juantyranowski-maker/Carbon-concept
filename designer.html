@@ -488,7 +488,7 @@ const STR = {
     canView: 'Can view', canEdit: 'Can edit', owner: 'Owner', pdfToast: 'In the app this creates the client PDF: chart with this project’s choices, the score, then one page per adopted technology.',
     adminToast: 'Admin view: to be designed next (editing the catalogue, savings, module impacts).', invited: 'Invitation sent (mockup).',
     workNew: 'New build', workRetro: 'Retrofit / renovation', workReuse: 'Adaptive reuse', strong: 'strong', addressed: 'addressed', avg: 'average',
-    matrix: 'Matrix', wheel: 'Wheel', zoomIn: 'Zoom in', zoomOut: 'Zoom out', fit: 'Fit', zoomHint: 'Hover to trace a row or column · scroll to zoom · drag to move', show: 'Show', focusAll: 'All', focusProject: 'This project',
+    matrix: 'Matrix', wheel: 'Wheel', zoomIn: 'Zoom in', zoomOut: 'Zoom out', fit: 'Fit', chartTitle: 'WHOLE-LIFE DECARBONIZATION STRATEGY', zoomHint: 'Hover to trace a row or column · scroll to zoom · drag to move', show: 'Show', focusAll: 'All', focusProject: 'This project',
     matrixHint: 'Click a row for details · ● ○ ✕ to decide', hideFilters: 'Hide filters', showFilters: 'Show filters', present: 'Present', exitPresent: 'Exit presentation',
     gA: 'A · Product & construction', gB: 'B · Use', gC: 'C · End of life', gD: 'D', resShort: 'Resil.', projectRow: 'This project (adopted)', hiddenN: '{0} technologies hidden by the filters',
     chipA: 'Product', chipB: 'Use', chipC: 'End of life', chipD: 'Beyond', coverTextC: '{0} of {2} scope categories addressed · {1} strongly'
@@ -523,7 +523,7 @@ const STR = {
     canView: '閲覧のみ', canEdit: '編集可', owner: '所有者', pdfToast: 'アプリでは顧客向けPDFを作成します：このプロジェクトの選択を反映した図、評価、採用した技術ごとのページ。',
     adminToast: '管理者画面：次に設計します（カタログ・削減率・段階ごとの影響度の編集）。', invited: '招待を送信しました（モックアップ）。',
     workNew: '新築', workRetro: '改修', workReuse: 'コンバージョン', strong: '大', addressed: '効果あり', avg: '平均',
-    matrix: 'マトリクス', wheel: 'ホイール', zoomIn: '拡大', zoomOut: '縮小', fit: '全体表示', zoomHint: 'ホバーで行・列をたどる · スクロールで拡大・縮小 · ドラッグで移動', show: '表示', focusAll: 'すべて', focusProject: 'このプロジェクト',
+    matrix: 'マトリクス', wheel: 'ホイール', zoomIn: '拡大', zoomOut: '縮小', fit: '全体表示', chartTitle: 'ホールライフ脱炭素戦略', zoomHint: 'ホバーで行・列をたどる · スクロールで拡大・縮小 · ドラッグで移動', show: '表示', focusAll: 'すべて', focusProject: 'このプロジェクト',
     matrixHint: '行をクリックで詳細 · ● ○ ✕ で判断', hideFilters: 'フィルターを隠す', showFilters: 'フィルターを表示', present: 'プレゼン', exitPresent: 'プレゼン終了',
     gA: 'A · 製造・施工', gB: 'B · 使用', gC: 'C · 解体・廃棄', gD: 'D', resShort: 'レジリエンス', projectRow: 'このプロジェクト（採用）', hiddenN: 'フィルターにより {0}件の技術を非表示',
     chipA: '製造・施工', chipB: '使用', chipC: '解体・廃棄', chipD: '境界外', coverTextC: '{2}カテゴリ中 {0}カテゴリに効果 · うち{1}カテゴリで大きい'
@@ -634,6 +634,9 @@ function chartSvg() {
   o.push(`<radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#F6E8EC" stop-opacity=".9"/><stop offset="100%" stop-color="#F6E8EC" stop-opacity="0"/></radialGradient>`);
   o.push('</defs>');
   o.push(`<circle cx="${C}" cy="${C}" r="250" fill="url(#glow)"/>`);
+  // title in the open space above the wheel, with the project as subtitle
+  o.push(`<text x="${C}" y="218" text-anchor="middle" font-size="42" font-weight="700" letter-spacing="${lang === 'ja' ? 4 : 5}" fill="#3E3A39">${esc(t('chartTitle'))}</text>`);
+  o.push(`<text x="${C}" y="252" text-anchor="middle" font-size="17" font-weight="600" letter-spacing="1.5" fill="#8A8285">${esc((lang === 'ja' ? p.nameJa : p.name) + ' · ' + BTYPE[lang][p.type] + ' · ' + (lang === 'ja' ? p.placeJa : p.place))}</text>`);
   // life-cycle loop (architect) or stage arcs (client) through the module nodes; drawn first so labels sit on top
   const groups = groupsOf(cs);
   if (!client) o.push(`<path d="${arc(NODE_R, 43, 295)}" fill="none" stroke="#3E3A39" stroke-width="1.5"/><path d="${arc(NODE_R, 295, 403)}" fill="none" stroke="#3E3A39" stroke-width="1.5" stroke-dasharray="3 6"/>`);
@@ -924,7 +927,7 @@ function workHtml() {
 }
 
 /* ---------- wheel zoom and pan ---------- */
-const VB = { x: 85, y: 215, w: 1830, h: 1700 };
+const VB = { x: 85, y: 160, w: 1830, h: 1755 };
 function applyZoom() {
   const svg = document.getElementById('viz');
   if (!svg) return;
