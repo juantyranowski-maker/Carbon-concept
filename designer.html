@@ -101,6 +101,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .stage svg { flex: 1 1 0; width: 100%; height: 0; min-height: 0; display: block; }
 .stage svg .ring { transition: opacity .18s; }
 .stage svg [data-tech] { cursor: pointer; }
+.stage svg .ring > *, .stage svg .mod { transition: opacity .15s; }
+#viz.hl .ring:not(.hot) > :not(.hot), #viz.hl .mod:not(.hot) { opacity: .1; }
+.mx.focus tbody tr.t:not(.adopted):not(.considered) td { opacity: .32; }
+.mx.focus tbody tr.t.considered td { opacity: .65; }
 
 .panel { border-left: 1px solid var(--hair); background: var(--surface); overflow: auto; padding: 18px 20px 40px; }
 .ptabs { display: flex; gap: 4px; margin-bottom: 14px; }
@@ -484,7 +488,7 @@ const STR = {
     canView: 'Can view', canEdit: 'Can edit', owner: 'Owner', pdfToast: 'In the app this creates the client PDF: chart with this project’s choices, the score, then one page per adopted technology.',
     adminToast: 'Admin view: to be designed next (editing the catalogue, savings, module impacts).', invited: 'Invitation sent (mockup).',
     workNew: 'New build', workRetro: 'Retrofit / renovation', workReuse: 'Adaptive reuse', strong: 'strong', addressed: 'addressed', avg: 'average',
-    matrix: 'Matrix', wheel: 'Wheel', zoomIn: 'Zoom in', zoomOut: 'Zoom out', fit: 'Fit', zoomHint: 'Scroll to zoom · drag to move',
+    matrix: 'Matrix', wheel: 'Wheel', zoomIn: 'Zoom in', zoomOut: 'Zoom out', fit: 'Fit', zoomHint: 'Hover to trace a row or column · scroll to zoom · drag to move', show: 'Show', focusAll: 'All', focusProject: 'This project',
     matrixHint: 'Click a row for details · ● ○ ✕ to decide', hideFilters: 'Hide filters', showFilters: 'Show filters', present: 'Present', exitPresent: 'Exit presentation',
     gA: 'A · Product & construction', gB: 'B · Use', gC: 'C · End of life', gD: 'D', resShort: 'Resil.', projectRow: 'This project (adopted)', hiddenN: '{0} technologies hidden by the filters',
     chipA: 'Product', chipB: 'Use', chipC: 'End of life', chipD: 'Beyond', coverTextC: '{0} of {2} scope categories addressed · {1} strongly'
@@ -519,7 +523,7 @@ const STR = {
     canView: '閲覧のみ', canEdit: '編集可', owner: '所有者', pdfToast: 'アプリでは顧客向けPDFを作成します：このプロジェクトの選択を反映した図、評価、採用した技術ごとのページ。',
     adminToast: '管理者画面：次に設計します（カタログ・削減率・段階ごとの影響度の編集）。', invited: '招待を送信しました（モックアップ）。',
     workNew: '新築', workRetro: '改修', workReuse: 'コンバージョン', strong: '大', addressed: '効果あり', avg: '平均',
-    matrix: 'マトリクス', wheel: 'ホイール', zoomIn: '拡大', zoomOut: '縮小', fit: '全体表示', zoomHint: 'スクロールで拡大・縮小 · ドラッグで移動',
+    matrix: 'マトリクス', wheel: 'ホイール', zoomIn: '拡大', zoomOut: '縮小', fit: '全体表示', zoomHint: 'ホバーで行・列をたどる · スクロールで拡大・縮小 · ドラッグで移動', show: '表示', focusAll: 'すべて', focusProject: 'このプロジェクト',
     matrixHint: '行をクリックで詳細 · ● ○ ✕ で判断', hideFilters: 'フィルターを隠す', showFilters: 'フィルターを表示', present: 'プレゼン', exitPresent: 'プレゼン終了',
     gA: 'A · 製造・施工', gB: 'B · 使用', gC: 'C · 解体・廃棄', gD: 'D', resShort: 'レジリエンス', projectRow: 'このプロジェクト（採用）', hiddenN: 'フィルターにより {0}件の技術を非表示',
     chipA: '製造・施工', chipB: '使用', chipC: '解体・廃棄', chipD: '境界外', coverTextC: '{2}カテゴリ中 {0}カテゴリに効果 · うち{1}カテゴリで大きい'
@@ -531,7 +535,7 @@ const STR = {
    ===================================================================================================== */
 const S = {
   screen: 'picker', lang: 'en', audience: 'architect', view: 'designer', tab: 'mine', projectId: null, sel: null, ptab: 'score', q: '',
-  mode: 'matrix', showFilters: true, present: false, zoom: { k: 1, cx: 1000, cy: 1000 },
+  mode: 'matrix', focus: 'all', showFilters: true, present: false, zoom: { k: 1, cx: 1000, cy: 1000 },
   f: { cats: new Set(), stages: new Set(), status: new Set(), cost: new Set(), res: new Set(), minEmb: 0, minOp: 0 }
 };
 const t = (k, ...a) => String((STR[S.lang][k] ?? STR.en[k] ?? k)).replace(/\{(\d)\}/g, (_, i) => a[i] ?? '');
@@ -539,7 +543,8 @@ const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '
 const tn = (x) => (S.lang === 'ja' ? x.ja : x.en);
 const proj = () => PROJECTS.find((p) => p.id === S.projectId);
 const LV = { H: 3, M: 2, L: 1, N: 0 }, LVK = ['N', 'L', 'M', 'H'];
-const IMPC = { H: '#D7262B', M: '#EE9A86', L: '#3E7CC9', N: '#DADAE1' };
+// impact level = one teal ramp, light -> dark (red / navy stay reserved for embodied / operational)
+const IMPC = { H: '#0D4A57', M: '#2A8590', L: '#72B8BB', N: '#E6E1E3' };
 const RESC = { H: '#1E7F4F', M: '#E0A100', L: '#1E1E28' };
 const lvName = (c) => ({ H: t('high'), M: t('medium'), L: t('low'), N: t('none') }[c]);
 const rcName = (c) => ({ H: t('high'), M: t('mid'), L: t('low') }[c]);
@@ -637,7 +642,8 @@ function chartSvg() {
   // technology rings
   L.rings.forEach((r, k) => {
     const x = r.x, st = p.status[x.id], match = matches(x), sel = S.sel === x.id;
-    const op = filterOn() && !match ? 0.12 : 1;
+    const focus = S.focus !== 'project' ? 1 : st === 'adopted' ? 1 : st === 'considered' ? 0.5 : 0.13;
+    const op = (filterOn() && !match ? 0.12 : 1) * focus;
     o.push(`<g class="ring" opacity="${op}" data-tech="${x.id}">`);
     o.push(`<circle cx="${C}" cy="${C}" r="${f1(r.R)}" fill="none" stroke="${sel ? '#3E3A39' : '#DDD6D8'}" stroke-width="${sel ? 1.6 : 0.75}"/>`);
     if (st === 'adopted' || st === 'considered') {
@@ -646,9 +652,9 @@ function chartSvg() {
       o.push(`<path d="${arc(rr, ANG[0] - HALF, ANG[16] + HALF)}" fill="none" stroke="#861C3C" stroke-width="2"${st === 'considered' ? ' stroke-dasharray="4 4"' : ''}/>`);
     }
     const segOp = st === 'rejected' ? 0.3 : 1;
-    cs.forEach((col) => {
+    cs.forEach((col, j) => {
       const c = lvOf(x, col);
-      o.push(`<path d="${arc(r.R, col.ang - col.half, col.ang + col.half)}" fill="none" stroke="${IMPC[c]}" stroke-width="${f1(sz.SEG_W)}" opacity="${segOp}" data-tip="${esc(tn(x))}|${esc(colTag(col) + ' · ' + colName(col))}: ${esc(lvName(c))}"/>`);
+      o.push(`<path class="seg" data-c="${j}" d="${arc(r.R, col.ang - col.half, col.ang + col.half)}" fill="none" stroke="${IMPC[c]}" stroke-width="${f1(sz.SEG_W)}" opacity="${segOp}" data-tip="${esc(tn(x))}|${esc(colTag(col) + ' · ' + colName(col))}: ${esc(lvName(c))}"/>`);
     });
     // saving bars
     const deg = (px) => px / r.R * 180 / Math.PI, g0 = deg(2);
@@ -705,6 +711,7 @@ function chartSvg() {
     const best = sc.best[i], ring = best !== 'N' ? IMPC[best] : null;
     const tip = `${esc(colTag(c) + ' · ' + colName(c))}|${best !== 'N' ? esc(t('adopted')) + ': ' + esc(lvName(best)) : esc(t('none'))}`;
     let tc;
+    o.push(`<g class="mod" data-c="${i}">`);
     if (client) {
       const st = SC_STYLE[c.sc];
       if (ring) o.push(`<rect x="${f1(pt[0] - 29)}" y="${f1(pt[1] - 29)}" width="58" height="58" rx="14" fill="none" stroke="${ring}" stroke-width="3.5" pointer-events="none"/>`);
@@ -726,6 +733,7 @@ function chartSvg() {
       o.push(`<text x="${f1(l[0])}" y="${f1(y)}" text-anchor="middle" font-size="14" font-weight="700" fill="${tc}">${c.k}</text>`);
       lines.forEach((s) => { y += 11.5; o.push(`<text x="${f1(l[0])}" y="${f1(y)}" text-anchor="middle" font-size="11" font-weight="600" letter-spacing="0.4" fill="${tc}">${esc(s)}</text>`); });
     }
+    o.push('</g>');
   });
   // centre: project estimate
   o.push(`<text x="1000" y="905" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="${ls}" fill="#8A8285">${esc(t('projectEstimate'))}</text>`);
@@ -813,7 +821,7 @@ function modsHtml(x, levelsOverride) {
     const icon = (c, col) => `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="${iconPath(c)}" fill="none" stroke="${col}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     return `<div class="tiles">${groupsOf(cs).map((g) => `<div class="tgrp" style="--sc:${g.color};--scbg:${g.bg}"><div class="tg-head">${esc(g.chip)}</div><div class="tg-row">${g.cols.map((c) => {
       const v = lv[cs.indexOf(c)], on = v !== 'N';
-      return `<div class="tile${on ? ' on' : ''}" style="--sc:${SC_STYLE[c.sc].c}" title="${esc(colTag(c) + ' · ' + colName(c))}: ${esc(lvName(v))}"><div class="ic" style="${on ? `background:${IMPC[v]}` : ''}">${icon(c, on ? (v === 'M' ? '#3E3A39' : '#fff') : g.color)}</div><b>${esc(colTag(c))}</b><span>${esc(colName(c))}</span></div>`;
+      return `<div class="tile${on ? ' on' : ''}" style="--sc:${SC_STYLE[c.sc].c}" title="${esc(colTag(c) + ' · ' + colName(c))}: ${esc(lvName(v))}"><div class="ic" style="${on ? `background:${IMPC[v]}` : ''}">${icon(c, on ? (v === 'L' ? '#3E3A39' : '#fff') : g.color)}</div><b>${esc(colTag(c))}</b><span>${esc(colName(c))}</span></div>`;
     }).join('')}</div></div>`).join('')}</div>
       <div class="note">${['1', '2', '3'].map((k) => `<span class="dotk" style="background:${SC_STYLE[k].c}"></span>${esc(S.lang === 'ja' ? SC_STYLE[k].ja : SC_STYLE[k].en)}`).join('  ')}</div>`;
   }
@@ -868,6 +876,7 @@ function stageBar() {
   const z = S.zoom;
   return `<div class="stage-bar">
     <div class="seg dark" data-g="mode"><button data-v="matrix" class="${S.mode === 'matrix' ? 'on' : ''}">▦ ${esc(t('matrix'))}</button><button data-v="wheel" class="${S.mode === 'wheel' ? 'on' : ''}">◎ ${esc(t('wheel'))}</button></div>
+    <span class="seg-label">${esc(t('show'))}</span><div class="seg" data-g="focus"><button data-v="all" class="${S.focus !== 'project' ? 'on' : ''}">${esc(t('focusAll'))}</button><button data-v="project" class="${S.focus === 'project' ? 'on' : ''}">● ${esc(t('focusProject'))}</button></div>
     ${S.mode === 'wheel' ? `<div class="zoom"><button data-z="out" title="${esc(t('zoomOut'))}">−</button><span>${Math.round(z.k * 100)}%</span><button data-z="in" title="${esc(t('zoomIn'))}">+</button><button class="wide" data-z="fit">${esc(t('fit'))}</button></div><span class="stage-note">${esc(t('zoomHint'))}</span>` : `<span class="stage-note">${esc(t('matrixHint'))}</span>`}
     <span class="sp"></span>
     ${S.present ? '' : `<button class="btn" data-act="toggleFilters">${esc(S.showFilters ? t('hideFilters') : t('showFilters'))}</button>`}
@@ -897,7 +906,7 @@ function matrixHtml() {
         <td class="rc"><span class="res ${x.res}">${x.res}</span></td><td class="rc">${yen(x.cost)}</td></tr>`);
     }
   }
-  return `<div class="mx-wrap"><table class="mx${client ? ' client' : ''}">
+  return `<div class="mx-wrap"><table class="mx${client ? ' client' : ''}${S.focus === 'project' ? ' focus' : ''}">
     <thead><tr class="g"><th class="st"></th><th class="name"></th>${groups.map((g) => `<th colspan="${g.cols.length}" class="grph${g.start > 0 ? ' gap' : ''}" style="border-bottom-color:${g.color};color:${g.color}${client ? `;background:${g.bg}` : ''}">${esc(client ? g.chip : t('g' + g.key))}</th>`).join('')}<th colspan="3"></th></tr>
       <tr class="m${client ? ' client' : ''}"><th class="st"></th><th class="name">${esc(t('tabTech'))}</th>${cs.map((c, j) => client
         ? `<th class="${gapAt.has(j) ? 'gap' : ''}" title="${esc(colName(c))}">${hIcon(c)}<small>${esc(colName(c))}</small><span class="tagc" style="color:${SC_STYLE[c.sc].c}">${esc(colTag(c))}</span></th>`
@@ -962,6 +971,7 @@ const app = document.getElementById('app');
 function render() {
   document.documentElement.lang = S.lang;
   app.innerHTML = S.screen === 'picker' ? pickerHtml() : workHtml();
+  hotKey = '';
   const q = document.getElementById('q');
   if (q) q.addEventListener('input', () => { S.q = q.value; const pos = q.selectionStart; render(); const n = document.getElementById('q'); n.focus(); n.setSelectionRange(pos, pos); });
   document.querySelectorAll('input[type=range]').forEach((r) => r.addEventListener('input', () => { S.f[r.dataset.r] = Number(r.value); render(); }));
@@ -1023,7 +1033,23 @@ app.addEventListener('dblclick', (e) => { const g = e.target.closest('[data-tech
 
 // tooltip
 const tip = document.getElementById('tip');
+// hover tracing: a segment lights its ring and its module column, a module node its column, a name or bar its ring
+let hotKey = '';
+function trace(e) {
+  const svg = document.getElementById('viz');
+  if (!svg) return;
+  const cEl = e && e.target.closest ? e.target.closest('#viz [data-c]') : null, rEl = e && e.target.closest ? e.target.closest('#viz [data-tech]') : null;
+  const c = cEl ? cEl.getAttribute('data-c') : null, r = rEl ? rEl.getAttribute('data-tech') : null, key = (r || '') + '|' + (c ?? '');
+  if (key === hotKey) return;
+  hotKey = key;
+  svg.querySelectorAll('.hot').forEach((n) => n.classList.remove('hot'));
+  if (!r && c == null) { svg.classList.remove('hl'); return; }
+  if (r) svg.querySelector(`.ring[data-tech="${r}"]`).classList.add('hot');
+  if (c != null) svg.querySelectorAll(`[data-c="${c}"]`).forEach((n) => n.classList.add('hot'));
+  svg.classList.add('hl');
+}
 app.addEventListener('mousemove', (e) => {
+  trace(e);
   const el = e.target.closest('[data-tip]');
   if (!el || !el.closest('svg')) { tip.classList.remove('on'); return; }
   const [a, b] = el.getAttribute('data-tip').split('|');
@@ -1031,7 +1057,7 @@ app.addEventListener('mousemove', (e) => {
   const w = 290, x = Math.min(e.clientX + 16, innerWidth - w), y = Math.min(e.clientY + 16, innerHeight - 90);
   tip.style.left = x + 'px'; tip.style.top = y + 'px'; tip.classList.add('on');
 });
-app.addEventListener('mouseleave', () => tip.classList.remove('on'));
+app.addEventListener('mouseleave', () => { tip.classList.remove('on'); trace(null); });
 
 // sheet
 const overlay = document.getElementById('overlay');
@@ -1090,6 +1116,7 @@ function inviteModal(p) {
   if (h.get('p')) { S.projectId = h.get('p'); S.screen = 'work'; }
   if (h.get('sel')) { S.sel = h.get('sel'); S.ptab = 'tech'; }
   if (h.get('mode')) S.mode = h.get('mode');
+  if (h.get('focus')) S.focus = h.get('focus');
   if (h.get('zoom')) { const [k, cx, cy] = h.get('zoom').split(',').map(Number); S.zoom = { k, cx, cy }; }
   if (h.get('nofilters')) S.showFilters = false;
   if (h.get('present')) { S.present = true; S.mode = 'wheel'; }
